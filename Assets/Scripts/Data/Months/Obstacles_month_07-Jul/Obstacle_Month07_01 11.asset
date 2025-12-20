@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20b5fd2355a74334aa31843193c33138, type: 3}
+  m_Name: Obstacle_Month07_01 11
+  m_EditorClassIdentifier: Assembly-CSharp::ObstacleData
+  obstacleName: 
+  obstaclePrefab: {fileID: 4156636702076863210, guid: 85db7a88827d2164e8de8eb45bee4cfc, type: 3}
+  laneIndex: 0
+  spawnDistance: 60
+  obstacleText: "7,5 \u043B\u0435\u0442 \u043A\u043E\u043B\u043E\u043D\u0438\u0438
+    \u0441\u0442\u0440\u043E\u0433\u043E\u0433\u043E \u0440\u0435\u0436\u0438\u043C\u0430
+    \u0437\u0430 \u043A\u0440\u0430\u0436\u0443 140 \u044F\u0438\u0446"

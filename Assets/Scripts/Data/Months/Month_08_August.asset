@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b96d665484ae2204d9cb100fecf8a7de, type: 3}
+  m_Name: Month_08_August
+  m_EditorClassIdentifier: Assembly-CSharp::MonthConfiguration
+  monthNumber: 8
+  monthName: "\u0410\u0432\u0433\u0443\u0441\u0442"
+  obstacles: []
+  segmentLength: 100
