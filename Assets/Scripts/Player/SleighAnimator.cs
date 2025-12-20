@@ -17,9 +17,14 @@ public class SleighAnimator : MonoBehaviour
     [SerializeField] private float rootRotationAmount = 8f;
     [SerializeField] private float rootRotationSpeed = 6f;
 
+    [Header("Hover Settings")]
+    [SerializeField] private float hoverHeight = 0.4f;
+    [SerializeField] private float hoverSpeed = 8f;
+    [SerializeField] private LayerMask groundLayer;
+
     [Header("Bobbing Settings")]
-    [SerializeField] private float bobbingAmount = 0.05f;
-    [SerializeField] private float bobbingSpeed = 3f;
+    [SerializeField] private float bobbingAmount = 0.03f;
+    [SerializeField] private float bobbingSpeed = 2f;
 
     [Header("DedMoroz Settings")]
     [SerializeField] private float dedMorozLeanAmount = 10f;
@@ -61,6 +66,7 @@ public class SleighAnimator : MonoBehaviour
     private float targetHatSway;
     private float bobbingOffset;
     private Vector3 lastPosition;
+    private float currentHoverHeight;
 
     void Start()
     {
@@ -90,6 +96,7 @@ public class SleighAnimator : MonoBehaviour
         }
 
         lastPosition = transform.position;
+        currentHoverHeight = hoverHeight;
     }
 
     void Update()
@@ -98,7 +105,7 @@ public class SleighAnimator : MonoBehaviour
 
         CalculateVelocityEffects();
         ApplyRootRotation();
-        ApplyBobbing();
+        ApplyHoverAndBobbing();
         ApplyRotations();
         ApplyDedMorozRotation();
         ApplyHatAnimation();
@@ -147,14 +154,27 @@ public class SleighAnimator : MonoBehaviour
         transform.localRotation = rootOriginalRotation * rootRotation;
     }
 
-    void ApplyBobbing()
+    void ApplyHoverAndBobbing()
     {
+        float targetHover = GetGroundHoverHeight();
+        currentHoverHeight = Mathf.Lerp(currentHoverHeight, targetHover, hoverSpeed * Time.deltaTime);
+
         bobbingOffset += Time.deltaTime * bobbingSpeed;
-        float yOffset = Mathf.Sin(bobbingOffset) * bobbingAmount;
+        float yBobbing = Mathf.Sin(bobbingOffset) * bobbingAmount;
 
         Vector3 newPosition = originalPosition;
-        newPosition.y += yOffset;
+        newPosition.y = currentHoverHeight + yBobbing;
         sleighVisual.localPosition = newPosition;
+    }
+
+    float GetGroundHoverHeight()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, -Vector3.up, out hit, hoverHeight * 3f, groundLayer))
+        {
+            return hoverHeight;
+        }
+        return hoverHeight;
     }
 
     void ApplyRotations()

@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
     [Header("Lane Settings")]
     [SerializeField] private float laneDistance = 2f;
     [SerializeField] private int currentLane = 1;
-    [SerializeField] private float laneChangeSpeed = 10f;
+    [SerializeField] private float laneChangeSpeed = 15f;
 
     [Header("Movement Settings")]
     [SerializeField] private float forwardSpeed = 5f;
@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
 
     void MoveForward()
     {
-        transform.Translate(Vector3.forward * forwardSpeed * Time.deltaTime, Space.World);
+        transform.position += Vector3.forward * forwardSpeed * Time.deltaTime;
     }
 
     void MoveBetweenLanes()
@@ -80,7 +80,6 @@ public class PlayerController : MonoBehaviour
             ChangeLane(-1);
         }
     }
-
 
     void HandleTouchInput()
     {
@@ -133,7 +132,6 @@ public class PlayerController : MonoBehaviour
     {
         isGameActive = true;
     }
-
 
     public float GetCurrentSpeed()
     {

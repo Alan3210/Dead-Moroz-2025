@@ -119,6 +119,99 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &43732184
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 43732185}
+  m_Layer: 0
+  m_Name: HoverPoint_Left
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &43732185
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43732184}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.379, y: -0.609, z: -0.615}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2139923272}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &296688717
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 296688718}
+  m_Layer: 0
+  m_Name: HoverPoint_Front
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &296688718
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 296688717}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.47, y: -0.609, z: 0.854}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2139923272}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &302384703
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 302384704}
+  m_Layer: 0
+  m_Name: HoverPoint_Right
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &302384704
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 302384703}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.418, y: -0.609, z: -0.663}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2139923272}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -586,13 +679,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 483904498539125202, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2564173871594548293, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
       propertyPath: hatTipBone
       value: 
       objectReference: {fileID: 1229088407}
     - target: {fileID: 2564173871594548293, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
+      propertyPath: hoverHeight
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2564173871594548293, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
       propertyPath: bobbingSpeed
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2564173871594548293, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
       propertyPath: hatSwaySpeed
@@ -600,7 +701,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2564173871594548293, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
       propertyPath: bobbingAmount
-      value: 0
+      value: 0.03
       objectReference: {fileID: 0}
     - target: {fileID: 2564173871594548293, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
       propertyPath: hatSwayAmount
@@ -631,6 +732,14 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2564173871594548293, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
+      propertyPath: enableRootRotation
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2564173871594548293, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2564173871594548293, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
       propertyPath: rootRotationAmount
       value: 2
       objectReference: {fileID: 0}
@@ -658,6 +767,10 @@ PrefabInstance:
       propertyPath: 'hatBones.Array.data[2]'
       value: 
       objectReference: {fileID: 717994641}
+    - target: {fileID: 3231061221048933501, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
+      propertyPath: m_Size.x
+      value: 0.96
+      objectReference: {fileID: 0}
     - target: {fileID: 5485250343975623139, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -698,13 +811,65 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6293004873902572645, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
+      propertyPath: maxSpeed
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6293004873902572645, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
+      propertyPath: movementForce
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 7461793730741255765, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
       propertyPath: m_Name
       value: Sleigh
       objectReference: {fileID: 0}
+    - target: {fileID: 7591726714479889828, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
+      propertyPath: m_Mass
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7591726714479889828, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7591726714479889828, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 7591726714479889828, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7591726714479889828, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7591726714479889828, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
+      propertyPath: m_LinearDamping
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7591726714479889828, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
+      propertyPath: m_AngularDamping
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7591726714479889828, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 5485250343975623139, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 296688718}
+    - targetCorrespondingSourceObject: {fileID: 5485250343975623139, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1735417389}
+    - targetCorrespondingSourceObject: {fileID: 5485250343975623139, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 43732185}
+    - targetCorrespondingSourceObject: {fileID: 5485250343975623139, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 302384704}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
 --- !u!1 &1461963990
@@ -738,7 +903,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   isGameOver: 0
   isGameActive: 0
-  baseSpeed: 5
+  baseSpeed: 10
   speedIncreasePerMonth: 1.5
   currentMonth: 1
   playerController: {fileID: 2139923273}
@@ -812,6 +977,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8667859047246224787, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
   m_PrefabInstance: {fileID: 1293776399}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1735417388
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1735417389}
+  m_Layer: 0
+  m_Name: HoverPoint_Back
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1735417389
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1735417388}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.402, y: -0.609, z: 0.843}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2139923272}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2139923272 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5485250343975623139, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
