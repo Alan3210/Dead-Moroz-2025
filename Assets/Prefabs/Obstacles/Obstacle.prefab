@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 1854309891081051116}
   - component: {fileID: 4194299214758757015}
   - component: {fileID: 2175721597413777682}
+  - component: {fileID: 7960695776013750165}
+  - component: {fileID: 6339922993468677113}
   m_Layer: 0
   m_Name: Obstacle
   m_TagString: Untagged
@@ -90,3 +92,36 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &7960695776013750165
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4156636702076863210}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.9000001, y: 1.1618701, z: 0.8767725}
+  m_Center: {x: 0, y: 0.56859106, z: 0.000000029802322}
+--- !u!114 &6339922993468677113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4156636702076863210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87d0777760858cd408f0e1ec89e0eb7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Obstacle

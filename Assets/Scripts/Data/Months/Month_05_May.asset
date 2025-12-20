@@ -14,5 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MonthConfiguration
   monthNumber: 5
   monthName: "\u041C\u0430\u0439"
-  obstacles: []
+  obstacles:
+  - {fileID: 11400000, guid: eb89c164dedefe14ca55bbedc41c1481, type: 2}
+  - {fileID: 11400000, guid: 2c8397ba193724749aaeedbb499736ef, type: 2}
+  - {fileID: 11400000, guid: ddbde16324d341b4f862a8b1f3918e60, type: 2}
+  - {fileID: 11400000, guid: 030024a25a6aa2e419e0f378ec493628, type: 2}
+  - {fileID: 11400000, guid: 1f4a630e87c1ab14e8955ca031813f8c, type: 2}
   segmentLength: 100

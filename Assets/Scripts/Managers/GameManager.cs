@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float speedIncreasePerMonth = 2f;
     [SerializeField] private int currentMonth = 1;
 
+    [Header("References")]
+    [SerializeField] private PlayerController playerController;
+
     public float CurrentSpeed { get; private set; }
     public int CurrentMonth => currentMonth;
     public bool IsGameOver => isGameOver;
@@ -40,6 +43,12 @@ public class GameManager : MonoBehaviour
         isGameOver = false;
         currentMonth = 1;
         UpdateSpeed();
+        ApplySpeedToPlayer();
+
+        if (playerController != null)
+        {
+            playerController.ResumePlayer();
+        }
     }
 
     public void TriggerGameOver()
@@ -48,7 +57,11 @@ public class GameManager : MonoBehaviour
 
         isGameOver = true;
         isGameActive = false;
-        Time.timeScale = 0f;
+
+        if (playerController != null)
+        {
+            playerController.StopPlayer();
+        }
 
         Debug.Log("Game Over!");
     }
@@ -57,13 +70,14 @@ public class GameManager : MonoBehaviour
     {
         if (currentMonth >= 12)
         {
-            TriggerVictory();
             return;
         }
 
         currentMonth++;
         UpdateSpeed();
-        Debug.Log($"Advanced to Month {currentMonth}");
+        ApplySpeedToPlayer();
+
+        Debug.Log($"Advanced to Month {currentMonth} - Speed: {CurrentSpeed}");
     }
 
     private void UpdateSpeed()
@@ -71,9 +85,23 @@ public class GameManager : MonoBehaviour
         CurrentSpeed = baseSpeed + (speedIncreasePerMonth * (currentMonth - 1));
     }
 
-    private void TriggerVictory()
+    private void ApplySpeedToPlayer()
+    {
+        if (playerController != null)
+        {
+            playerController.SetSpeed(CurrentSpeed);
+        }
+    }
+
+    public void TriggerVictory()
     {
         isGameActive = false;
+
+        if (playerController != null)
+        {
+            playerController.StopPlayer();
+        }
+
         Debug.Log("Victory! Completed all 12 months!");
     }
 }

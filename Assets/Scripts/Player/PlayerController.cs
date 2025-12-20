@@ -81,6 +81,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
     void HandleTouchInput()
     {
         if (Touchscreen.current == null) return;
@@ -127,6 +128,12 @@ public class PlayerController : MonoBehaviour
         isGameActive = false;
         forwardSpeed = 0f;
     }
+
+    public void ResumePlayer()
+    {
+        isGameActive = true;
+    }
+
 
     public float GetCurrentSpeed()
     {

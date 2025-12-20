@@ -187,12 +187,23 @@ public class ObstacleSpawner : MonoBehaviour
         if (currentMonthIndex < monthConfigurations.Length)
         {
             LoadCurrentMonth();
+
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.AdvanceMonth();
+            }
         }
         else
         {
             Debug.Log("ObstacleSpawner: All months completed! Game finished.");
+
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.TriggerVictory();
+            }
         }
     }
+
 
     public int GetCurrentMonth()
     {

@@ -576,6 +576,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2564173871594548293, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
+      propertyPath: dedMorozLeanSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2564173871594548293, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
+      propertyPath: dedMorozLeanAmount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2564173871594548293, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
+      propertyPath: dedMorozTiltXSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2564173871594548293, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
+      propertyPath: dedMorozTiltZSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2564173871594548293, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
+      propertyPath: dedMorozTiltXAmount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2564173871594548293, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
+      propertyPath: dedMorozTiltZAmount
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5485250343975623139, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -615,10 +639,6 @@ PrefabInstance:
     - target: {fileID: 5485250343975623139, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6293004873902572645, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
-      propertyPath: laneDistance
-      value: 1.26
       objectReference: {fileID: 0}
     - target: {fileID: 7461793730741255765, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
       propertyPath: m_Name
@@ -660,9 +680,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   isGameOver: 0
   isGameActive: 0
-  baseSpeed: 10
-  speedIncreasePerMonth: 2
+  baseSpeed: 5
+  speedIncreasePerMonth: 1.5
   currentMonth: 1
+  playerController: {fileID: 2139923273}
 --- !u!4 &1461963992
 Transform:
   m_ObjectHideFlags: 0
@@ -733,6 +754,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5485250343975623139, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
   m_PrefabInstance: {fileID: 1293776399}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2139923273 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6293004873902572645, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
+  m_PrefabInstance: {fileID: 1293776399}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c1b433be93f77347ad6ec886b5bfbb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

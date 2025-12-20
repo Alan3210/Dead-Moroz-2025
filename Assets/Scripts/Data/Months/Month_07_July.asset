@@ -14,5 +14,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MonthConfiguration
   monthNumber: 7
   monthName: "\u0418\u044E\u043B\u044C"
-  obstacles: []
+  obstacles:
+  - {fileID: 11400000, guid: 031941923d4a53e4f8a3359810554b9c, type: 2}
+  - {fileID: 11400000, guid: 7249e0bfb86326d419b82c66cc01b53e, type: 2}
+  - {fileID: 11400000, guid: 5748d7c9c37d27a4cbd9b78ebbbd6119, type: 2}
+  - {fileID: 11400000, guid: 51b577e654356a245b37ddee9e7334d6, type: 2}
+  - {fileID: 11400000, guid: 42deff421325327468bb9275e631590b, type: 2}
+  - {fileID: 11400000, guid: 47881b4287981294bbc191f15d202afb, type: 2}
+  - {fileID: 11400000, guid: 76939883cfe339f449e0ea5c0be120f5, type: 2}
+  - {fileID: 11400000, guid: 83e9b254216985c499b74ce6be5f6268, type: 2}
+  - {fileID: 11400000, guid: 0ffedb32228658b49853b9694b825549, type: 2}
+  - {fileID: 11400000, guid: 5b896f715e8330a4bac397faa1e8b0e9, type: 2}
+  - {fileID: 11400000, guid: 6b030bfc839823a45af1abf70a13813c, type: 2}
+  - {fileID: 11400000, guid: 0a4994a212e795b4cba08400ee397875, type: 2}
+  - {fileID: 11400000, guid: 705987c3be7959441b18b72a33842705, type: 2}
+  - {fileID: 11400000, guid: e6767b74c5b240c4e9a87814e9e43471, type: 2}
+  - {fileID: 11400000, guid: 217fa1c86fe1a6e4bb6a9f1fd76e7e04, type: 2}
+  - {fileID: 11400000, guid: 7f52810e3e5bda24782c148f4800c62b, type: 2}
+  - {fileID: 11400000, guid: eff219c1b624f974e9bb0575d4601bea, type: 2}
+  - {fileID: 11400000, guid: c8786f7aa0e39b949b0b5ed0f0e298eb, type: 2}
+  - {fileID: 11400000, guid: 249cf29f7f678b24881fdd9fd05e10f1, type: 2}
+  - {fileID: 11400000, guid: fd23ab2e66732444b828eb82f88917f3, type: 2}
+  - {fileID: 11400000, guid: ef78b1d30b1ed8547b029caf74f6d2ff, type: 2}
   segmentLength: 100
