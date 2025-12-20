@@ -12,6 +12,11 @@ public class SleighAnimator : MonoBehaviour
     [SerializeField] private float steeringAmount = 10f;
     [SerializeField] private float steeringSpeed = 5f;
 
+    [Header("Root Rotation Settings")]
+    [SerializeField] private bool enableRootRotation = true;
+    [SerializeField] private float rootRotationAmount = 8f;
+    [SerializeField] private float rootRotationSpeed = 6f;
+
     [Header("Bobbing Settings")]
     [SerializeField] private float bobbingAmount = 0.05f;
     [SerializeField] private float bobbingSpeed = 3f;
@@ -24,6 +29,12 @@ public class SleighAnimator : MonoBehaviour
     [SerializeField] private float dedMorozTiltZAmount = 5f;
     [SerializeField] private float dedMorozTiltZSpeed = 8f;
 
+    [Header("Hat Tip Settings")]
+    [SerializeField] private Transform[] hatBones;
+    [SerializeField] private float hatSwayAmount = 20f;
+    [SerializeField] private float hatSwaySpeed = 3f;
+    [SerializeField] private float hatSwayMultiplier = 1.5f;
+
     [Header("References")]
     [SerializeField] private Transform sleighVisual;
     [SerializeField] private Transform dedMorozTransform;
@@ -31,22 +42,30 @@ public class SleighAnimator : MonoBehaviour
 
     private Vector3 originalPosition;
     private Quaternion originalRotation;
+    private Quaternion rootOriginalRotation;
     private Quaternion dedMorozOriginalRotation;
+    private Quaternion[] hatBonesOriginalRotations;
     private float currentTiltZ;
     private float targetTiltZ;
     private float currentSteeringY;
     private float targetSteeringY;
+    private float currentRootRotationZ;
+    private float targetRootRotationZ;
     private float currentDedMorozLean;
     private float targetDedMorozLean;
     private float currentDedMorozTiltX;
     private float targetDedMorozTiltX;
     private float currentDedMorozTiltZ;
     private float targetDedMorozTiltZ;
+    private float currentHatSway;
+    private float targetHatSway;
     private float bobbingOffset;
     private Vector3 lastPosition;
 
     void Start()
     {
+        rootOriginalRotation = transform.localRotation;
+
         if (sleighVisual != null)
         {
             originalPosition = sleighVisual.localPosition;
@@ -58,6 +77,18 @@ public class SleighAnimator : MonoBehaviour
             dedMorozOriginalRotation = dedMorozTransform.localRotation;
         }
 
+        if (hatBones != null && hatBones.Length > 0)
+        {
+            hatBonesOriginalRotations = new Quaternion[hatBones.Length];
+            for (int i = 0; i < hatBones.Length; i++)
+            {
+                if (hatBones[i] != null)
+                {
+                    hatBonesOriginalRotations[i] = hatBones[i].localRotation;
+                }
+            }
+        }
+
         lastPosition = transform.position;
     }
 
@@ -66,9 +97,11 @@ public class SleighAnimator : MonoBehaviour
         if (sleighVisual == null || playerController == null) return;
 
         CalculateVelocityEffects();
+        ApplyRootRotation();
         ApplyBobbing();
         ApplyRotations();
         ApplyDedMorozRotation();
+        ApplyHatAnimation();
     }
 
     void CalculateVelocityEffects()
@@ -80,24 +113,38 @@ public class SleighAnimator : MonoBehaviour
         {
             targetTiltZ = -velocity.x * laneTiltAmount;
             targetSteeringY = velocity.x * steeringAmount;
+            targetRootRotationZ = -velocity.x * rootRotationAmount;
             targetDedMorozLean = velocity.x * dedMorozLeanAmount;
             targetDedMorozTiltX = -Mathf.Abs(velocity.x) * dedMorozTiltXAmount;
             targetDedMorozTiltZ = -velocity.x * dedMorozTiltZAmount;
+            targetHatSway = velocity.x * hatSwayAmount;
         }
         else
         {
             targetTiltZ = 0f;
             targetSteeringY = 0f;
+            targetRootRotationZ = 0f;
             targetDedMorozLean = 0f;
             targetDedMorozTiltX = 0f;
             targetDedMorozTiltZ = 0f;
+            targetHatSway = 0f;
         }
 
         currentTiltZ = Mathf.Lerp(currentTiltZ, targetTiltZ, laneTiltSpeed * Time.deltaTime);
         currentSteeringY = Mathf.Lerp(currentSteeringY, targetSteeringY, steeringSpeed * Time.deltaTime);
+        currentRootRotationZ = Mathf.Lerp(currentRootRotationZ, targetRootRotationZ, rootRotationSpeed * Time.deltaTime);
         currentDedMorozLean = Mathf.Lerp(currentDedMorozLean, targetDedMorozLean, dedMorozLeanSpeed * Time.deltaTime);
         currentDedMorozTiltX = Mathf.Lerp(currentDedMorozTiltX, targetDedMorozTiltX, dedMorozTiltXSpeed * Time.deltaTime);
         currentDedMorozTiltZ = Mathf.Lerp(currentDedMorozTiltZ, targetDedMorozTiltZ, dedMorozTiltZSpeed * Time.deltaTime);
+        currentHatSway = Mathf.Lerp(currentHatSway, targetHatSway, hatSwaySpeed * Time.deltaTime);
+    }
+
+    void ApplyRootRotation()
+    {
+        if (!enableRootRotation) return;
+
+        Quaternion rootRotation = Quaternion.Euler(0f, 0f, currentRootRotationZ);
+        transform.localRotation = rootOriginalRotation * rootRotation;
     }
 
     void ApplyBobbing()
@@ -126,6 +173,24 @@ public class SleighAnimator : MonoBehaviour
 
         Quaternion dedMorozLean = Quaternion.Euler(currentDedMorozTiltX, currentDedMorozLean, currentDedMorozTiltZ);
         dedMorozTransform.localRotation = dedMorozOriginalRotation * dedMorozLean;
+    }
+
+    void ApplyHatAnimation()
+    {
+        if (hatBones == null || hatBones.Length == 0 || hatBonesOriginalRotations == null) return;
+
+        for (int i = 0; i < hatBones.Length; i++)
+        {
+            if (hatBones[i] == null) continue;
+
+            float progressiveMultiplier = Mathf.Pow(hatSwayMultiplier, i);
+            float swayAmount = currentHatSway * progressiveMultiplier;
+            float bobbingSway = Mathf.Sin(bobbingOffset * 2f + i * 0.5f) * (hatSwayAmount * 0.15f * progressiveMultiplier);
+
+            float totalSway = swayAmount + bobbingSway;
+            Quaternion hatRotation = Quaternion.Euler(0f, 0f, totalSway);
+            hatBones[i].localRotation = hatBonesOriginalRotations[i] * hatRotation;
+        }
     }
 
     public void TriggerLandeImpact()
