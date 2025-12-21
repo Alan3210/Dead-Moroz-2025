@@ -667,6 +667,61 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 164371145}
   m_CullTransparentMesh: 1
+--- !u!1 &185206380
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 185206382}
+  - component: {fileID: 185206381}
+  m_Layer: 0
+  m_Name: EnvironmentManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &185206381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 185206380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d0c866d67c3a20408147aaaab3cf7cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnvironmentSpawner
+  pinePrefab: {fileID: 3516243033350407055, guid: 26a091f4c04462043bf65e2f8826f363, type: 3}
+  panelkaPrefab: {fileID: 5256655298075522325, guid: ef06d113142eee041bd32890dea54553, type: 3}
+  playerTransform: {fileID: 2139923272}
+  spawnDistanceAhead: 40
+  despawnDistanceBehind: 30
+  pineRoadSideOffset: 4
+  panelkaRoadSideOffset: 7
+  minSpawnInterval: 2
+  maxSpawnInterval: 10
+  randomPositionVariation: 0.5
+  initialPoolSize: 20
+--- !u!4 &185206382
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 185206380}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &246437711
 GameObject:
   m_ObjectHideFlags: 0
@@ -2026,63 +2081,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 514723211575055243, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
   m_PrefabInstance: {fileID: 1293776399}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &762140691
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 702381583672761644, guid: f9b868607a6e1c2418726d7988727096, type: 3}
-      propertyPath: m_Name
-      value: Road
-      objectReference: {fileID: 0}
-    - target: {fileID: 2225593691300349277, guid: f9b868607a6e1c2418726d7988727096, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2225593691300349277, guid: f9b868607a6e1c2418726d7988727096, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2225593691300349277, guid: f9b868607a6e1c2418726d7988727096, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2225593691300349277, guid: f9b868607a6e1c2418726d7988727096, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2225593691300349277, guid: f9b868607a6e1c2418726d7988727096, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2225593691300349277, guid: f9b868607a6e1c2418726d7988727096, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2225593691300349277, guid: f9b868607a6e1c2418726d7988727096, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2225593691300349277, guid: f9b868607a6e1c2418726d7988727096, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2225593691300349277, guid: f9b868607a6e1c2418726d7988727096, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2225593691300349277, guid: f9b868607a6e1c2418726d7988727096, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: f9b868607a6e1c2418726d7988727096, type: 3}
 --- !u!1 &776904517
 GameObject:
   m_ObjectHideFlags: 0
@@ -2837,6 +2835,7 @@ MonoBehaviour:
   playerTransform: {fileID: 2139923272}
   spawnDistanceAhead: 90
   despawnDistanceBehind: 30
+  startingSafeZoneDistance: 30
   laneDistance: 1.26
   monthConfigurations:
   - {fileID: 11400000, guid: 1dd7e78cb2fa4f2459fe5f22d1f7fbe7, type: 2}
@@ -4002,6 +4001,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoadSpawner
   roadPrefab: {fileID: 702381583672761644, guid: f9b868607a6e1c2418726d7988727096, type: 3}
+  snowPrefab: {fileID: 3224508464517654381, guid: d25abc3994c9a8043988780980a8d9a1, type: 3}
+  snowSideOffset: -5
+  snowXOffset: 0.6
+  snowYOffset: -0.1
+  snowZOffset: 1
+  snowLengthOffset: 0.9
   initialRoadCount: 5
   roadLength: 6.65
   playerTransform: {fileID: 2139923272}
@@ -5411,15 +5416,15 @@ CanvasRenderer:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1461963992}
+  - {fileID: 185206382}
+  - {fileID: 1530556949}
+  - {fileID: 246437713}
+  - {fileID: 1111263125}
+  - {fileID: 1649716703}
   - {fileID: 330585546}
   - {fileID: 410087041}
   - {fileID: 832575519}
-  - {fileID: 1461963992}
-  - {fileID: 1530556949}
   - {fileID: 1293776399}
-  - {fileID: 762140691}
-  - {fileID: 1111263125}
   - {fileID: 1526472018}
   - {fileID: 384350891}
-  - {fileID: 246437713}
-  - {fileID: 1649716703}

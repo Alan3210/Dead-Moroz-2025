@@ -8,6 +8,9 @@ public class ObstacleSpawner : MonoBehaviour
     [SerializeField] private float spawnDistanceAhead = 50f;
     [SerializeField] private float despawnDistanceBehind = 30f;
 
+    [Header("Safe Zone")]
+    [SerializeField] private float startingSafeZoneDistance = 30f;
+
     [Header("Lane Settings")]
     [SerializeField] private float laneDistance = 2f;
 
@@ -37,7 +40,7 @@ public class ObstacleSpawner : MonoBehaviour
             return;
         }
 
-        currentMonthStartZ = playerTransform.position.z;
+        currentMonthStartZ = playerTransform.position.z + startingSafeZoneDistance;
         LoadCurrentMonth();
     }
 

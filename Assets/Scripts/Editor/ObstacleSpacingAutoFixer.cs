@@ -8,6 +8,8 @@ public class ObstacleSpacingAutoFixer : EditorWindow
     private const float MIN_SPACING_SAME_LANE = 15f;
     private const float MIN_SPACING_DIFFERENT_LANE = 8f;
     private const float SEGMENT_LENGTH = 100f;
+    private const float START_POSITION = 5f;
+    private const float END_POSITION = 95f;
 
     private Vector2 scrollPosition;
     private List<MonthData> monthsData = new List<MonthData>();
@@ -23,6 +25,7 @@ public class ObstacleSpacingAutoFixer : EditorWindow
         public int issuesFixed;
         public bool canFitAll;
         public int maxRecommended;
+        public bool isCentered;
     }
 
     [MenuItem("Tools/Dead Moroz/Auto-Fix All Spacing")]
@@ -41,9 +44,9 @@ public class ObstacleSpacingAutoFixer : EditorWindow
         EditorGUILayout.HelpBox(
             "This tool will automatically:\n" +
             "1. Discover ALL obstacle assets in your project\n" +
-            "2. Calculate optimal spacing respecting 8-unit minimum\n" +
-            "3. Apply balanced lane distribution\n" +
-            "4. FORCE redistribute obstacles to eliminate clustering",
+            "2. Use 8-unit target spacing for consistent difficulty\n" +
+            "3. Center obstacle groups in months with few obstacles\n" +
+            "4. Compress spacing only when necessary (many obstacles)",
             MessageType.Info);
 
         EditorGUILayout.Space();
@@ -89,14 +92,21 @@ public class ObstacleSpacingAutoFixer : EditorWindow
             string.Format("Month {0:D2} - {1}", month.monthNumber, month.monthName),
             EditorStyles.boldLabel);
 
-        EditorGUILayout.LabelField(string.Format("Obstacles: {0} | Spacing: {1:F1} units",
-            month.obstacles.Count, month.calculatedSpacing));
+        string spacingInfo = string.Format("Obstacles: {0} | Spacing: {1:F1} units",
+            month.obstacles.Count, month.calculatedSpacing);
+
+        if (month.isCentered)
+        {
+            spacingInfo += " (centered)";
+        }
+
+        EditorGUILayout.LabelField(spacingInfo);
 
         if (!month.canFitAll)
         {
             EditorGUILayout.HelpBox(
-                string.Format("WARNING: Too many obstacles! Recommended max: {0}. Current: {1}\nSpacing will be compressed but obstacles will be distributed evenly.",
-                month.maxRecommended, month.obstacles.Count),
+                string.Format("WARNING: Too many obstacles! Recommended max: {0}. Current: {1}\nSpacing will be compressed to {2:F1} units (below {3:F1} minimum).",
+                month.maxRecommended, month.obstacles.Count, month.calculatedSpacing, MIN_SPACING_DIFFERENT_LANE),
                 MessageType.Warning);
         }
 
@@ -136,9 +146,27 @@ public class ObstacleSpacingAutoFixer : EditorWindow
                 monthData.maxRecommended = maxObstacles;
                 monthData.canFitAll = obstacleCount <= maxObstacles;
 
-                if (obstacleCount > 0)
+                if (obstacleCount > 1)
                 {
-                    monthData.calculatedSpacing = (SEGMENT_LENGTH - 5f) / obstacleCount;
+                    float targetSpacing = MIN_SPACING_DIFFERENT_LANE;
+                    float totalLength = (obstacleCount - 1) * targetSpacing;
+                    float availableSpace = END_POSITION - START_POSITION;
+
+                    if (totalLength > availableSpace)
+                    {
+                        monthData.calculatedSpacing = availableSpace / (obstacleCount - 1);
+                        monthData.isCentered = false;
+                    }
+                    else
+                    {
+                        monthData.calculatedSpacing = targetSpacing;
+                        monthData.isCentered = true;
+                    }
+                }
+                else if (obstacleCount == 1)
+                {
+                    monthData.calculatedSpacing = 0f;
+                    monthData.isCentered = true;
                 }
 
                 monthsData.Add(monthData);
@@ -150,14 +178,16 @@ public class ObstacleSpacingAutoFixer : EditorWindow
 
         int totalObstacles = monthsData.Sum(m => m.obstacles.Count);
         int problemMonths = monthsData.Count(m => !m.canFitAll);
+        int centeredMonths = monthsData.Count(m => m.isCentered && m.obstacles.Count > 1);
 
-        Debug.Log(string.Format("[Auto-Fixer] Analyzed {0} months with {1} total obstacles. {2} months have too many obstacles.",
-            monthsData.Count, totalObstacles, problemMonths));
+        Debug.Log(string.Format("[Auto-Fixer] Analyzed {0} months with {1} total obstacles. {2} compressed, {3} centered.",
+            monthsData.Count, totalObstacles, problemMonths, centeredMonths));
     }
 
     private int CalculateMaxObstacles()
     {
-        return Mathf.FloorToInt(SEGMENT_LENGTH / MIN_SPACING_DIFFERENT_LANE) - 1;
+        float availableSpace = END_POSITION - START_POSITION;
+        return Mathf.FloorToInt(availableSpace / MIN_SPACING_DIFFERENT_LANE) + 1;
     }
 
     private void ApplyOptimalSpacing()
@@ -167,8 +197,9 @@ public class ObstacleSpacingAutoFixer : EditorWindow
         if (problemMonths > 0)
         {
             if (!EditorUtility.DisplayDialog(
-                "Warning: Overcrowded Months",
-                string.Format("{0} months have too many obstacles. Obstacles will be compressed but distributed evenly.\n\nContinue?", problemMonths),
+                "Warning: Compressed Spacing",
+                string.Format("{0} months have spacing below the {1:F1} unit minimum.\n\nObstacles will still be distributed with proper spacing.\n\nContinue?",
+                    problemMonths, MIN_SPACING_DIFFERENT_LANE),
                 "Yes, Continue",
                 "Cancel"))
             {
@@ -178,8 +209,8 @@ public class ObstacleSpacingAutoFixer : EditorWindow
 
         if (!EditorUtility.DisplayDialog(
             "Apply Optimal Spacing",
-            string.Format("This will FORCE update spacing for ALL {0} obstacles across {1} months.\n\nThis will eliminate clustering and distribute obstacles evenly.\n\nContinue?",
-                monthsData.Sum(m => m.obstacles.Count), monthsData.Count),
+            string.Format("This will redistribute ALL {0} obstacles across {1} months.\n\n- Use {2:F0}-unit target spacing\n- Center groups with few obstacles\n- Compress only when necessary\n\nContinue?",
+                monthsData.Sum(m => m.obstacles.Count), monthsData.Count, MIN_SPACING_DIFFERENT_LANE),
             "Yes, Fix All",
             "Cancel"))
         {
@@ -206,17 +237,22 @@ public class ObstacleSpacingAutoFixer : EditorWindow
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
 
-        Debug.Log(string.Format("[Auto-Fixer] Successfully redistributed {0} obstacles!", totalFixed));
+        Debug.Log(string.Format("[Auto-Fixer] Successfully redistributed {0} obstacles across {1} months!",
+            totalFixed, monthsData.Count));
 
-        string message = string.Format("Redistributed {0} obstacles across {1} months!", totalFixed, monthsData.Count);
+        int centeredMonths = monthsData.Count(m => m.isCentered && m.obstacles.Count > 1);
+
+        string message = string.Format("Successfully redistributed {0} obstacles across {1} months!\n\n- {2} months use centered distribution\n- {3} months use compressed spacing",
+            totalFixed, monthsData.Count, centeredMonths, problemMonths);
 
         if (problemMonths > 0)
         {
-            message += string.Format("\n\nNote: {0} months have compressed spacing due to too many obstacles.\nConsider removing some obstacles if spacing is too tight.", problemMonths);
+            message += string.Format("\n\nNote: {0} months have spacing below {1:F1} units.\nConsider removing obstacles from overcrowded months.",
+                problemMonths, MIN_SPACING_DIFFERENT_LANE);
         }
         else
         {
-            message += "\n\nRun the Spacing Validator to verify all warnings are resolved.";
+            message += "\n\nRun the Spacing Validator to verify all issues are resolved!";
         }
 
         EditorUtility.DisplayDialog("Success", message, "OK");
@@ -237,8 +273,9 @@ public class ObstacleSpacingAutoFixer : EditorWindow
         int[] lanePattern = GenerateLanePattern(obstacleCount);
         float[] distancePattern = GenerateDistancePattern(obstacleCount);
 
-        Debug.Log(string.Format("[Auto-Fixer] Month {0}: Applying spacing pattern to {1} obstacles:",
-            month.monthNumber, obstacleCount));
+        string distributionType = month.isCentered ? "centered" : "compressed";
+        Debug.Log(string.Format("[Auto-Fixer] Month {0}: Redistributing {1} obstacles ({2}, spacing: {3:F1} units):",
+            month.monthNumber, obstacleCount, distributionType, month.calculatedSpacing));
 
         for (int i = 0; i < obstacleCount; i++)
         {
@@ -261,10 +298,14 @@ public class ObstacleSpacingAutoFixer : EditorWindow
 
             fixedCount++;
 
-            if (i < 3)
+            if (i < 3 || i >= obstacleCount - 1)
             {
                 Debug.Log(string.Format("  Obstacle {0}: {1:F1} -> {2:F1}, Lane {3} -> {4}",
                     i + 1, oldDistance, newDistance, oldLane, newLane));
+            }
+            else if (i == 3)
+            {
+                Debug.Log(string.Format("  ... ({0} more obstacles)", obstacleCount - 4));
             }
         }
 
@@ -280,7 +321,8 @@ public class ObstacleSpacingAutoFixer : EditorWindow
 
         monthSo.ApplyModifiedProperties();
 
-        Debug.Log(string.Format("[Auto-Fixer] Month {0}: Updated {1} obstacles", month.monthNumber, fixedCount));
+        Debug.Log(string.Format("[Auto-Fixer] Month {0}: Updated {1} obstacles (range: {2:F1} to {3:F1})",
+            month.monthNumber, fixedCount, distancePattern[0], distancePattern[obstacleCount - 1]));
 
         return fixedCount;
     }
@@ -312,18 +354,24 @@ public class ObstacleSpacingAutoFixer : EditorWindow
             return distances;
         }
 
-        float startPosition = 5f;
-        float endPosition = SEGMENT_LENGTH - 5f;
-        float availableSpace = endPosition - startPosition;
+        float targetSpacing = MIN_SPACING_DIFFERENT_LANE;
+        float totalLength = (count - 1) * targetSpacing;
 
-        float spacing = availableSpace / (count - 1);
+        float availableSpace = END_POSITION - START_POSITION;
+
+        if (totalLength > availableSpace)
+        {
+            targetSpacing = availableSpace / (count - 1);
+            totalLength = availableSpace;
+        }
+
+        float startOffset = START_POSITION + (availableSpace - totalLength) / 2f;
 
         for (int i = 0; i < count; i++)
         {
-            distances[i] = startPosition + (i * spacing);
+            distances[i] = startOffset + (i * targetSpacing);
         }
 
         return distances;
     }
-
 }
