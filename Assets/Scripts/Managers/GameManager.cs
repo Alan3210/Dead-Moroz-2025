@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool isGameOver = false;
     [SerializeField] private bool isGameActive = false;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip backgroundMusic;
+
     [Header("Speed Settings")]
     [SerializeField] private float baseSpeed = 10f;
     [SerializeField] private float speedIncreasePerMonth = 2f;
@@ -75,7 +78,14 @@ public class GameManager : MonoBehaviour
         {
             monthVisualManager.ApplyMonthVisuals(0, false);
         }
+
+        // Add this line:
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayMusic(backgroundMusic);
+        }
     }
+
 
 
     public void TriggerGameOver()
@@ -88,6 +98,11 @@ public class GameManager : MonoBehaviour
         if (playerController != null)
         {
             playerController.StopPlayer();
+        }
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.StopMusic();
         }
 
         if (UIManager.Instance != null)
@@ -118,7 +133,14 @@ public class GameManager : MonoBehaviour
             string monthName = GetMonthName(currentMonth);
             UIManager.Instance.ShowMonthTransition(currentMonth, monthName);
         }
+
+        // Add this line:
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayMonthTransitionSound();
+        }
     }
+
 
 
     private string GetMonthName(int month)
@@ -153,6 +175,11 @@ public class GameManager : MonoBehaviour
         if (playerController != null)
         {
             playerController.StopPlayer();
+        }
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.StopMusic();
         }
 
         if (UIManager.Instance != null)

@@ -145,9 +145,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleTextDisplay
   textOffsetY: 2.95
-  fontSize: 28
+  fontSize: 32
   textColor: {r: 1, g: 1, b: 1, a: 1}
   backgroundColor: {r: 0, g: 0, b: 0, a: 0.7}
   canvasSize: {x: 360, y: 220}
-  canvasScale: 0.015
+  canvasScale: 0.02
   enableDebugLogs: 0

@@ -42,6 +42,10 @@ public class UIManager : MonoBehaviour
     [Header("Month Transition Elements")]
     [SerializeField] private MonthTransitionEffect monthTransitionEffect;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip buttonClickSFX;
+
+
     private bool isPaused = false;
     private Keyboard keyboard;
 
@@ -200,6 +204,14 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private void PlayButtonClickSound()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(buttonClickSFX);
+        }
+    }
+
 
     private void HideAllPanels()
     {
@@ -213,6 +225,7 @@ public class UIManager : MonoBehaviour
 
     private void OnStartGame()
     {
+        PlayButtonClickSound();
         ShowGameplayHUD();
 
         if (GameManager.Instance != null)

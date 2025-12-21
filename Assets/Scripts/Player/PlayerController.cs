@@ -110,7 +110,14 @@ public class PlayerController : MonoBehaviour
         targetPosition = new Vector3(targetX, transform.position.y, transform.position.z);
 
         lastInputTime = Time.time;
+
+        // Add this line:
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayLaneChangeSound();
+        }
     }
+
 
     public void IncreaseSpeed(float amount)
     {

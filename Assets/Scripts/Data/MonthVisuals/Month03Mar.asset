@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MonthVisualSettings
   monthName: "\u041C\u0430\u0440\u0442"
   monthNumber: 3
-  skyboxMaterial: {fileID: 0}
+  skyboxMaterial: {fileID: 2100000, guid: 3f506143f3cfe0f4aa03834de89c315c, type: 2}
   ambientColor: {r: 0.27450982, g: 0.3529412, b: 0.50980395, a: 1}
   ambientIntensity: 0.02
   useFog: 1
