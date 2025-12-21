@@ -34,8 +34,22 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        StartGame();
+        InitializeGame();
     }
+
+    private void InitializeGame()
+    {
+        isGameActive = false;
+        isGameOver = false;
+        currentMonth = 1;
+        UpdateSpeed();
+
+        if (playerController != null)
+        {
+            playerController.StopPlayer();
+        }
+    }
+
 
     public void StartGame()
     {
@@ -63,8 +77,12 @@ public class GameManager : MonoBehaviour
             playerController.StopPlayer();
         }
 
-        Debug.Log("Game Over!");
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.ShowGameOver(currentMonth);
+        }
     }
+
 
     public void AdvanceMonth()
     {
@@ -77,8 +95,24 @@ public class GameManager : MonoBehaviour
         UpdateSpeed();
         ApplySpeedToPlayer();
 
-        Debug.Log($"Advanced to Month {currentMonth} - Speed: {CurrentSpeed}");
+        if (UIManager.Instance != null)
+        {
+            string monthName = GetMonthName(currentMonth);
+            UIManager.Instance.ShowMonthTransition(currentMonth, monthName);
+        }
     }
+
+    private string GetMonthName(int month)
+    {
+        string[] monthNames = {
+        "Январь", "Февраль", "Март", "Апрель",
+        "Май", "Июнь", "Июль", "Август",
+        "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"
+    };
+
+        return month >= 1 && month <= 12 ? monthNames[month - 1] : "Неизвестный месяц";
+    }
+
 
     private void UpdateSpeed()
     {
@@ -102,6 +136,10 @@ public class GameManager : MonoBehaviour
             playerController.StopPlayer();
         }
 
-        Debug.Log("Victory! Completed all 12 months!");
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.ShowVictory();
+        }
     }
+
 }
