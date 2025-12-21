@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private MonthVisualManager monthVisualManager;
 
     public float CurrentSpeed { get; private set; }
     public int CurrentMonth => currentMonth;
@@ -48,7 +49,13 @@ public class GameManager : MonoBehaviour
         {
             playerController.StopPlayer();
         }
+
+        if (monthVisualManager != null)
+        {
+            monthVisualManager.ApplyMonthVisuals(0, false);
+        }
     }
+
 
 
     public void StartGame()
@@ -63,7 +70,13 @@ public class GameManager : MonoBehaviour
         {
             playerController.ResumePlayer();
         }
+
+        if (monthVisualManager != null)
+        {
+            monthVisualManager.ApplyMonthVisuals(0, false);
+        }
     }
+
 
     public void TriggerGameOver()
     {
@@ -95,12 +108,18 @@ public class GameManager : MonoBehaviour
         UpdateSpeed();
         ApplySpeedToPlayer();
 
+        if (monthVisualManager != null)
+        {
+            monthVisualManager.ApplyMonthVisuals(currentMonth - 1, true);
+        }
+
         if (UIManager.Instance != null)
         {
             string monthName = GetMonthName(currentMonth);
             UIManager.Instance.ShowMonthTransition(currentMonth, monthName);
         }
     }
+
 
     private string GetMonthName(int month)
     {

@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 public class Obstacle : MonoBehaviour
 {
     [Header("Collision Settings")]
@@ -13,6 +14,40 @@ public class Obstacle : MonoBehaviour
     [Header("Camera Shake Settings")]
     [SerializeField] private float shakeDuration = 0.3f;
     [SerializeField] private float shakeMagnitude = 0.2f;
+
+    [Header("VFX")]
+    [SerializeField] private GameObject impactEffectPrefab;
+
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            // Spawn impact effect
+            if (impactEffectPrefab != null)
+            {
+                Instantiate(impactEffectPrefab, collision.contacts[0].point, Quaternion.identity);
+            }
+
+            // Trigger camera shake
+            if (CameraShake.Instance != null)
+            {
+                CameraShake.Instance.TriggerShake();
+            }
+
+            // Play sound
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlayCollisionSound();
+            }
+
+            // Game Over
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.TriggerGameOver();
+            }
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -33,6 +68,8 @@ public class Obstacle : MonoBehaviour
 
     private void HandleCollision(Collider player)
     {
+        StopPlayer(player);
+
         SpawnImpactParticles(player.transform.position);
 
         TriggerCameraShake();
@@ -41,6 +78,7 @@ public class Obstacle : MonoBehaviour
 
         TriggerGameOver();
     }
+
 
     private void SpawnImpactParticles(Vector3 collisionPoint)
     {
@@ -59,6 +97,19 @@ public class Obstacle : MonoBehaviour
             {
                 Destroy(particleObj, 2f);
             }
+        }
+    }
+
+    private void StopPlayer(Collider player)
+    {
+        PlayerController playerController = player.GetComponent<PlayerController>();
+        if (playerController != null)
+        {
+            playerController.StopPlayer();
+        }
+        else
+        {
+            Debug.LogWarning("PlayerController not found on player object!");
         }
     }
 
@@ -85,6 +136,13 @@ public class Obstacle : MonoBehaviour
 
     private void TriggerGameOver()
     {
+        StartCoroutine(DelayedGameOver());
+    }
+
+    private System.Collections.IEnumerator DelayedGameOver()
+    {
+        yield return new WaitForSeconds(1f);
+
         if (GameManager.Instance != null)
         {
             GameManager.Instance.TriggerGameOver();
@@ -94,6 +152,7 @@ public class Obstacle : MonoBehaviour
             Debug.LogError("GameManager instance not found!");
         }
     }
+
 
     private void OnDisable()
     {
