@@ -126,3 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Obstacle
   debugMode: 1
+  impactParticlePrefab: {fileID: 5253988280620667305, guid: 1f7ea8ed8855f2944821e47d4aa473b4, type: 3}
+  particleOffset: {x: 0, y: 0, z: 0}
+  shakeDuration: 0.3
+  shakeMagnitude: 0.2

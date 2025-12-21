@@ -7,6 +7,13 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private float smoothSpeed = 5f;
     [SerializeField] private bool followX = false;
 
+    private CameraShake cameraShake;
+
+    private void Start()
+    {
+        cameraShake = GetComponent<CameraShake>();
+    }
+
     void LateUpdate()
     {
         if (target == null) return;
@@ -19,6 +26,12 @@ public class CameraFollow : MonoBehaviour
         }
 
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
+
+        if (cameraShake != null && cameraShake.IsShaking())
+        {
+            smoothedPosition += cameraShake.ShakeOffset;
+        }
+
         transform.position = smoothedPosition;
     }
 }
