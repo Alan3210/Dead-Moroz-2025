@@ -16,14 +16,6 @@ MonoBehaviour:
   monthName: "\u0410\u043F\u0440\u0435\u043B\u044C"
   obstacles:
   - {fileID: 11400000, guid: 67acbe7193468c747bab39a04519693a, type: 2}
-  - {fileID: 11400000, guid: aeff4c3f4c1ce7043a479131608d093c, type: 2}
-  - {fileID: 11400000, guid: c4fb42cf7a11b9843917e4d9ea81db9c, type: 2}
-  - {fileID: 11400000, guid: 3f694a82aff5e0c4eae01c0c82607b42, type: 2}
-  - {fileID: 11400000, guid: 44a1df9fbb13f1e4981597ec65c954e2, type: 2}
-  - {fileID: 11400000, guid: 47c14c2d1b75db14e86511bcced5f525, type: 2}
-  - {fileID: 11400000, guid: 91a76993a57552f4bb2ed0c6e2c4ad12, type: 2}
-  - {fileID: 11400000, guid: d362247698076b243b788f8fd542b344, type: 2}
-  - {fileID: 11400000, guid: 2c7549281f9ed62459e1ee999eafd5b4, type: 2}
   - {fileID: 11400000, guid: e614248132fc03f448de1d08a3fdf1a8, type: 2}
   - {fileID: 11400000, guid: 03ef859272a8fb241a53d8f0bd2cc851, type: 2}
   - {fileID: 11400000, guid: 9bba347852a717a46a3221ac456f8ad9, type: 2}
@@ -34,4 +26,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c79ad731b9af07d4886a211456fb4052, type: 2}
   - {fileID: 11400000, guid: f0041ec1835ff6644b3328c7568b6207, type: 2}
   - {fileID: 11400000, guid: 88a8d6a3d0f8f69478eedd20bbf71460, type: 2}
+  - {fileID: 11400000, guid: aeff4c3f4c1ce7043a479131608d093c, type: 2}
+  - {fileID: 11400000, guid: c4fb42cf7a11b9843917e4d9ea81db9c, type: 2}
+  - {fileID: 11400000, guid: 3f694a82aff5e0c4eae01c0c82607b42, type: 2}
+  - {fileID: 11400000, guid: 44a1df9fbb13f1e4981597ec65c954e2, type: 2}
+  - {fileID: 11400000, guid: 47c14c2d1b75db14e86511bcced5f525, type: 2}
+  - {fileID: 11400000, guid: 91a76993a57552f4bb2ed0c6e2c4ad12, type: 2}
+  - {fileID: 11400000, guid: d362247698076b243b788f8fd542b344, type: 2}
+  - {fileID: 11400000, guid: 2c7549281f9ed62459e1ee999eafd5b4, type: 2}
   segmentLength: 100

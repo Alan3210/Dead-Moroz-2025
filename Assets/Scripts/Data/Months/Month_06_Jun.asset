@@ -16,6 +16,8 @@ MonoBehaviour:
   monthName: "\u0418\u044E\u043D\u044C"
   obstacles:
   - {fileID: 11400000, guid: 7795630582735e649be8b14b0c9a7ff7, type: 2}
+  - {fileID: 11400000, guid: 320d0863d889a814697fd519e4fd9acc, type: 2}
+  - {fileID: 11400000, guid: a9dc70276fbc7e84da46b6b7ef01cb88, type: 2}
   - {fileID: 11400000, guid: 196dd3e0f036dce4997c5011db686031, type: 2}
   - {fileID: 11400000, guid: bd1afcdbd6af3604aa3b547e94095345, type: 2}
   - {fileID: 11400000, guid: e87667c724c012d41b381f88fe8275cc, type: 2}
@@ -24,6 +26,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 01fc7b545fbdda949a315fc6e638b272, type: 2}
   - {fileID: 11400000, guid: 2362e9b678bd30344b46cfa1fcb76e5e, type: 2}
   - {fileID: 11400000, guid: a72546ad26666c74ab3b9db404df6ca4, type: 2}
-  - {fileID: 11400000, guid: 320d0863d889a814697fd519e4fd9acc, type: 2}
-  - {fileID: 11400000, guid: a9dc70276fbc7e84da46b6b7ef01cb88, type: 2}
   segmentLength: 100

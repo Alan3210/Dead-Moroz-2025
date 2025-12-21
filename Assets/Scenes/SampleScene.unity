@@ -884,6 +884,7 @@ GameObject:
   - component: {fileID: 330585544}
   - component: {fileID: 330585547}
   - component: {fileID: 330585548}
+  - component: {fileID: 330585549}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1025,6 +1026,21 @@ MonoBehaviour:
   offset: {x: 0, y: 5, z: -8}
   smoothSpeed: 5
   followX: 0
+--- !u!114 &330585549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330585543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a281f457446b1147b4104059f81fe42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraShake
+  defaultShakeDuration: 0.3
+  defaultShakeMagnitude: 0.2
+  dampingSpeed: 1.5
 --- !u!1 &384350888
 GameObject:
   m_ObjectHideFlags: 0
@@ -2819,7 +2835,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleSpawner
   playerTransform: {fileID: 2139923272}
-  spawnDistanceAhead: 120
+  spawnDistanceAhead: 90
   despawnDistanceBehind: 30
   laneDistance: 1.26
   monthConfigurations:
@@ -4280,6 +4296,57 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1614435683}
   m_CullTransparentMesh: 1
+--- !u!1 &1649716701
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1649716703}
+  - component: {fileID: 1649716702}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1649716702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1649716701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef06b327ec01c58429e18f4679b87673, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  sfxSource: {fileID: 0}
+  musicSource: {fileID: 0}
+  collisionSFX: {fileID: 0}
+  laneChangeSFX: {fileID: 0}
+  monthTransitionSFX: {fileID: 0}
+  sfxVolume: 1
+  musicVolume: 0.7
+--- !u!4 &1649716703
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1649716701}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 39.75817, y: -0.00004, z: 5868.961}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1656028522
 GameObject:
   m_ObjectHideFlags: 0
@@ -5355,3 +5422,4 @@ SceneRoots:
   - {fileID: 1526472018}
   - {fileID: 384350891}
   - {fileID: 246437713}
+  - {fileID: 1649716703}

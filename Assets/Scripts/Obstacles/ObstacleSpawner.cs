@@ -133,8 +133,16 @@ public class ObstacleSpawner : MonoBehaviour
         Vector3 spawnPosition = new Vector3(xPosition, 0f, zPosition);
 
         GameObject obstacle = Instantiate(data.obstaclePrefab, spawnPosition, Quaternion.identity, transform);
+
+        ObstacleTextDisplay textDisplay = obstacle.GetComponent<ObstacleTextDisplay>();
+        if (textDisplay != null && !string.IsNullOrEmpty(data.obstacleText))
+        {
+            textDisplay.SetText(data.obstacleText);
+        }
+
         activeObstacles.Enqueue(obstacle);
     }
+
 
     void DespawnPassedObstacles()
     {

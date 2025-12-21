@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleData
   obstacleName: Obstacle_Month03_01
   obstaclePrefab: {fileID: 4156636702076863210, guid: 85db7a88827d2164e8de8eb45bee4cfc, type: 3}
-  laneIndex: 0
-  spawnDistance: 10
+  laneIndex: 1
+  spawnDistance: 5
   obstacleText: "6 \u043F\u043E\u0433\u0438\u0431\u043B\u0438 \u0432 \u043A\u0430\u0442\u0430\u0441\u0442\u0440\u043E\u0444\u0435
     \u0432 \u041A\u0440\u044B\u043C\u0443"

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2175721597413777682}
   - component: {fileID: 7960695776013750165}
   - component: {fileID: 6339922993468677113}
+  - component: {fileID: 171559807164880208}
   m_Layer: 0
   m_Name: Obstacle
   m_TagString: Untagged
@@ -130,3 +131,22 @@ MonoBehaviour:
   particleOffset: {x: 0, y: 0, z: 0}
   shakeDuration: 0.3
   shakeMagnitude: 0.2
+--- !u!114 &171559807164880208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4156636702076863210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8662893bf77cbb49aed623ea337ecc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObstacleTextDisplay
+  textOffsetY: 2.95
+  fontSize: 28
+  textColor: {r: 1, g: 1, b: 1, a: 1}
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0.7}
+  canvasSize: {x: 360, y: 220}
+  canvasScale: 0.015
+  enableDebugLogs: 0

@@ -16,6 +16,7 @@ MonoBehaviour:
   monthName: "\u0424\u0435\u0432\u0440\u0430\u043B\u044C"
   obstacles:
   - {fileID: 11400000, guid: 6a50bae2367994f4d9ad5989f07f005f, type: 2}
+  - {fileID: 11400000, guid: 1bbc0bb1e1c59e8499c1330cd729c2a1, type: 2}
   - {fileID: 11400000, guid: 6acbfe649abef294f8d11202e7b33d13, type: 2}
   - {fileID: 11400000, guid: ee07aa2a643cc77498a5c5490ec49be0, type: 2}
   - {fileID: 11400000, guid: bea2f96dcc1a02f498127fb43bd1e300, type: 2}
@@ -24,5 +25,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2ffab3684b30c0f409831fb03d54d00e, type: 2}
   - {fileID: 11400000, guid: ac5dd2450958d064fa0c320dbe9d51ee, type: 2}
   - {fileID: 11400000, guid: 3240abb6e680d5a40a1cf68e4c2b5785, type: 2}
-  - {fileID: 11400000, guid: 1bbc0bb1e1c59e8499c1330cd729c2a1, type: 2}
   segmentLength: 100
