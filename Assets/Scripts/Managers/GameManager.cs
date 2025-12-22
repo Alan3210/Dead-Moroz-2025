@@ -20,8 +20,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PlayerController playerController;
     [SerializeField] private MonthVisualManager monthVisualManager;
 
+    private const string HIGH_SCORE_KEY = "HighScore";
+    private int highScore = 0;
+
     public float CurrentSpeed { get; private set; }
     public int CurrentMonth => currentMonth;
+    public int HighScore => highScore;
+
     public bool IsGameOver => isGameOver;
     public bool IsGameActive => isGameActive;
 
@@ -46,6 +51,7 @@ public class GameManager : MonoBehaviour
         isGameActive = false;
         isGameOver = false;
         currentMonth = 1;
+        highScore = PlayerPrefs.GetInt(HIGH_SCORE_KEY, 0);
         UpdateSpeed();
 
         if (playerController != null)
@@ -90,6 +96,14 @@ public class GameManager : MonoBehaviour
 
     public void TriggerGameOver()
     {
+        
+        if (currentMonth > highScore)
+        {
+            highScore = currentMonth;
+            PlayerPrefs.SetInt(HIGH_SCORE_KEY, highScore);
+            PlayerPrefs.Save();
+        }
+
         if (isGameOver) return;
 
         isGameOver = true;

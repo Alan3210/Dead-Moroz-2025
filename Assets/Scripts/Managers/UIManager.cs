@@ -45,6 +45,9 @@ public class UIManager : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioClip buttonClickSFX;
 
+    [SerializeField] private TextMeshProUGUI mainMenuHighScoreText;
+    [SerializeField] private TextMeshProUGUI gameOverHighScoreText;
+
 
     private bool isPaused = false;
     private Keyboard keyboard;
@@ -139,6 +142,20 @@ public class UIManager : MonoBehaviour
 
         Time.timeScale = 1f;
         isPaused = false;
+
+        if (mainMenuHighScoreText != null && GameManager.Instance != null)
+        {
+            int highScore = GameManager.Instance.HighScore;
+            if (highScore > 0)
+            {
+                mainMenuHighScoreText.text = $"Ћучший результат: ћес€ц {highScore}";
+            }
+            else
+            {
+                mainMenuHighScoreText.text = "—ыграйте первую игру!";
+            }
+        }
+
     }
 
     public void ShowGameplayHUD()
@@ -167,11 +184,25 @@ public class UIManager : MonoBehaviour
         {
             gameOverPanel.SetActive(true);
 
-            if (gameOverMonthText != null)
+            //if (gameOverMonthText != null)
+            //{
+            //    gameOverMonthText.text = $"¬ы дошли до мес€ца: {monthReached}";
+            //}
+        }
+
+        if (gameOverHighScoreText != null && GameManager.Instance != null)
+        {
+            int highScore = GameManager.Instance.HighScore;
+            if (highScore > monthReached)
             {
-                gameOverMonthText.text = $"¬ы дошли до мес€ца: {monthReached}";
+                gameOverHighScoreText.text = $"–екорд: ћес€ц {highScore}";
+            }
+            else
+            {
+                gameOverHighScoreText.text = "Ќјƒќ Ќ≈ћЌќ√ќ ѕќ“≈–ѕ≈“№";
             }
         }
+
 
         Time.timeScale = 0f;
     }

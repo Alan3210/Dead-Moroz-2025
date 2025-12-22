@@ -31,4 +31,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: da6e47a4f95337d48bc2c0c2d1f867c3, type: 2}
   - {fileID: 11400000, guid: bba9ad2367b359647a1963b88202b0d8, type: 2}
   - {fileID: 11400000, guid: 595cb0c48fc68ac4181d1b900c280e3d, type: 2}
-  segmentLength: 100
+  segmentLength: 150

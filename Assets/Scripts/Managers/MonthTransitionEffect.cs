@@ -58,7 +58,7 @@ public class MonthTransitionEffect : MonoBehaviour
 
         if (monthTransitionText != null)
         {
-            monthTransitionText.text = $"{monthName}\nΜερÿφ {month}";
+            monthTransitionText.text = monthName;
         }
 
         if (panelTransform != null)

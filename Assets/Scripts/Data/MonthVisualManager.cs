@@ -6,6 +6,7 @@ public class MonthVisualManager : MonoBehaviour
     [SerializeField] private Light directionalLight;
     [SerializeField] private MonthVisualSettings[] monthVisualSettings;
 
+
     [Header("Transition Settings")]
     [SerializeField] private float transitionDuration = 2f;
     [SerializeField] private bool enableTransitions = true;
