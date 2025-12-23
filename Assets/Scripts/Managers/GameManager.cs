@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private PlayerController playerController;
     [SerializeField] private MonthVisualManager monthVisualManager;
+    [SerializeField] private CameraFollow cameraFollow;
 
     private const string HIGH_SCORE_KEY = "HighScore";
     private int highScore = 0;
@@ -75,9 +76,19 @@ public class GameManager : MonoBehaviour
         UpdateSpeed();
         ApplySpeedToPlayer();
 
+        if (PassedObstaclesTracker.Instance != null)
+        {
+            PassedObstaclesTracker.Instance.ClearPassedObstacles();
+        }
+
         if (playerController != null)
         {
             playerController.ResumePlayer();
+        }
+
+        if (cameraFollow != null)
+        {
+            cameraFollow.StartFollowing();
         }
 
         if (monthVisualManager != null)
@@ -85,7 +96,6 @@ public class GameManager : MonoBehaviour
             monthVisualManager.ApplyMonthVisuals(0, false);
         }
 
-        // Add this line:
         if (AudioManager.Instance != null)
         {
             AudioManager.Instance.PlayMusic(backgroundMusic);
@@ -96,7 +106,6 @@ public class GameManager : MonoBehaviour
 
     public void TriggerGameOver()
     {
-        
         if (currentMonth > highScore)
         {
             highScore = currentMonth;
@@ -114,6 +123,11 @@ public class GameManager : MonoBehaviour
             playerController.StopPlayer();
         }
 
+        if (cameraFollow != null)
+        {
+            cameraFollow.StopFollowing();
+        }
+
         if (AudioManager.Instance != null)
         {
             AudioManager.Instance.StopMusic();
@@ -124,6 +138,7 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.ShowGameOver(currentMonth);
         }
     }
+
 
 
     public void AdvanceMonth()

@@ -7,6 +7,8 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private Vector3 offset = new Vector3(0, 5, -8);
     [SerializeField] private bool followX = false;
 
+    private bool isFollowing = true;
+
     [Header("Smooth Follow")]
     [SerializeField] private float smoothSpeed = 5f;
     [SerializeField] private float followLagAmount = 0.1f;
@@ -61,6 +63,10 @@ public class CameraFollow : MonoBehaviour
             Time.deltaTime
         );
 
+        if (target == null || !isFollowing) return;
+
+        CalculateDynamicEffects();
+
         if (cameraShake != null && cameraShake.IsShaking())
         {
             smoothedPosition += cameraShake.ShakeOffset;
@@ -79,6 +85,15 @@ public class CameraFollow : MonoBehaviour
         }
 
         lastTargetPosition = target.position;
+    }
+    public void StopFollowing()
+    {
+        isFollowing = false;
+    }
+
+    public void StartFollowing()
+    {
+        isFollowing = true;
     }
 
     private void CalculateDynamicEffects()

@@ -1,8 +1,9 @@
-using UnityEngine;
-using UnityEngine.UI;
+using System.Collections.Generic;
 using TMPro;
-using UnityEngine.SceneManagement;
+using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -17,13 +18,11 @@ public class UIManager : MonoBehaviour
 
     [Header("HUD Elements")]
     [SerializeField] private TextMeshProUGUI monthText;
-    [SerializeField] private TextMeshProUGUI speedText;
-    [SerializeField] private Button pauseButton;
+    [SerializeField] private TextMeshProUGUI controlsText;
 
     [Header("Main Menu Elements")]
     [SerializeField] private Button startButton;
-    [SerializeField] private TextMeshProUGUI controlsText;
-
+    
     [Header("Pause Elements")]
     [SerializeField] private Button resumeButton;
     [SerializeField] private Button restartFromPauseButton;
@@ -33,6 +32,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI gameOverMonthText;
     [SerializeField] private Button restartFromGameOverButton;
     [SerializeField] private Button quitFromGameOverButton;
+    [SerializeField] private PassedObstaclesList passedObstaclesList;
 
     [Header("Victory Elements")]
     [SerializeField] private TextMeshProUGUI victoryMessageText;
@@ -45,12 +45,12 @@ public class UIManager : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioClip buttonClickSFX;
 
-    [SerializeField] private TextMeshProUGUI mainMenuHighScoreText;
-    [SerializeField] private TextMeshProUGUI gameOverHighScoreText;
-
 
     private bool isPaused = false;
     private Keyboard keyboard;
+    private const float CONTROLS_DISPLAY_DURATION = 5f;
+    private float controlsDisplayTimer = 0f;
+    private bool showingControls = false;
 
     private void Awake()
     {
@@ -76,16 +76,29 @@ public class UIManager : MonoBehaviour
         {
             UpdateHUD();
             HandlePauseInput();
+            HandleControlsDisplay();
         }
     }
+
+    private void HandleControlsDisplay()
+    {
+        if (showingControls && controlsText != null)
+        {
+            controlsDisplayTimer += Time.deltaTime;
+
+            if (controlsDisplayTimer >= CONTROLS_DISPLAY_DURATION)
+            {
+                controlsText.gameObject.SetActive(false);
+                showingControls = false;
+            }
+        }
+    }
+
 
     private void SetupButtonListeners()
     {
         if (startButton != null)
             startButton.onClick.AddListener(OnStartGame);
-
-        if (pauseButton != null)
-            pauseButton.onClick.AddListener(OnPauseGame);
 
         if (resumeButton != null)
             resumeButton.onClick.AddListener(OnResumeGame);
@@ -116,15 +129,22 @@ public class UIManager : MonoBehaviour
         if (monthText != null)
         {
             int month = GameManager.Instance.CurrentMonth;
-            monthText.text = $"Месяц: {month}/12";
-        }
-
-        if (speedText != null)
-        {
-            float speed = GameManager.Instance.CurrentSpeed;
-            speedText.text = $"Скорость: {speed:F0}";
+            string monthName = GetMonthName(month);
+            monthText.text = monthName;
         }
     }
+
+    private string GetMonthName(int month)
+    {
+        string[] monthNames = {
+        "Январь", "Февраль", "Март", "Апрель",
+        "Май", "Июнь", "Июль", "Август",
+        "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"
+    };
+
+        return month >= 1 && month <= 12 ? monthNames[month - 1] : "Неизвестный месяц";
+    }
+
 
     private void HandlePauseInput()
     {
@@ -140,21 +160,14 @@ public class UIManager : MonoBehaviour
         if (mainMenuPanel != null)
             mainMenuPanel.SetActive(true);
 
+        if (controlsText != null)
+            controlsText.gameObject.SetActive(false);
+        
+        showingControls = false;
+        controlsDisplayTimer = 0f;
+
         Time.timeScale = 1f;
         isPaused = false;
-
-        if (mainMenuHighScoreText != null && GameManager.Instance != null)
-        {
-            int highScore = GameManager.Instance.HighScore;
-            if (highScore > 0)
-            {
-                mainMenuHighScoreText.text = $"Лучший результат: Месяц {highScore}";
-            }
-            else
-            {
-                mainMenuHighScoreText.text = "Сыграйте первую игру!";
-            }
-        }
 
     }
 
@@ -164,9 +177,17 @@ public class UIManager : MonoBehaviour
         if (gameplayHUDPanel != null)
             gameplayHUDPanel.SetActive(true);
 
+        if (controlsText != null)
+        {
+            controlsText.gameObject.SetActive(true);
+            showingControls = true;
+            controlsDisplayTimer = 0f;
+        }
+
         Time.timeScale = 1f;
         isPaused = false;
     }
+
 
     public void ShowPauseMenu()
     {
@@ -183,29 +204,22 @@ public class UIManager : MonoBehaviour
         if (gameOverPanel != null)
         {
             gameOverPanel.SetActive(true);
-
-            //if (gameOverMonthText != null)
-            //{
-            //    gameOverMonthText.text = $"Вы дошли до месяца: {monthReached}";
-            //}
         }
 
-        if (gameOverHighScoreText != null && GameManager.Instance != null)
+        Debug.Log("[UIManager] ShowGameOver called");
+        Debug.Log($"[UIManager] passedObstaclesList is null: {passedObstaclesList == null}");
+        Debug.Log($"[UIManager] PassedObstaclesTracker.Instance is null: {PassedObstaclesTracker.Instance == null}");
+
+        if (passedObstaclesList != null && PassedObstaclesTracker.Instance != null)
         {
-            int highScore = GameManager.Instance.HighScore;
-            if (highScore > monthReached)
-            {
-                gameOverHighScoreText.text = $"Рекорд: Месяц {highScore}";
-            }
-            else
-            {
-                gameOverHighScoreText.text = "НАДО НЕМНОГО ПОТЕРПЕТЬ";
-            }
+            List<string> passedObstacles = PassedObstaclesTracker.Instance.GetPassedObstacles();
+            Debug.Log($"[UIManager] Passed obstacles count: {passedObstacles.Count}");
+            passedObstaclesList.DisplayPassedObstacles(passedObstacles);
         }
-
 
         Time.timeScale = 0f;
     }
+
 
     public void ShowVictory()
     {
@@ -216,7 +230,7 @@ public class UIManager : MonoBehaviour
 
             if (victoryMessageText != null)
             {
-                victoryMessageText.text = "Поздравляем!\nВы прошли все 12 месяцев 2025 года!";
+                victoryMessageText.text = "Поздравляем!\nВы вывезли 2025ый год! Готовы к следующему?";
             }
         }
 

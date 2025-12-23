@@ -1,4 +1,3 @@
-using UnityEditor;
 using UnityEngine;
 
 public class DynamicSleighTrails : MonoBehaviour
@@ -98,15 +97,10 @@ public class DynamicSleighTrails : MonoBehaviour
     void InitializeWidthCurve()
     {
         widthCurve = new AnimationCurve();
-        widthCurve.AddKey(0f, 1f);
-        widthCurve.AddKey(1f, 0f);
-
-        for (int i = 0; i < widthCurve.keys.Length; i++)
-        {
-            AnimationUtility.SetKeyLeftTangentMode(widthCurve, i, AnimationUtility.TangentMode.Linear);
-            AnimationUtility.SetKeyRightTangentMode(widthCurve, i, AnimationUtility.TangentMode.Linear);
-        }
+        widthCurve.AddKey(new Keyframe(0f, 1f, 0f, -1f));
+        widthCurve.AddKey(new Keyframe(1f, 0f, -1f, 0f));
     }
+
 
     void Update()
     {

@@ -1,5 +1,6 @@
+﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using System.Collections.Generic;
 
 public class ObstacleSpawner : MonoBehaviour
 {
@@ -149,6 +150,30 @@ public class ObstacleSpawner : MonoBehaviour
 
     void DespawnPassedObstacles()
     {
+        List<GameObject> obstaclesToCheck = new List<GameObject>(activeObstacles);
+
+        foreach (GameObject obstacle in obstaclesToCheck)
+        {
+            if (obstacle == null) continue;
+
+            float distanceBehindPlayer = playerTransform.position.z - obstacle.transform.position.z;
+
+            if (distanceBehindPlayer > 5f)
+            {
+                ObstacleTextDisplay textDisplay = obstacle.GetComponent<ObstacleTextDisplay>();
+                if (textDisplay != null && PassedObstaclesTracker.Instance != null && !textDisplay.hasBeenRecorded)
+                {
+                    TextMeshProUGUI tmpText = textDisplay.GetComponentInChildren<TextMeshProUGUI>();
+                    if (tmpText != null && !string.IsNullOrEmpty(tmpText.text) && tmpText.text != "Loading...")
+                    {
+                        Debug.Log($"[ObstacleSpawner] ✓ Recording PASSED obstacle: '{tmpText.text}' (distance: {distanceBehindPlayer:F1})");
+                        PassedObstaclesTracker.Instance.RecordPassedObstacle(tmpText.text);
+                        textDisplay.hasBeenRecorded = true;
+                    }
+                }
+            }
+        }
+
         while (activeObstacles.Count > 0)
         {
             GameObject obstacle = activeObstacles.Peek();
@@ -158,6 +183,7 @@ public class ObstacleSpawner : MonoBehaviour
                 activeObstacles.Dequeue();
                 if (obstacle != null)
                 {
+                    Debug.Log($"[ObstacleSpawner] Despawning obstacle: {obstacle.name}");
                     Destroy(obstacle);
                 }
             }
@@ -167,6 +193,10 @@ public class ObstacleSpawner : MonoBehaviour
             }
         }
     }
+
+
+
+
 
     bool ShouldAdvanceToNextMonth()
     {

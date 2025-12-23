@@ -21,6 +21,6 @@ MonoBehaviour:
   fogColor: {r: 0.78431374, g: 0.8627451, b: 1, a: 1}
   fogDensity: 0.01
   lightColor: {r: 1, g: 0.9411765, b: 0.8627451, a: 1}
-  lightIntensity: 1.2
+  lightIntensity: 1.6
   themeDescription: "\u041E\u0441\u0435\u043D\u044C, \u0437\u043E\u043B\u043E\u0442\u044B\u0435
     \u0442\u043E\u043D\u0430"

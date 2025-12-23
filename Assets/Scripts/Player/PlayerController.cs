@@ -25,13 +25,14 @@ public class PlayerController : MonoBehaviour
     private const int MIDDLE_LANE = 1;
     private const int RIGHT_LANE = 2;
     private DynamicSleighTrails trailEffects;
-
+    private SleighHoverController hoverController;
 
     void Awake()
     {
         inputActions = new PlayerInputActions();
         targetPosition = transform.position;
         trailEffects = GetComponent<DynamicSleighTrails>();
+        hoverController = GetComponent<SleighHoverController>();
 
     }
 
@@ -143,11 +144,22 @@ public class PlayerController : MonoBehaviour
     {
         isGameActive = false;
         forwardSpeed = 0f;
+
+        if (hoverController != null)
+        {
+            hoverController.enabled = false;
+        }
     }
+
 
     public void ResumePlayer()
     {
         isGameActive = true;
+
+        if (hoverController != null)
+        {
+            hoverController.enabled = true;
+        }
     }
 
     public float GetCurrentSpeed()

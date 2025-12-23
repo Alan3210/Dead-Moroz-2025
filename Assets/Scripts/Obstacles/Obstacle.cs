@@ -1,3 +1,4 @@
+﻿using TMPro;
 using UnityEngine;
 
 public class Obstacle : MonoBehaviour
@@ -68,6 +69,17 @@ public class Obstacle : MonoBehaviour
         {
             Vector3 hitDirection = (transform.position - player.transform.position).normalized;
             textDisplay.TriggerScreenReaction(hitDirection);
+
+            if (PassedObstaclesTracker.Instance != null && !textDisplay.hasBeenRecorded)
+            {
+                TextMeshProUGUI tmpText = textDisplay.GetComponentInChildren<TextMeshProUGUI>();
+                if (tmpText != null && !string.IsNullOrEmpty(tmpText.text) && tmpText.text != "Loading...")
+                {
+                    Debug.Log($"[Obstacle] ✓ Recording HIT obstacle: '{tmpText.text}'");
+                    PassedObstaclesTracker.Instance.RecordPassedObstacle(tmpText.text);
+                    textDisplay.hasBeenRecorded = true;
+                }
+            }
         }
 
         SpawnImpactParticles(player.transform.position);
@@ -76,12 +88,12 @@ public class Obstacle : MonoBehaviour
 
         PlayCollisionSound();
 
-        // Deal damage instead of immediate game over
         if (HealthSystem.Instance != null)
         {
             HealthSystem.Instance.TakeDamage(1);
         }
     }
+
 
 
     private void SpawnImpactParticles(Vector3 collisionPoint)

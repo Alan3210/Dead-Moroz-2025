@@ -26,6 +26,9 @@ public class ObstacleTextDisplay : MonoBehaviour
     private UnityEngine.UI.Image backgroundImage;
     private Camera mainCamera;
 
+    public bool hasBeenRecorded = false;
+
+
     private void Awake()
     {
         CreateWorldSpaceCanvas();
