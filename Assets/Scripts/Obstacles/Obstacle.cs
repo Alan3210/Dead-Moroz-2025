@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 public class Obstacle : MonoBehaviour
 {
     [Header("Collision Settings")]
@@ -23,25 +22,21 @@ public class Obstacle : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            // Spawn impact effect
             if (impactEffectPrefab != null)
             {
                 Instantiate(impactEffectPrefab, collision.contacts[0].point, Quaternion.identity);
             }
 
-            // Trigger camera shake
             if (CameraShake.Instance != null)
             {
                 CameraShake.Instance.TriggerShake();
             }
 
-            // Play sound
             if (AudioManager.Instance != null)
             {
                 AudioManager.Instance.PlayCollisionSound();
             }
 
-            // Game Over
             if (GameManager.Instance != null)
             {
                 GameManager.Instance.TriggerGameOver();
@@ -68,7 +63,12 @@ public class Obstacle : MonoBehaviour
 
     private void HandleCollision(Collider player)
     {
-        StopPlayer(player);
+        ObstacleTextDisplay textDisplay = GetComponent<ObstacleTextDisplay>();
+        if (textDisplay != null)
+        {
+            Vector3 hitDirection = (transform.position - player.transform.position).normalized;
+            textDisplay.TriggerScreenReaction(hitDirection);
+        }
 
         SpawnImpactParticles(player.transform.position);
 
@@ -76,7 +76,11 @@ public class Obstacle : MonoBehaviour
 
         PlayCollisionSound();
 
-        TriggerGameOver();
+        // Deal damage instead of immediate game over
+        if (HealthSystem.Instance != null)
+        {
+            HealthSystem.Instance.TakeDamage(1);
+        }
     }
 
 
@@ -113,7 +117,6 @@ public class Obstacle : MonoBehaviour
         }
     }
 
-
     private void TriggerCameraShake()
     {
         if (CameraShake.Instance != null)
@@ -134,25 +137,24 @@ public class Obstacle : MonoBehaviour
         }
     }
 
-    private void TriggerGameOver()
-    {
-        StartCoroutine(DelayedGameOver());
-    }
+    //private void TriggerGameOver()
+    //{
+    //    StartCoroutine(DelayedGameOver());
+    //}
 
-    private System.Collections.IEnumerator DelayedGameOver()
-    {
-        yield return new WaitForSeconds(1f);
+    //private System.Collections.IEnumerator DelayedGameOver()
+    //{
+    //    yield return new WaitForSeconds(1f);
 
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.TriggerGameOver();
-        }
-        else
-        {
-            Debug.LogError("GameManager instance not found!");
-        }
-    }
-
+    //    if (GameManager.Instance != null)
+    //    {
+    //        GameManager.Instance.TriggerGameOver();
+    //    }
+    //    else
+    //    {
+    //        Debug.LogError("GameManager instance not found!");
+    //    }
+    //}
 
     private void OnDisable()
     {

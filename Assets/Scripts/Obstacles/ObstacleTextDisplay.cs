@@ -11,6 +11,13 @@ public class ObstacleTextDisplay : MonoBehaviour
     [SerializeField] private Vector2 canvasSize = new Vector2(300f, 80f);
     [SerializeField] private float canvasScale = 0.01f;
 
+    [Header("Screen Physics Reaction")]
+    [SerializeField] private TextScreenPhysics.ReactionMode reactionMode = TextScreenPhysics.ReactionMode.TiltAndFall;
+    [SerializeField] private float fallSpeed = 5f;
+    [SerializeField] private float tiltAngle = 90f;
+    [SerializeField] private float pushBackDistance = 2f;
+    [SerializeField] private float reactionDuration = 1.0f;
+
     [Header("Debug")]
     [SerializeField] private bool enableDebugLogs = false;
 
@@ -55,6 +62,9 @@ public class ObstacleTextDisplay : MonoBehaviour
         UnityEngine.UI.CanvasScaler scaler = canvasObj.AddComponent<UnityEngine.UI.CanvasScaler>();
         scaler.dynamicPixelsPerUnit = 10;
 
+        TextScreenPhysics screenPhysics = canvasObj.AddComponent<TextScreenPhysics>();
+        screenPhysics.SetPhysicsSettings(reactionMode, fallSpeed, tiltAngle, pushBackDistance, reactionDuration);
+
         GameObject backgroundObj = new GameObject("Background");
         backgroundObj.transform.SetParent(canvasObj.transform, false);
 
@@ -80,7 +90,7 @@ public class ObstacleTextDisplay : MonoBehaviour
         textMeshPro.fontSize = fontSize;
         textMeshPro.color = textColor;
         textMeshPro.alignment = TextAlignmentOptions.Center;
-        textMeshPro.enableWordWrapping = true;
+        textMeshPro.textWrappingMode = TextWrappingModes.Normal;
         textMeshPro.overflowMode = TextOverflowModes.Truncate;
         textMeshPro.fontStyle = FontStyles.Bold;
 
@@ -89,6 +99,30 @@ public class ObstacleTextDisplay : MonoBehaviour
         if (enableDebugLogs)
         {
             Debug.Log($"[ObstacleTextDisplay] World space canvas created for {gameObject.name}");
+        }
+    }
+
+    public void TriggerScreenReaction(Vector3 hitDirection)
+    {
+        Debug.Log($"[ObstacleTextDisplay] TriggerScreenReaction called on {gameObject.name}");
+
+        if (canvas != null)
+        {
+            Debug.Log($"[ObstacleTextDisplay] Canvas found: {canvas.gameObject.name}");
+            TextScreenPhysics physics = canvas.GetComponent<TextScreenPhysics>();
+            if (physics != null)
+            {
+                Debug.Log($"[ObstacleTextDisplay] TextScreenPhysics found, triggering reaction");
+                physics.TriggerReaction(hitDirection);
+            }
+            else
+            {
+                Debug.LogWarning($"[ObstacleTextDisplay] TextScreenPhysics NOT found on canvas!");
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"[ObstacleTextDisplay] Canvas is NULL!");
         }
     }
 

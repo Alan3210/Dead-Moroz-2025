@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 7960695776013750165}
   - component: {fileID: 6339922993468677113}
   - component: {fileID: 171559807164880208}
+  - component: {fileID: 8132278221981152740}
+  - component: {fileID: 2619320750568849432}
   m_Layer: 0
   m_Name: Obstacle
   m_TagString: Untagged
@@ -112,7 +114,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.81, y: 1.1618701, z: 0.81}
+  m_Size: {x: 1.88, y: 1.1618701, z: 0.81}
   m_Center: {x: 0, y: 0.56859106, z: 0.000000029802322}
 --- !u!114 &6339922993468677113
 MonoBehaviour:
@@ -150,4 +152,53 @@ MonoBehaviour:
   backgroundColor: {r: 0, g: 0, b: 0, a: 0.7}
   canvasSize: {x: 360, y: 220}
   canvasScale: 0.02
+  reactionMode: 2
+  fallSpeed: 6
+  tiltAngle: 90
+  pushBackDistance: 3
+  reactionDuration: 2
   enableDebugLogs: 0
+--- !u!54 &8132278221981152740
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4156636702076863210}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &2619320750568849432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4156636702076863210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a79aa4c7eddfb54b92f7fbd28889b66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObstaclePhysicsReaction
+  fallDuration: 1.5
+  pushForce: 3
+  torqueForce: 3
+  usePhysics: 1
+  autoDestroyDelay: 2

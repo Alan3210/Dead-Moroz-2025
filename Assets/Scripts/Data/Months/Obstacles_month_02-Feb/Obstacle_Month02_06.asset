@@ -16,5 +16,4 @@ MonoBehaviour:
   obstaclePrefab: {fileID: 4156636702076863210, guid: 85db7a88827d2164e8de8eb45bee4cfc, type: 3}
   laneIndex: 1
   spawnDistance: 62
-  obstacleText: "\u041F\u0440\u043E\u0434\u043E\u043B\u0436\u0430\u044E\u0442 \u0437\u0430\u043A\u0440\u044B\u0432\u0430\u0442\u044C
-    \u0440\u043E\u0434\u0434\u043E\u043C\u0430"
+  obstacleText: "\u0417\u0430\u043A\u0440\u044B\u0432\u0430\u044E\u0442 \u0440\u043E\u0434\u0434\u043E\u043C\u0430"
