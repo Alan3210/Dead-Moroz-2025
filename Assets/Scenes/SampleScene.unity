@@ -249,6 +249,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 43732185}
+  - component: {fileID: 43732186}
   m_Layer: 0
   m_Name: HoverPoint_Left
   m_TagString: Untagged
@@ -272,6 +273,30 @@ Transform:
   - {fileID: 784258747}
   m_Father: {fileID: 2139923272}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &43732186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43732184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b83f0951e9ac1dc4799fd018db1b1884, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrailSparkleEffect
+  sparkleColor: {r: 0.4, g: 1, b: 1, a: 1}
+  sparkleSize: 0.05
+  sparkleLifetime: 0.3
+  sparkleSpeed: 2
+  emissionRate: 20
+  burstOnLaneChange: 1
+  burstCount: 10
+--- !u!1 &125185227 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7461793730741255765, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
+  m_PrefabInstance: {fileID: 1293776399}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &136532581
 GameObject:
   m_ObjectHideFlags: 0
@@ -692,6 +717,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 302384704}
+  - component: {fileID: 302384705}
   m_Layer: 0
   m_Name: HoverPoint_Right
   m_TagString: Untagged
@@ -715,6 +741,25 @@ Transform:
   - {fileID: 1676287509}
   m_Father: {fileID: 2139923272}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &302384705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 302384703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b83f0951e9ac1dc4799fd018db1b1884, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrailSparkleEffect
+  sparkleColor: {r: 0.4, g: 1, b: 1, a: 1}
+  sparkleSize: 0.05
+  sparkleLifetime: 0.3
+  sparkleSpeed: 2
+  emissionRate: 20
+  burstOnLaneChange: 1
+  burstCount: 10
 --- !u!1 &305140316
 GameObject:
   m_ObjectHideFlags: 0
@@ -13407,7 +13452,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5485250343975623139, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 302384704}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7461793730741255765, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2139923277}
   m_SourcePrefab: {fileID: 100100000, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
 --- !u!1 &1305833252
 GameObject:
@@ -15491,12 +15539,48 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6293004873902572645, guid: c71f9b1218ddc5249b1f102f1a42518e, type: 3}
   m_PrefabInstance: {fileID: 1293776399}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 125185227}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7c1b433be93f77347ad6ec886b5bfbb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+--- !u!114 &2139923277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125185227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbe870e8d7f88ac4681df41b50f8a479, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DynamicSleighTrails
+  leftTrail: {fileID: 0}
+  rightTrail: {fileID: 0}
+  playerController: {fileID: 2139923273}
+  minWidth: 0.15
+  maxWidth: 0.4
+  widthPulseSpeed: 3
+  enableSpeedBasedWidth: 1
+  speedWidthMultiplier: 0.02
+  baseColor: {r: 0.19, g: 0.84, b: 0.88, a: 1}
+  accentColor: {r: 0.4, g: 1, b: 1, a: 1}
+  colorPulseSpeed: 2
+  enableLaneChangeFlash: 1
+  flashIntensity: 2
+  flashDuration: 0.3
+  minEmission: 2
+  maxEmission: 5
+  emissionPulseSpeed: 2.5
+  minTrailTime: 0.2
+  maxTrailTime: 0.5
+  enableSpeedBasedTime: 1
+  leftSparkles: {fileID: 0}
+  rightSparkles: {fileID: 0}
+  enableSparkles: 1
+  sparkleEmissionRate: 20
 --- !u!1 &2146817931
 GameObject:
   m_ObjectHideFlags: 0

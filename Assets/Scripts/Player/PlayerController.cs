@@ -24,11 +24,15 @@ public class PlayerController : MonoBehaviour
     private const int LEFT_LANE = 0;
     private const int MIDDLE_LANE = 1;
     private const int RIGHT_LANE = 2;
+    private DynamicSleighTrails trailEffects;
+
 
     void Awake()
     {
         inputActions = new PlayerInputActions();
         targetPosition = transform.position;
+        trailEffects = GetComponent<DynamicSleighTrails>();
+
     }
 
     void OnEnable()
@@ -111,12 +115,18 @@ public class PlayerController : MonoBehaviour
 
         lastInputTime = Time.time;
 
-        // Add this line:
         if (AudioManager.Instance != null)
         {
             AudioManager.Instance.PlayLaneChangeSound();
         }
+
+        if (trailEffects != null)
+        {
+            trailEffects.TriggerLaneChangeFlash();
+        }
     }
+
+
 
 
     public void IncreaseSpeed(float amount)
