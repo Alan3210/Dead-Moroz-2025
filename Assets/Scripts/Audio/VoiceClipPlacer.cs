@@ -43,4 +43,15 @@ public class VoiceClipPlacer : MonoBehaviour
             }
         }
     }
+
+    void OnDrawGizmos()
+    {
+        BoxCollider boxCollider = GetComponent<BoxCollider>();
+        if (boxCollider != null)
+        {
+            Gizmos.color = new Color(0f, 1f, 0f, 0.3f);
+            Gizmos.matrix = transform.localToWorldMatrix;
+            Gizmos.DrawCube(boxCollider.center, boxCollider.size);
+        }
+    }
 }

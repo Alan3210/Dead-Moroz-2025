@@ -19,6 +19,10 @@ public class EnvironmentSpawner : MonoBehaviour
     [SerializeField] private float maxSpawnInterval = 15f;
     [SerializeField] private float randomPositionVariation = 1.5f;
 
+    [Header("Parallax Settings")]
+    [SerializeField][Range(1f, 3f)] private float pineParallaxSpeed = 1.3f;
+    [SerializeField][Range(1f, 3f)] private float panelkaParallaxSpeed = 1.5f;
+
     [Header("Pooling Settings")]
     [SerializeField] private int initialPoolSize = 20;
 
@@ -32,7 +36,6 @@ public class EnvironmentSpawner : MonoBehaviour
     private float nextRightPineSpawnZ = 0f;
     private float nextLeftPanelkaSpawnZ = 0f;
     private float nextRightPanelkaSpawnZ = 0f;
-
 
     private class EnvironmentObject
     {
@@ -60,7 +63,6 @@ public class EnvironmentSpawner : MonoBehaviour
         nextRightPineSpawnZ = playerTransform.position.z + Random.Range(minSpawnInterval, maxSpawnInterval);
         nextLeftPanelkaSpawnZ = playerTransform.position.z + Random.Range(minSpawnInterval, maxSpawnInterval);
         nextRightPanelkaSpawnZ = playerTransform.position.z + Random.Range(minSpawnInterval, maxSpawnInterval);
-
     }
 
     void Update()
@@ -82,12 +84,23 @@ public class EnvironmentSpawner : MonoBehaviour
         for (int i = 0; i < initialPoolSize; i++)
         {
             GameObject pine = Instantiate(pinePrefab, Vector3.zero, Quaternion.identity, transform);
+            EnsureParallaxComponent(pine, true);
             pine.SetActive(false);
             pinePool.Add(pine);
 
             GameObject panelka = Instantiate(panelkaPrefab, Vector3.zero, Quaternion.identity, transform);
+            EnsureParallaxComponent(panelka, false);
             panelka.SetActive(false);
             panelkaPool.Add(panelka);
+        }
+    }
+
+    void EnsureParallaxComponent(GameObject obj, bool isPine)
+    {
+        ParallaxObject parallax = obj.GetComponent<ParallaxObject>();
+        if (parallax == null)
+        {
+            parallax = obj.AddComponent<ParallaxObject>();
         }
     }
 
@@ -127,6 +140,7 @@ public class EnvironmentSpawner : MonoBehaviour
         if (obj == null)
         {
             obj = Instantiate(isPine ? pinePrefab : panelkaPrefab, transform);
+            EnsureParallaxComponent(obj, isPine);
         }
 
         float roadOffset = isPine ? pineRoadSideOffset : panelkaRoadSideOffset;
@@ -158,6 +172,13 @@ public class EnvironmentSpawner : MonoBehaviour
             obj.transform.rotation = Quaternion.Euler(0f, yRotation, 0f);
         }
 
+        ParallaxObject parallax = obj.GetComponent<ParallaxObject>();
+        if (parallax != null)
+        {
+            float speedMultiplier = isPine ? pineParallaxSpeed : panelkaParallaxSpeed;
+            parallax.Initialize(playerTransform, speedMultiplier);
+        }
+
         obj.SetActive(true);
 
         EnvironmentObject envObj = new EnvironmentObject(obj, isLeftSide);
@@ -171,8 +192,6 @@ public class EnvironmentSpawner : MonoBehaviour
             activeRightObjects.Enqueue(envObj);
         }
     }
-
-
 
     GameObject GetPooledObject(bool isPine)
     {
