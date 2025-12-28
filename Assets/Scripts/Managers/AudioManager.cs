@@ -19,7 +19,6 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private float[] voiceClipVolumes = new float[] { 1.5f, 1.0f, 1.0f };
     [SerializeField] private float voiceVolume = 1f;
 
-
     [Header("Volume Settings")]
     [SerializeField] private float sfxVolume = 1f;
     [SerializeField] private float musicVolume = 0.7f;
@@ -60,6 +59,18 @@ public class AudioManager : MonoBehaviour
         voiceSource.volume = voiceVolume;
     }
 
+    public void PlayVoiceClip(AudioClip clip)
+    {
+        if (voiceSource == null || clip == null) return;
+
+        if (voiceSource.isPlaying)
+        {
+            voiceSource.Stop();
+        }
+
+        voiceSource.PlayOneShot(clip, voiceVolume);
+    }
+
     public void PlayCollisionSound()
     {
         PlaySFX(collisionSFX);
@@ -94,7 +105,6 @@ public class AudioManager : MonoBehaviour
             currentVoiceIndex = 0;
         }
     }
-
 
     public void PlayLaneChangeSound()
     {
