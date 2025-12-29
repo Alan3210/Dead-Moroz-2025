@@ -6,6 +6,7 @@ public class EnvironmentSpawner : MonoBehaviour
     [Header("Environment Prefabs")]
     [SerializeField] private GameObject pinePrefab;
     [SerializeField] private GameObject panelkaPrefab;
+    [SerializeField] private GameObject snowPrefab;
 
     [Header("Spawning Settings")]
     [SerializeField] private Transform playerTransform;
@@ -19,23 +20,35 @@ public class EnvironmentSpawner : MonoBehaviour
     [SerializeField] private float maxSpawnInterval = 15f;
     [SerializeField] private float randomPositionVariation = 1.5f;
 
+    [Header("Snow Settings")]
+    [SerializeField] private float roadSegmentLength = 6.65f;
+    [SerializeField] private float snowYOffset = -0.1f;
+    [SerializeField] private float snowXOffset = 0f;
+    [SerializeField] private float snowZOffset = 0f;
+
     [Header("Parallax Settings")]
     [SerializeField][Range(1f, 3f)] private float pineParallaxSpeed = 1.3f;
     [SerializeField][Range(1f, 3f)] private float panelkaParallaxSpeed = 1.5f;
+    [SerializeField][Range(1f, 3f)] private float snowParallaxSpeed = 1.2f;
+    [SerializeField] private bool enableDynamicParallax = true;
 
     [Header("Pooling Settings")]
     [SerializeField] private int initialPoolSize = 20;
+    [SerializeField] private int initialSnowPoolSize = 10;
 
     private Queue<EnvironmentObject> activeLeftObjects = new Queue<EnvironmentObject>();
     private Queue<EnvironmentObject> activeRightObjects = new Queue<EnvironmentObject>();
+    private Queue<GameObject> activeSnowObjects = new Queue<GameObject>();
 
     private List<GameObject> pinePool = new List<GameObject>();
     private List<GameObject> panelkaPool = new List<GameObject>();
+    private List<GameObject> snowPool = new List<GameObject>();
 
     private float nextLeftPineSpawnZ = 0f;
     private float nextRightPineSpawnZ = 0f;
     private float nextLeftPanelkaSpawnZ = 0f;
     private float nextRightPanelkaSpawnZ = 0f;
+    private float nextSnowSpawnZ = 0f;
 
     private class EnvironmentObject
     {
@@ -63,6 +76,10 @@ public class EnvironmentSpawner : MonoBehaviour
         nextRightPineSpawnZ = playerTransform.position.z + Random.Range(minSpawnInterval, maxSpawnInterval);
         nextLeftPanelkaSpawnZ = playerTransform.position.z + Random.Range(minSpawnInterval, maxSpawnInterval);
         nextRightPanelkaSpawnZ = playerTransform.position.z + Random.Range(minSpawnInterval, maxSpawnInterval);
+
+        nextSnowSpawnZ = snowZOffset;
+
+        SpawnInitialSnow();
     }
 
     void Update()
@@ -70,6 +87,7 @@ public class EnvironmentSpawner : MonoBehaviour
         if (playerTransform == null) return;
 
         CheckAndSpawnEnvironment();
+        CheckAndSpawnSnow();
         DespawnPassedObjects();
     }
 
@@ -92,6 +110,31 @@ public class EnvironmentSpawner : MonoBehaviour
             EnsureParallaxComponent(panelka, false);
             panelka.SetActive(false);
             panelkaPool.Add(panelka);
+        }
+
+        if (snowPrefab != null)
+        {
+            for (int i = 0; i < initialSnowPoolSize; i++)
+            {
+                GameObject snow = Instantiate(snowPrefab, Vector3.zero, Quaternion.identity, transform);
+                ParallaxObject parallax = snow.GetComponent<ParallaxObject>();
+                if (parallax == null)
+                {
+                    snow.AddComponent<ParallaxObject>();
+                }
+                snow.SetActive(false);
+                snowPool.Add(snow);
+            }
+        }
+    }
+
+    void SpawnInitialSnow()
+    {
+        if (snowPrefab == null) return;
+
+        for (int i = 0; i < 5; i++)
+        {
+            SpawnSnowSegment();
         }
     }
 
@@ -131,6 +174,48 @@ public class EnvironmentSpawner : MonoBehaviour
             SpawnSpecificObject(false, false);
             nextRightPanelkaSpawnZ += Random.Range(minSpawnInterval, maxSpawnInterval);
         }
+    }
+
+    void CheckAndSpawnSnow()
+    {
+        if (snowPrefab == null) return;
+
+        float playerZ = playerTransform.position.z;
+
+        if (playerZ + spawnDistanceAhead > nextSnowSpawnZ)
+        {
+            SpawnSnowSegment();
+        }
+    }
+
+    void SpawnSnowSegment()
+    {
+        GameObject snow = GetPooledSnow();
+
+        if (snow == null)
+        {
+            snow = Instantiate(snowPrefab, transform);
+            ParallaxObject parallax = snow.GetComponent<ParallaxObject>();
+            if (parallax == null)
+            {
+                snow.AddComponent<ParallaxObject>();
+            }
+        }
+
+        Vector3 spawnPosition = new Vector3(snowXOffset, snowYOffset, nextSnowSpawnZ);
+        snow.transform.position = spawnPosition;
+        snow.transform.rotation = Quaternion.identity;
+
+        ParallaxObject snowParallax = snow.GetComponent<ParallaxObject>();
+        if (snowParallax != null)
+        {
+            snowParallax.Initialize(playerTransform, snowParallaxSpeed, enableDynamicParallax);
+        }
+
+        snow.SetActive(true);
+        activeSnowObjects.Enqueue(snow);
+
+        nextSnowSpawnZ += roadSegmentLength;
     }
 
     void SpawnSpecificObject(bool isLeftSide, bool isPine)
@@ -176,7 +261,7 @@ public class EnvironmentSpawner : MonoBehaviour
         if (parallax != null)
         {
             float speedMultiplier = isPine ? pineParallaxSpeed : panelkaParallaxSpeed;
-            parallax.Initialize(playerTransform, speedMultiplier);
+            parallax.Initialize(playerTransform, speedMultiplier, enableDynamicParallax);
         }
 
         obj.SetActive(true);
@@ -208,12 +293,26 @@ public class EnvironmentSpawner : MonoBehaviour
         return null;
     }
 
+    GameObject GetPooledSnow()
+    {
+        foreach (GameObject snow in snowPool)
+        {
+            if (!snow.activeInHierarchy)
+            {
+                return snow;
+            }
+        }
+
+        return null;
+    }
+
     void DespawnPassedObjects()
     {
         float playerZ = playerTransform.position.z;
 
         DespawnSideObjects(activeLeftObjects, playerZ);
         DespawnSideObjects(activeRightObjects, playerZ);
+        DespawnSnowObjects(playerZ);
     }
 
     void DespawnSideObjects(Queue<EnvironmentObject> objectQueue, float playerZ)
@@ -229,6 +328,28 @@ public class EnvironmentSpawner : MonoBehaviour
                 if (envObj.gameObject != null)
                 {
                     envObj.gameObject.SetActive(false);
+                }
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+
+    void DespawnSnowObjects(float playerZ)
+    {
+        while (activeSnowObjects.Count > 0)
+        {
+            GameObject snow = activeSnowObjects.Peek();
+
+            if (snow == null || snow.transform.position.z < playerZ - despawnDistanceBehind)
+            {
+                activeSnowObjects.Dequeue();
+
+                if (snow != null)
+                {
+                    snow.SetActive(false);
                 }
             }
             else

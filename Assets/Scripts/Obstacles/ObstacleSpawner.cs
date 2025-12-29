@@ -25,7 +25,7 @@ public class ObstacleSpawner : MonoBehaviour
     private int currentMonthIndex = 0;
     private float currentMonthStartZ = 0f;
     private List<ObstacleData> pendingObstacles = new List<ObstacleData>();
-    private bool monthTransitionQueued = false;
+    private bool monthTransitionTriggered = false;
 
     void Start()
     {
@@ -92,7 +92,7 @@ public class ObstacleSpawner : MonoBehaviour
             }
         }
 
-        monthTransitionQueued = false;
+        monthTransitionTriggered = false;
         Debug.Log($"Loaded Month {currentMonth.monthNumber}: {currentMonth.monthName} with {pendingObstacles.Count} obstacles at Z = {currentMonthStartZ}");
     }
 
@@ -121,12 +121,11 @@ public class ObstacleSpawner : MonoBehaviour
 
     void CheckMonthTransition()
     {
-        if (monthTransitionQueued) return;
-        if (pendingObstacles.Count > 0) return;
+        if (monthTransitionTriggered) return;
 
         if (ShouldAdvanceToNextMonth())
         {
-            monthTransitionQueued = true;
+            monthTransitionTriggered = true;
             AdvanceToNextMonth();
         }
     }
@@ -193,10 +192,6 @@ public class ObstacleSpawner : MonoBehaviour
             }
         }
     }
-
-
-
-
 
     bool ShouldAdvanceToNextMonth()
     {
