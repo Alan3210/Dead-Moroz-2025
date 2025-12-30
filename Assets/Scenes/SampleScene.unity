@@ -21055,71 +21055,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 183879497}
   m_Mesh: {fileID: -8109694843429632186, guid: 41306ae3168570c44ba5a7bc8053ad6c, type: 3}
---- !u!1 &185206380
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 185206382}
-  - component: {fileID: 185206381}
-  m_Layer: 0
-  m_Name: EnvironmentManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &185206381
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 185206380}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d0c866d67c3a20408147aaaab3cf7cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnvironmentSpawner
-  pinePrefab: {fileID: 3516243033350407055, guid: 26a091f4c04462043bf65e2f8826f363, type: 3}
-  panelkaPrefab: {fileID: 5256655298075522325, guid: ef06d113142eee041bd32890dea54553, type: 3}
-  snowPrefab: {fileID: 3224508464517654381, guid: d25abc3994c9a8043988780980a8d9a1, type: 3}
-  playerTransform: {fileID: 2139923272}
-  spawnDistanceAhead: 50
-  despawnDistanceBehind: 10
-  pineRoadSideOffset: 4
-  panelkaRoadSideOffset: 9.8
-  minSpawnInterval: 2
-  maxSpawnInterval: 10
-  randomPositionVariation: 0.5
-  roadSegmentLength: 6.65
-  snowYOffset: -0.5
-  snowXOffset: 0
-  snowZOffset: 0
-  pineParallaxSpeed: 1.1
-  panelkaParallaxSpeed: 1.3
-  snowParallaxSpeed: 1.1
-  enableDynamicParallax: 1
-  initialPoolSize: 20
-  initialSnowPoolSize: 10
---- !u!4 &185206382
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 185206380}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &185826379
 GameObject:
   m_ObjectHideFlags: 0
@@ -21368,72 +21303,63 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::VoiceClipPlacer
   voiceClipTriggerPrefab: {fileID: 3022246153884205874, guid: e87535e951c12d24c9f231a7f19fab24, type: 3}
   voiceClips:
-  - clipName: "\u041C\u0430\u0440\u0448\u0440\u0443\u0442 \u043F\u043E\u0441\u0442\u0440\u043E\u0435\u043D"
-    audioClip: {fileID: 8300000, guid: 7753278300b9243428bd2a911f274ee9, type: 3}
-    zPosition: 20
-  - clipName: "\u042F\u043D\u0432\u0430\u0440\u044C - \u0447\u0435\u0440\u0435\u0437
-      200 \u043C\u0435\u0442\u0440\u043E\u0432 \u0440\u043E\u0441\u0442 \u0446\u0435\u043D"
-    audioClip: {fileID: 8300000, guid: 4848b3b8a6a221c40947f484cbd541a4, type: 3}
-    zPosition: 60
-  - clipName: "\u0412\u044B \u043F\u0440\u043E\u0434\u043E\u043B\u0436\u0430\u0435\u0442\u0435
-      \u0434\u0432\u0438\u0436\u0435\u043D\u0438\u0435, \u0430\u043B\u044C\u0442\u0435\u0440\u043D\u0430\u0442\u0438\u0432\u043D\u044B\u044B\u0439
-      \u043C\u0430\u0440\u0448\u0443\u0442 \u043D\u0435\u0434\u043E\u0441\u0442\u0443\u043F\u0435\u043D"
-    audioClip: {fileID: 8300000, guid: 2a96e38b73252ef4aa2ee28c7c39c583, type: 3}
-    zPosition: 190
-  - clipName: "\u0424\u0435\u0432\u0440\u0430\u043B\u044C - \u0447\u0435\u0440\u0435\u0437
-      300 \u043C\u0435\u0442\u0440\u043E\u0432 \u043D\u043E\u0432\u044B\u0435 \u043E\u0433\u0440\u0430\u043D\u0438\u0447\u0435\u043D\u0438\u044F"
-    audioClip: {fileID: 8300000, guid: 19b7b051ee8cddf4abac1bab7918e472, type: 3}
-    zPosition: 220
-  - clipName: "\u0421\u043A\u043E\u0440\u043E\u0441\u0442\u044C \u0443\u0432\u0435\u043B\u0438\u0447\u0438\u0432\u0430\u0435\u0442\u0441\u044F
-      - \u044D\u0442\u043E \u043D\u043E\u0440\u043C\u0430\u043B\u044C\u043D\u043E"
-    audioClip: {fileID: 8300000, guid: 50f42e4273916a649b520db84f4cfe3f, type: 3}
+  - clipName: preStart
+    audioClip: {fileID: 8300000, guid: 67193632f44fa174189273a09ce60bc8, type: 3}
+    zPosition: 30
+  - clipName: January middle
+    audioClip: {fileID: 8300000, guid: 1af18d9984c1c4942b61f69a35c25fa5, type: 3}
+    zPosition: 85
+  - clipName: Jan 2
+    audioClip: {fileID: 8300000, guid: 860e48233d221ce44ba477bd980e5bbf, type: 3}
+    zPosition: 140
+  - clipName: February start
+    audioClip: {fileID: 8300000, guid: 60bd43370547c4f4d8f3bd1d01e475f9, type: 3}
+    zPosition: 219
+  - clipName: Feb2
+    audioClip: {fileID: 8300000, guid: 5986a1a96d28f7c46a4f298be7c08d6c, type: 3}
     zPosition: 260
-  - clipName: "\u041C\u0430\u0440\u0442 - \u0432\u0435\u0441\u0435\u043D\u043D\u0435\u0435
-      \u043E\u0431\u043E\u0441\u0442\u0440\u0435\u043D\u0438\u0435"
-    audioClip: {fileID: 8300000, guid: 4b62184d95c25be41901dbc083168a61, type: 3}
-    zPosition: 340
-  - clipName: 
-    audioClip: {fileID: 0}
-    zPosition: 0
-  - clipName: 
-    audioClip: {fileID: 0}
-    zPosition: 0
-  - clipName: 
-    audioClip: {fileID: 0}
-    zPosition: 0
-  - clipName: 
-    audioClip: {fileID: 0}
-    zPosition: 0
-  - clipName: 
-    audioClip: {fileID: 0}
-    zPosition: 0
-  - clipName: 
-    audioClip: {fileID: 0}
-    zPosition: 0
-  - clipName: 
-    audioClip: {fileID: 0}
-    zPosition: 0
-  - clipName: 
-    audioClip: {fileID: 0}
-    zPosition: 0
-  - clipName: 
-    audioClip: {fileID: 0}
-    zPosition: 0
-  - clipName: 
-    audioClip: {fileID: 0}
-    zPosition: 0
-  - clipName: 
-    audioClip: {fileID: 0}
-    zPosition: 0
-  - clipName: 
-    audioClip: {fileID: 0}
-    zPosition: 0
-  - clipName: 
-    audioClip: {fileID: 0}
-    zPosition: 0
-  - clipName: 
-    audioClip: {fileID: 0}
-    zPosition: 0
+  - clipName: March start
+    audioClip: {fileID: 8300000, guid: 5e57baeb6b9c6b34591b4418ac1dd132, type: 3}
+    zPosition: 345
+  - clipName: March2
+    audioClip: {fileID: 8300000, guid: 3273e40c0ac2a7240a68106d7765a7ce, type: 3}
+    zPosition: 415
+  - clipName: "\u0410\u043F\u0440\u0435\u043B\u044C start"
+    audioClip: {fileID: 8300000, guid: a2a6f7372740081489b4ef7fc63b669e, type: 3}
+    zPosition: 495
+  - clipName: Apr2
+    audioClip: {fileID: 8300000, guid: 113fb1ba5a721354a954b9850bac8a21, type: 3}
+    zPosition: 540
+  - clipName: May start
+    audioClip: {fileID: 8300000, guid: d50439691a78f2f4d8f901139b6424cc, type: 3}
+    zPosition: 665
+  - clipName: Jun start
+    audioClip: {fileID: 8300000, guid: 9e0a28faec90ff141a6690497c6d0a50, type: 3}
+    zPosition: 755
+  - clipName: Jun2
+    audioClip: {fileID: 8300000, guid: d2bda7a65a4d2214a990ea3045735018, type: 3}
+    zPosition: 800
+  - clipName: July start
+    audioClip: {fileID: 8300000, guid: 446faf697fbb54e4c965ef0301c40c2a, type: 3}
+    zPosition: 891
+  - clipName: AugStart
+    audioClip: {fileID: 8300000, guid: c14d8617f54adea41ab43c634632937b, type: 3}
+    zPosition: 1035
+  - clipName: SepStart
+    audioClip: {fileID: 8300000, guid: dae7c4e1eedb3174abb0f8cc0f1c32a9, type: 3}
+    zPosition: 1180
+  - clipName: OctStart
+    audioClip: {fileID: 8300000, guid: 9f4f83de676d6f04181e5079a5589c02, type: 3}
+    zPosition: 1325
+  - clipName: Nov start
+    audioClip: {fileID: 8300000, guid: f1ff00bc7bda513438e2021cf1285ab0, type: 3}
+    zPosition: 1470
+  - clipName: Dec start
+    audioClip: {fileID: 8300000, guid: cc97cc164810bf74dbafaa8a12b24990, type: 3}
+    zPosition: 1615
+  - clipName: Dec end
+    audioClip: {fileID: 8300000, guid: 1e547f240b167964f8fb666b22af46bb, type: 3}
+    zPosition: 1730
   triggerHeight: 1
 --- !u!4 &186959233
 Transform:
@@ -129358,69 +129284,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1110572502}
   m_Mesh: {fileID: -8634060567236447461, guid: 789df973fd1e9194d9034ebfc2dfa028, type: 3}
---- !u!1 &1111263123
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1111263125}
-  - component: {fileID: 1111263124}
-  m_Layer: 0
-  m_Name: ObstacleManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1111263124
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1111263123}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d719599acb978f446839e0e0d89b582f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ObstacleSpawner
-  playerTransform: {fileID: 2139923272}
-  spawnDistanceAhead: 90
-  despawnDistanceBehind: 60
-  startingSafeZoneDistance: 80
-  laneDistance: 1.25
-  monthConfigurations:
-  - {fileID: 11400000, guid: 1dd7e78cb2fa4f2459fe5f22d1f7fbe7, type: 2}
-  - {fileID: 11400000, guid: 0a506a3128bad4b4cb33a809795ad418, type: 2}
-  - {fileID: 11400000, guid: 284c04c009cad464b80155afc40faa08, type: 2}
-  - {fileID: 11400000, guid: 59491619428d05b4483f6df8b2bca0ad, type: 2}
-  - {fileID: 11400000, guid: 478aa81306820e24ba2d30ff62fdf25a, type: 2}
-  - {fileID: 11400000, guid: fa2ce9e7b5e22ac4fbcb5c3dd88cb2e1, type: 2}
-  - {fileID: 11400000, guid: 3b67f2c24d9a727498277b7a00a6cb95, type: 2}
-  - {fileID: 11400000, guid: ebe115c2295dbb441ab3d9f719740281, type: 2}
-  - {fileID: 11400000, guid: 8edbc4a6e2224694d93b9cc9a81c3b3f, type: 2}
-  - {fileID: 11400000, guid: 22edffa8c5f202043b165354f26e5183, type: 2}
-  - {fileID: 11400000, guid: cd8cddc62a7021c4c8525ec5e5c6ed29, type: 2}
-  - {fileID: 11400000, guid: 1997fe74783f52b4b988e0447b5e009f, type: 2}
-  monthTransitionOverlap: 20
---- !u!4 &1111263125
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1111263123}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1113588512
 GameObject:
   m_ObjectHideFlags: 0
@@ -174096,56 +173959,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1529895611}
   m_Mesh: {fileID: -8109694843429632186, guid: 41306ae3168570c44ba5a7bc8053ad6c, type: 3}
---- !u!1 &1530556947
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1530556949}
-  - component: {fileID: 1530556948}
-  m_Layer: 0
-  m_Name: RoadManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1530556948
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1530556947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8914537569a954c4ab2bdaeef97fd174, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RoadSpawner
-  roadPrefab: {fileID: 702381583672761644, guid: f9b868607a6e1c2418726d7988727096, type: 3}
-  initialRoadCount: 5
-  roadLength: 6.65
-  playerTransform: {fileID: 2139923272}
-  spawnDistanceAhead: 50
-  despawnDistanceBehind: 20
---- !u!4 &1530556949
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1530556947}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1532936028
 GameObject:
   m_ObjectHideFlags: 0
@@ -242718,9 +242531,6 @@ SceneRoots:
   - {fileID: 1461963992}
   - {fileID: 972517807}
   - {fileID: 1678280098}
-  - {fileID: 185206382}
-  - {fileID: 1530556949}
-  - {fileID: 1111263125}
   - {fileID: 1649716703}
   - {fileID: 330585546}
   - {fileID: 410087041}
