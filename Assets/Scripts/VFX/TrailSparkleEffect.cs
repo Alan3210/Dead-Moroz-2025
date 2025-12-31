@@ -13,7 +13,7 @@ public class TrailSparkleEffect : MonoBehaviour
     [SerializeField] private bool burstOnLaneChange = true;
     [SerializeField] private int burstCount = 10;
 
-    private ParticleSystem particleSystem;
+    private ParticleSystem sparkleParticles;
 
     void Start()
     {
@@ -26,9 +26,9 @@ public class TrailSparkleEffect : MonoBehaviour
         psObject.transform.SetParent(transform);
         psObject.transform.localPosition = Vector3.zero;
 
-        particleSystem = psObject.AddComponent<ParticleSystem>();
+        sparkleParticles = psObject.AddComponent<ParticleSystem>();
 
-        var main = particleSystem.main;
+        var main = sparkleParticles.main;
         main.startColor = sparkleColor;
         main.startSize = sparkleSize;
         main.startLifetime = sparkleLifetime;
@@ -36,14 +36,14 @@ public class TrailSparkleEffect : MonoBehaviour
         main.maxParticles = 100;
         main.simulationSpace = ParticleSystemSimulationSpace.World;
 
-        var emission = particleSystem.emission;
+        var emission = sparkleParticles.emission;
         emission.rateOverTime = emissionRate;
 
-        var shape = particleSystem.shape;
+        var shape = sparkleParticles.shape;
         shape.shapeType = ParticleSystemShapeType.Sphere;
         shape.radius = 0.05f;
 
-        var colorOverLifetime = particleSystem.colorOverLifetime;
+        var colorOverLifetime = sparkleParticles.colorOverLifetime;
         colorOverLifetime.enabled = true;
         Gradient gradient = new Gradient();
         gradient.SetKeys(
@@ -58,14 +58,14 @@ public class TrailSparkleEffect : MonoBehaviour
         );
         colorOverLifetime.color = gradient;
 
-        var sizeOverLifetime = particleSystem.sizeOverLifetime;
+        var sizeOverLifetime = sparkleParticles.sizeOverLifetime;
         sizeOverLifetime.enabled = true;
         AnimationCurve sizeCurve = new AnimationCurve();
         sizeCurve.AddKey(0f, 1f);
         sizeCurve.AddKey(1f, 0f);
         sizeOverLifetime.size = new ParticleSystem.MinMaxCurve(1f, sizeCurve);
 
-        var renderer = particleSystem.GetComponent<ParticleSystemRenderer>();
+        var renderer = sparkleParticles.GetComponent<ParticleSystemRenderer>();
         renderer.material = new Material(Shader.Find("Universal Render Pipeline/Particles/Unlit"));
         renderer.material.SetColor("_BaseColor", sparkleColor);
         renderer.material.EnableKeyword("_EMISSION");
@@ -75,17 +75,17 @@ public class TrailSparkleEffect : MonoBehaviour
 
     public void TriggerBurst()
     {
-        if (burstOnLaneChange && particleSystem != null)
+        if (burstOnLaneChange && sparkleParticles != null)
         {
-            particleSystem.Emit(burstCount);
+            sparkleParticles.Emit(burstCount);
         }
     }
 
     public void SetEmissionRate(float rate)
     {
-        if (particleSystem == null) return;
+        if (sparkleParticles == null) return;
 
-        var emission = particleSystem.emission;
+        var emission = sparkleParticles.emission;
         emission.rateOverTime = rate;
     }
 }

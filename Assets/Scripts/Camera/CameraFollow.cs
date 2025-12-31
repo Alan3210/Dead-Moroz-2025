@@ -10,7 +10,6 @@ public class CameraFollow : MonoBehaviour
     private bool isFollowing = true;
 
     [Header("Smooth Follow")]
-    [SerializeField] private float smoothSpeed = 5f;
     [SerializeField] private float followLagAmount = 0.1f;
 
     [Header("Dynamic Tilt")]

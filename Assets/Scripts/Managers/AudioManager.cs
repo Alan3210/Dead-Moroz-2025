@@ -13,6 +13,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip collisionSFX;
     [SerializeField] private AudioClip laneChangeSFX;
     [SerializeField] private AudioClip monthTransitionSFX;
+    [SerializeField] private AudioClip moneyPickupSFX;
 
     [Header("Ded Moroz Voice Clips")]
     [SerializeField] private AudioClip[] dedMorozCollisionVoices;
@@ -114,6 +115,11 @@ public class AudioManager : MonoBehaviour
     public void PlayMonthTransitionSound()
     {
         PlaySFX(monthTransitionSFX);
+    }
+
+    public void PlayMoneyPickupSound()
+    {
+        PlaySFX(moneyPickupSFX);
     }
 
     public void PlaySFX(AudioClip clip)

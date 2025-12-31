@@ -10,9 +10,6 @@ public class HealthUI : MonoBehaviour
     [SerializeField] private Sprite tangerineFullSprite;
     [SerializeField] private Sprite tangerineEmptySprite;
 
-    [Header("Layout")]
-    [SerializeField] private float iconSpacing = 10f;
-
     private List<Image> healthIcons = new List<Image>();
 
     void Start()
