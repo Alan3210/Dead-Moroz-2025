@@ -10,12 +10,24 @@ public class MonthConfiguration : ScriptableObject
     [Header("Obstacles")]
     public ObstacleData[] obstacles;
 
+    [Header("Money Collectibles")]
+    [Tooltip("Money bundles scattered throughout this month")]
+    public MoneySpawnData[] moneySpawns;
+
+    [Header("Economic Info (Read-Only)")]
+    [SerializeField] private float totalMoneyAvailable;
+
     [Header("Auto-Calculated Length (Read-Only)")]
     [SerializeField] private float calculatedLength;
 
     public float segmentLength
     {
         get { return CalculateSegmentLength(); }
+    }
+
+    public float TotalMoneyInMonth
+    {
+        get { return CalculateTotalMoney(); }
     }
 
     private float CalculateSegmentLength()
@@ -37,10 +49,30 @@ public class MonthConfiguration : ScriptableObject
         return maxDistance + 10f;
     }
 
+    private float CalculateTotalMoney()
+    {
+        if (moneySpawns == null || moneySpawns.Length == 0)
+        {
+            return 0f;
+        }
+
+        float total = 0f;
+        foreach (MoneySpawnData money in moneySpawns)
+        {
+            if (money != null)
+            {
+                total += money.rubleValue;
+            }
+        }
+
+        return total;
+    }
+
 #if UNITY_EDITOR
     void OnValidate()
     {
         calculatedLength = CalculateSegmentLength();
+        totalMoneyAvailable = CalculateTotalMoney();
     }
 #endif
 }

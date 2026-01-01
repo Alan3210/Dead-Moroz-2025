@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1864693925567363045}
   m_Layer: 0
   m_Name: MoneyBundle
-  m_TagString: Untagged
+  m_TagString: Collectible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -127,5 +127,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MoneyCollectible
   value: 10
   rotationSpeed: 140
-  floatAmplitude: 0.3
-  floatFrequency: 2
+  bobSpeed: 2
+  bobHeight: 0.3
+  collectSound: {fileID: 8300000, guid: c7b86ce79c0f4f74ca835374c33d0bbc, type: 3}

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MoneyCollectible : MonoBehaviour
 {
@@ -8,60 +8,59 @@ public class MoneyCollectible : MonoBehaviour
 
     [Header("Visual Settings")]
     [SerializeField] private float rotationSpeed = 90f;
-    [SerializeField] private float floatAmplitude = 0.5f;
-    [SerializeField] private float floatFrequency = 2f;
+    [SerializeField] private float bobSpeed = 2f;
+    [SerializeField] private float bobHeight = 0.3f;
 
-    private Vector3 initialPosition;
-    private float timeOffset;
+    [Header("Audio Settings")]
+    [SerializeField] private AudioClip collectSound;
 
-    private void Start()
+    private Vector3 startPosition;
+    private float bobOffset;
+
+    void Start()
     {
-        initialPosition = transform.position;
-        // Randomize start time so multiple collectibles don't move in perfect sync
-        timeOffset = Random.Range(0f, Mathf.PI * 2f);
+        startPosition = transform.position;
+        bobOffset = Random.Range(0f, Mathf.PI * 2f);
     }
 
-    private void Update()
+    void Update()
     {
-        HandleAnimation();
-    }
-
-    private void HandleAnimation()
-    {
-        // Rotate around Y axis
         transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
 
-        // Simple Sine wave floating
-        float newY = initialPosition.y + Mathf.Sin((Time.time + timeOffset) * floatFrequency) * floatAmplitude;
+        float newY = startPosition.y + Mathf.Sin(Time.time * bobSpeed + bobOffset) * bobHeight;
         transform.position = new Vector3(transform.position.x, newY, transform.position.z);
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Collect();
+            CollectMoney();
         }
     }
 
-    private void Collect()
+    void CollectMoney()
     {
-        if (EconomyManager.Instance != null)
+        if (EconomicManager.Instance != null)
         {
-            EconomyManager.Instance.AddMoney(value);
-        }
-        else
-        {
-            Debug.LogWarning("EconomyManager instance is missing in the scene!");
+            EconomicManager.Instance.AddMoney(value);
         }
 
-        if (AudioManager.Instance != null)
+        if (collectSound != null && AudioManager.Instance != null)
         {
-            AudioManager.Instance.PlayMoneyPickupSound();
+            AudioManager.Instance.PlaySFX(collectSound);
         }
 
-        // Potential for visual effects here
-        
         Destroy(gameObject);
+    }
+
+    public void SetValue(int newValue)
+    {
+        value = newValue;
+    }
+
+    public int GetValue()
+    {
+        return value;
     }
 }

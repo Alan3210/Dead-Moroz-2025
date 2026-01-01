@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 
 public class LevelBuilder : MonoBehaviour
@@ -44,13 +44,11 @@ public class LevelBuilder : MonoBehaviour
     [SerializeField] private Transform snowParent;
     [SerializeField] private Transform environmentParent;
     [SerializeField] private Transform obstaclesParent;
+    [SerializeField] private Transform collectiblesParent;
 
     public float StartSafeZoneDistance => startSafeZoneDistance;
     public float MonthBufferZone => monthBufferZone;
     public MonthConfiguration[] MonthConfigurations => monthConfigurations;
-
-
-
 
     void Start()
     {
@@ -82,6 +80,7 @@ public class LevelBuilder : MonoBehaviour
         BuildSnow();
         BuildEnvironment();
         BuildObstacles();
+        BuildMoneyCollectibles();
 
         Debug.Log($"Level built! Total length: {totalLevelLength} units");
     }
@@ -104,6 +103,10 @@ public class LevelBuilder : MonoBehaviour
         if (obstaclesParent != null)
         {
             DestroyImmediate(obstaclesParent.gameObject);
+        }
+        if (collectiblesParent != null)
+        {
+            DestroyImmediate(collectiblesParent.gameObject);
         }
 
         CreateParents();
@@ -137,6 +140,13 @@ public class LevelBuilder : MonoBehaviour
             GameObject obsObj = new GameObject("Obstacles");
             obsObj.transform.SetParent(transform);
             obstaclesParent = obsObj.transform;
+        }
+
+        if (collectiblesParent == null)
+        {
+            GameObject collObj = new GameObject("Collectibles");
+            collObj.transform.SetParent(transform);
+            collectiblesParent = collObj.transform;
         }
     }
 
@@ -289,6 +299,72 @@ public class LevelBuilder : MonoBehaviour
 
         Debug.Log($"Built {totalObstacleCount} total obstacles across {monthConfigurations.Length} months");
         Debug.Log($"Total level distance with buffers: {currentMonthStartZ:F1} units");
+    }
+
+    void BuildMoneyCollectibles()
+    {
+        if (monthConfigurations == null || monthConfigurations.Length == 0)
+        {
+            Debug.LogWarning("LevelBuilder: No month configurations assigned. Skipping money placement.");
+            return;
+        }
+
+        float currentMonthStartZ = startPosition + startSafeZoneDistance;
+        int totalMoneyCount = 0;
+        float totalValuePlaced = 0f;
+
+        for (int monthIndex = 0; monthIndex < monthConfigurations.Length; monthIndex++)
+        {
+            MonthConfiguration month = monthConfigurations[monthIndex];
+
+            if (month == null)
+            {
+                Debug.LogWarning($"LevelBuilder: Month configuration at index {monthIndex} is null! Skipping.");
+                continue;
+            }
+
+            GameObject monthMoneyParent = new GameObject($"Month_{month.monthNumber:D2}_{month.monthName}_Money");
+            monthMoneyParent.transform.SetParent(collectiblesParent);
+            monthMoneyParent.transform.position = Vector3.zero;
+
+            if (month.moneySpawns != null && month.moneySpawns.Length > 0)
+            {
+                float monthValue = 0f;
+
+                foreach (MoneySpawnData moneyData in month.moneySpawns)
+                {
+                    if (moneyData == null || moneyData.moneyPrefab == null)
+                    {
+                        Debug.LogWarning($"LevelBuilder: Null money data in {month.monthName}. Skipping.");
+                        continue;
+                    }
+
+                    float moneyZ = currentMonthStartZ + moneyData.spawnDistance;
+                    float moneyX = (moneyData.laneIndex - 1) * laneDistance;
+
+                    Vector3 position = new Vector3(moneyX, 0.5f, moneyZ);
+                    GameObject money = Instantiate(moneyData.moneyPrefab, position, Quaternion.identity, monthMoneyParent.transform);
+                    money.name = $"Money_{totalMoneyCount:D3}_{moneyData.rubleValue}руб";
+
+                    MoneyCollectible collectible = money.GetComponent<MoneyCollectible>();
+                    if (collectible != null)
+                    {
+                        collectible.SetValue((int)moneyData.rubleValue);
+                    }
+
+                    monthValue += moneyData.rubleValue;
+                    totalMoneyCount++;
+                }
+
+                totalValuePlaced += monthValue;
+                Debug.Log($"Built {month.moneySpawns.Length} money bundles for Month {month.monthNumber} ({month.monthName}): Total value = {monthValue:F0}₽");
+            }
+
+            currentMonthStartZ += month.segmentLength + monthBufferZone;
+        }
+
+        Debug.Log($"Built {totalMoneyCount} total money bundles across {monthConfigurations.Length} months");
+        Debug.Log($"Total money available in level: {totalValuePlaced:F0}₽");
     }
 
     void SpawnPine(bool isLeftSide, float zPosition, ref int count)
