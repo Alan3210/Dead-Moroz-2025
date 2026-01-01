@@ -18,11 +18,11 @@ public class UIManager : MonoBehaviour
 
     [Header("HUD Elements")]
     [SerializeField] private TextMeshProUGUI monthText;
-    [SerializeField] private TextMeshProUGUI controlsText;
+    [SerializeField] private GameObject controlsPanel;
 
     [Header("Main Menu Elements")]
     [SerializeField] private Button startButton;
-    
+
     [Header("Pause Elements")]
     [SerializeField] private Button resumeButton;
     [SerializeField] private Button restartFromPauseButton;
@@ -82,13 +82,13 @@ public class UIManager : MonoBehaviour
 
     private void HandleControlsDisplay()
     {
-        if (showingControls && controlsText != null)
+        if (showingControls && controlsPanel != null)
         {
             controlsDisplayTimer += Time.deltaTime;
 
             if (controlsDisplayTimer >= CONTROLS_DISPLAY_DURATION)
             {
-                controlsText.gameObject.SetActive(false);
+                controlsPanel.SetActive(false);
                 showingControls = false;
             }
         }
@@ -160,9 +160,9 @@ public class UIManager : MonoBehaviour
         if (mainMenuPanel != null)
             mainMenuPanel.SetActive(true);
 
-        if (controlsText != null)
-            controlsText.gameObject.SetActive(false);
-        
+        if (controlsPanel != null)
+            controlsPanel.SetActive(false);
+
         showingControls = false;
         controlsDisplayTimer = 0f;
 
@@ -177,9 +177,9 @@ public class UIManager : MonoBehaviour
         if (gameplayHUDPanel != null)
             gameplayHUDPanel.SetActive(true);
 
-        if (controlsText != null)
+        if (controlsPanel != null)
         {
-            controlsText.gameObject.SetActive(true);
+            controlsPanel.SetActive(true);
             showingControls = true;
             controlsDisplayTimer = 0f;
         }
@@ -230,7 +230,7 @@ public class UIManager : MonoBehaviour
 
             if (victoryMessageText != null)
             {
-                victoryMessageText.text = "Поздравляем!\nВы вывезли 2025ый год! Готовы к следующему?";
+                victoryMessageText.text = "Поздравляем!\nВы пережили 2025й год! Готовы к следующему?";
             }
         }
 

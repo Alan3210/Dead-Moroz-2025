@@ -81,7 +81,7 @@ public class EconomicManager : MonoBehaviour
             totalExpenses += expense.amount;
         }
 
-        float balance = currentMonthIncome - totalExpenses;
+        float balance = earnedMonthIncome - totalExpenses;
         bool canAfford = balance >= 0;
         bool needsLoan = balance < -LOAN_THRESHOLD;
 

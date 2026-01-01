@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80175543b6a3f894a9a9d19d8fe5afd1, type: 3}
   m_Name: MonthlyExpenses
   m_EditorClassIdentifier: Assembly-CSharp::MonthlyExpenses
-  rent: 30000
-  food: 20000
-  transport: 4000
-  internet: 1000
-  hygiene: 5000
-  medicine: 4637
+  expenseDataList:
+  - {fileID: 11400000, guid: 987380d07ca1f744ea308f13096c523b, type: 2}
+  - {fileID: 11400000, guid: 28890f67f7ade154faadf85a8c732ef8, type: 2}
+  - {fileID: 11400000, guid: 43271ffbe06b851479bfd0488f0a5a39, type: 2}
+  - {fileID: 11400000, guid: fb346b0995b65b04eb2458890d7e6b54, type: 2}
+  - {fileID: 11400000, guid: 381fc8440f9f4ec4fa69767313a62558, type: 2}
+  - {fileID: 11400000, guid: d28226627ad5e6448b0dc8ffb8e914d9, type: 2}
+  - {fileID: 11400000, guid: 5dcbbdd467383eb4285fd0df3a74cd93, type: 2}
+  - {fileID: 11400000, guid: 6338d05657fe2a74fab9623da1f6f9b1, type: 2}
   inflationRate: 0.01

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49f711aa724ce5c4b910e8857dfc3f98, type: 3}
   m_Name: "\u041F\u043E\u043C\u043E\u0449\u044C \u043C\u0430\u043C\u0435"
   m_EditorClassIdentifier: Assembly-CSharp::ExpenseData
-  expenseName: "\u0421\u0432\u044F\u0437\u044C"
+  expenseName: "\u041F\u043E\u043C\u043E\u0449\u044C \u043C\u0430\u043C\u0435"
   baseCost: 4637
   isMandatory: 1
   isEnabled: 1

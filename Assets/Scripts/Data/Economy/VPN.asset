@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49f711aa724ce5c4b910e8857dfc3f98, type: 3}
   m_Name: VPN
   m_EditorClassIdentifier: Assembly-CSharp::ExpenseData
-  expenseName: "\u0421\u0432\u044F\u0437\u044C"
+  expenseName: VPN
   baseCost: 200
   isMandatory: 1
   isEnabled: 1
