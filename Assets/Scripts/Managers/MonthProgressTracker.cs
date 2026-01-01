@@ -8,7 +8,9 @@ public class MonthProgressTracker : MonoBehaviour
 
     private int currentDisplayedMonth = 1;
     private float[] monthTransitionPoints;
+    private float[] monthEndPoints;
     private bool[] monthEntered;
+    private bool[] monthCompleted;
     private MonthConfiguration[] monthConfigurations;
 
     void Start()
@@ -51,11 +53,14 @@ public class MonthProgressTracker : MonoBehaviour
         float bufferZone = levelBuilder.MonthBufferZone;
 
         monthTransitionPoints = new float[monthConfigurations.Length];
+        monthEndPoints = new float[monthConfigurations.Length];
         monthEntered = new bool[monthConfigurations.Length];
-
-        float currentMonthStartZ = startSafeZone;
+        monthCompleted = new bool[monthConfigurations.Length];
 
         monthEntered[0] = true;
+        monthCompleted[0] = false;
+
+        float currentMonthStartZ = startSafeZone;
 
         for (int i = 0; i < monthConfigurations.Length; i++)
         {
@@ -67,10 +72,11 @@ public class MonthProgressTracker : MonoBehaviour
                 continue;
             }
 
+            float lastObstacleZ = GetLastObstacleZ(currentMonth, currentMonthStartZ);
+            monthEndPoints[i] = lastObstacleZ + 10f;
+
             if (i < monthConfigurations.Length - 1)
             {
-                float lastObstacleZ = GetLastObstacleZ(currentMonth, currentMonthStartZ);
-
                 float nextMonthStartZ = currentMonthStartZ + currentMonth.segmentLength + bufferZone;
                 MonthConfiguration nextMonth = monthConfigurations[i + 1];
 
@@ -78,8 +84,9 @@ public class MonthProgressTracker : MonoBehaviour
 
                 monthTransitionPoints[i + 1] = (lastObstacleZ + firstNextObstacleZ) / 2f;
                 monthEntered[i + 1] = false;
+                monthCompleted[i + 1] = false;
 
-                Debug.Log($"[MonthProgressTracker] Month {i + 1}→{i + 2} transition: Last obstacle at Z={lastObstacleZ:F1}, First next at Z={firstNextObstacleZ:F1}, Transition at Z={monthTransitionPoints[i + 1]:F1}");
+                Debug.Log($"[MonthProgressTracker] Month {i + 1}: End at Z={monthEndPoints[i]:F1}, Transition to {i + 2} at Z={monthTransitionPoints[i + 1]:F1}");
 
                 currentMonthStartZ = nextMonthStartZ;
             }
@@ -130,6 +137,15 @@ public class MonthProgressTracker : MonoBehaviour
 
         float playerZ = playerTransform.position.z;
 
+        for (int i = 0; i < monthConfigurations.Length; i++)
+        {
+            if (!monthCompleted[i] && playerZ >= monthEndPoints[i])
+            {
+                CompleteMonth(i + 1);
+                monthCompleted[i] = true;
+            }
+        }
+
         for (int i = 1; i < monthTransitionPoints.Length; i++)
         {
             if (!monthEntered[i] && playerZ >= monthTransitionPoints[i])
@@ -137,6 +153,20 @@ public class MonthProgressTracker : MonoBehaviour
                 EnterNewMonth(i + 1);
                 monthEntered[i] = true;
             }
+        }
+    }
+
+    void CompleteMonth(int monthNumber)
+    {
+        Debug.Log($"📅 Month {monthNumber} completed! Showing banking screen...");
+
+        if (EconomicManager.Instance != null)
+        {
+            EconomicManager.Instance.ShowMonthEndScreen();
+        }
+        else
+        {
+            Debug.LogError("EconomicManager not found!");
         }
     }
 

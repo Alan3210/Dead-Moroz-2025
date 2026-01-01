@@ -1,54 +1,54 @@
-using UnityEngine;
+    using UnityEngine;
 
-public class CameraFollow : MonoBehaviour
-{
-    [Header("Target Settings")]
-    [SerializeField] private Transform target;
-    [SerializeField] private Vector3 offset = new Vector3(0, 5, -8);
-    [SerializeField] private bool followX = false;
-
-    private bool isFollowing = true;
-
-    [Header("Smooth Follow")]
-    [SerializeField] private float followLagAmount = 0.1f;
-
-    [Header("Dynamic Tilt")]
-    [SerializeField] private bool enableTilt = true;
-    [SerializeField] private float tiltAmount = 3f;
-    [SerializeField] private float tiltSpeed = 4f;
-
-    [Header("Look Ahead")]
-    [SerializeField] private bool enableLookAhead = true;
-    [SerializeField] private float lookAheadDistance = 2f;
-    [SerializeField] private float lookAheadSpeed = 3f;
-
-    [Header("Subtle Movement Shake")]
-    [SerializeField] private bool enableMovementShake = true;
-    [SerializeField] private float shakeFrequency = 2f;
-    [SerializeField] private float shakeMagnitude = 0.03f;
-
-    private CameraShake cameraShake;
-    private Vector3 velocity = Vector3.zero;
-    private Vector3 lastTargetPosition;
-    private float currentTiltZ;
-    private float targetTiltZ;
-    private float currentLookAheadX;
-    private float targetLookAheadX;
-    private float shakeTime;
-
-    private void Start()
+    public class CameraFollow : MonoBehaviour
     {
-        cameraShake = GetComponent<CameraShake>();
+        [Header("Target Settings")]
+        [SerializeField] private Transform target;
+        [SerializeField] private Vector3 offset = new Vector3(0, 5, -8);
+        [SerializeField] private bool followX = false;
 
-        if (target != null)
+        private bool isFollowing = true;
+
+        [Header("Smooth Follow")]
+        [SerializeField] private float followLagAmount = 0.1f;
+
+        [Header("Dynamic Tilt")]
+        [SerializeField] private bool enableTilt = true;
+        [SerializeField] private float tiltAmount = 3f;
+        [SerializeField] private float tiltSpeed = 4f;
+
+        [Header("Look Ahead")]
+        [SerializeField] private bool enableLookAhead = true;
+        [SerializeField] private float lookAheadDistance = 2f;
+        [SerializeField] private float lookAheadSpeed = 3f;
+
+        [Header("Subtle Movement Shake")]
+        [SerializeField] private bool enableMovementShake = true;
+        [SerializeField] private float shakeFrequency = 2f;
+        [SerializeField] private float shakeMagnitude = 0.03f;
+
+        private CameraShake cameraShake;
+        private Vector3 velocity = Vector3.zero;
+        private Vector3 lastTargetPosition;
+        private float currentTiltZ;
+        private float targetTiltZ;
+        private float currentLookAheadX;
+        private float targetLookAheadX;
+        private float shakeTime;
+
+        private void Start()
         {
-            lastTargetPosition = target.position;
+            cameraShake = GetComponent<CameraShake>();
+
+            if (target != null)
+            {
+                lastTargetPosition = target.position;
+            }
         }
-    }
 
     void LateUpdate()
     {
-        if (target == null) return;
+        if (target == null || !isFollowing || Time.timeScale == 0f) return;
 
         CalculateDynamicEffects();
 
@@ -61,10 +61,6 @@ public class CameraFollow : MonoBehaviour
             Mathf.Infinity,
             Time.deltaTime
         );
-
-        if (target == null || !isFollowing) return;
-
-        CalculateDynamicEffects();
 
         if (cameraShake != null && cameraShake.IsShaking())
         {
@@ -85,79 +81,80 @@ public class CameraFollow : MonoBehaviour
 
         lastTargetPosition = target.position;
     }
+
     public void StopFollowing()
-    {
-        isFollowing = false;
-    }
-
-    public void StartFollowing()
-    {
-        isFollowing = true;
-    }
-
-    private void CalculateDynamicEffects()
-    {
-        Vector3 targetVelocity = (target.position - lastTargetPosition) / Time.deltaTime;
-
-        if (enableTilt)
         {
-            if (Mathf.Abs(targetVelocity.x) > 0.1f)
-            {
-                targetTiltZ = -targetVelocity.x * tiltAmount;
-            }
-            else
-            {
-                targetTiltZ = 0f;
-            }
-
-            currentTiltZ = Mathf.Lerp(currentTiltZ, targetTiltZ, tiltSpeed * Time.deltaTime);
+            isFollowing = false;
         }
 
-        if (enableLookAhead)
+        public void StartFollowing()
         {
-            if (Mathf.Abs(targetVelocity.x) > 0.1f)
+            isFollowing = true;
+        }
+
+        private void CalculateDynamicEffects()
+        {
+            Vector3 targetVelocity = (target.position - lastTargetPosition) / Time.deltaTime;
+
+            if (enableTilt)
             {
-                targetLookAheadX = Mathf.Sign(targetVelocity.x) * lookAheadDistance;
+                if (Mathf.Abs(targetVelocity.x) > 0.1f)
+                {
+                    targetTiltZ = -targetVelocity.x * tiltAmount;
+                }
+                else
+                {
+                    targetTiltZ = 0f;
+                }
+
+                currentTiltZ = Mathf.Lerp(currentTiltZ, targetTiltZ, tiltSpeed * Time.deltaTime);
             }
-            else
+
+            if (enableLookAhead)
             {
-                targetLookAheadX = 0f;
+                if (Mathf.Abs(targetVelocity.x) > 0.1f)
+                {
+                    targetLookAheadX = Mathf.Sign(targetVelocity.x) * lookAheadDistance;
+                }
+                else
+                {
+                    targetLookAheadX = 0f;
+                }
+
+                currentLookAheadX = Mathf.Lerp(currentLookAheadX, targetLookAheadX, lookAheadSpeed * Time.deltaTime);
+            }
+        }
+
+        private Vector3 CalculateDesiredPosition()
+        {
+            Vector3 desiredPosition = target.position + offset;
+
+            if (!followX)
+            {
+                desiredPosition.x = offset.x;
             }
 
-            currentLookAheadX = Mathf.Lerp(currentLookAheadX, targetLookAheadX, lookAheadSpeed * Time.deltaTime);
+            if (enableLookAhead)
+            {
+                desiredPosition.x += currentLookAheadX;
+            }
+
+            return desiredPosition;
         }
-    }
 
-    private Vector3 CalculateDesiredPosition()
-    {
-        Vector3 desiredPosition = target.position + offset;
-
-        if (!followX)
+        private void ApplyTilt()
         {
-            desiredPosition.x = offset.x;
+            Quaternion tiltRotation = Quaternion.Euler(0f, 0f, currentTiltZ);
+            transform.rotation = Quaternion.Slerp(transform.rotation, tiltRotation, tiltSpeed * Time.deltaTime);
         }
 
-        if (enableLookAhead)
+        private Vector3 CalculateMovementShake()
         {
-            desiredPosition.x += currentLookAheadX;
+            shakeTime += Time.deltaTime * shakeFrequency;
+
+            float shakeX = Mathf.PerlinNoise(shakeTime, 0f) * 2f - 1f;
+            float shakeY = Mathf.PerlinNoise(0f, shakeTime) * 2f - 1f;
+
+            return new Vector3(shakeX, shakeY, 0f) * shakeMagnitude;
         }
-
-        return desiredPosition;
     }
-
-    private void ApplyTilt()
-    {
-        Quaternion tiltRotation = Quaternion.Euler(0f, 0f, currentTiltZ);
-        transform.rotation = Quaternion.Slerp(transform.rotation, tiltRotation, tiltSpeed * Time.deltaTime);
-    }
-
-    private Vector3 CalculateMovementShake()
-    {
-        shakeTime += Time.deltaTime * shakeFrequency;
-
-        float shakeX = Mathf.PerlinNoise(shakeTime, 0f) * 2f - 1f;
-        float shakeY = Mathf.PerlinNoise(0f, shakeTime) * 2f - 1f;
-
-        return new Vector3(shakeX, shakeY, 0f) * shakeMagnitude;
-    }
-}

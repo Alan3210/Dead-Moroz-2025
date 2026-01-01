@@ -13,6 +13,7 @@ public class EconomicManager : MonoBehaviour
     private const float LOAN_THRESHOLD = 5000f;
 
     [Header("Current State")]
+    [SerializeField] private float earnedMonthIncome = 0f;
     [SerializeField] private float currentMonthIncome = 0f;
     [SerializeField] private float totalLifetimeIncome = 0f;
     [SerializeField] private int currentMonth = 1;
@@ -20,9 +21,18 @@ public class EconomicManager : MonoBehaviour
     [Header("Loans")]
     private List<Loan> activeLoans = new List<Loan>();
 
+    public float EarnedMonthIncome => earnedMonthIncome;
     public float CurrentMonthIncome => currentMonthIncome;
     public int CurrentMonth => currentMonth;
     public List<Loan> ActiveLoans => activeLoans;
+
+    [ContextMenu("Test Banking Screen")]
+    void TestBankingScreen()
+    {
+        earnedMonthIncome = 50000f;
+        currentMonthIncome = 50000f;
+        ShowMonthEndScreen();
+    }
 
     void Awake()
     {
@@ -44,10 +54,11 @@ public class EconomicManager : MonoBehaviour
 
     public void AddMoney(float amount)
     {
+        earnedMonthIncome += amount;
         currentMonthIncome += amount;
         totalLifetimeIncome += amount;
 
-        Debug.Log($"💰 Collected {amount}₽ | Month total: {currentMonthIncome:F0}₽");
+        Debug.Log($"💰 Collected {amount}₽ | Earned: {earnedMonthIncome:F0}₽ | Available: {currentMonthIncome:F0}₽");
     }
 
     public void ShowMonthEndScreen()
@@ -74,33 +85,21 @@ public class EconomicManager : MonoBehaviour
         bool canAfford = balance >= 0;
         bool needsLoan = balance < -LOAN_THRESHOLD;
 
-        Debug.Log("═══════════════════════════════════════════");
-        Debug.Log($"<color=cyan>📊 MONTH {currentMonth} FINANCIAL SUMMARY</color>");
-        Debug.Log("═══════════════════════════════════════════");
-        Debug.Log($"<color=green>💵 Income: +{currentMonthIncome:F0}₽</color>");
-        Debug.Log("<color=red>Expenses:</color>");
-
-        foreach (ExpenseItem expense in allExpenses)
+        if (BankingScreenController.Instance != null)
         {
-            Debug.Log($"  • {expense.name}: -{expense.amount:F0}₽");
-        }
-
-        Debug.Log($"Total Expenses: -{totalExpenses:F0}₽");
-
-        if (balance >= 0)
-        {
-            Debug.Log($"<color=green>✅ Balance: +{balance:F0}₽ - Живём пока</color>");
-        }
-        else if (needsLoan)
-        {
-            Debug.Log($"<color=red>❌ Deficit: {balance:F0}₽ - Нужен займ!</color>");
+            BankingScreenController.Instance.ShowBankingScreen(
+                income: earnedMonthIncome,
+                expenses: allExpenses.ToArray(),
+                balance: balance,
+                monthNumber: currentMonth,
+                canAffordExpenses: canAfford,
+                showLoanButton: needsLoan
+            );
         }
         else
         {
-            Debug.Log($"<color=yellow>⚠️ Deficit: {balance:F0}₽</color>");
+            Debug.LogError("❌ BankingScreenController.Instance is NULL! Make sure BankingScreenCanvas has the component and is active.");
         }
-
-        Debug.Log("═══════════════════════════════════════════");
     }
 
     public void TakeLoan(float amount)
@@ -116,6 +115,7 @@ public class EconomicManager : MonoBehaviour
     public void AdvanceToNextMonth()
     {
         currentMonth++;
+        earnedMonthIncome = 0f;
         currentMonthIncome = 0f;
 
         Debug.Log($"📅 Advanced to Month {currentMonth}");
