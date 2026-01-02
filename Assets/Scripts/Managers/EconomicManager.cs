@@ -98,8 +98,19 @@ public class EconomicManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("❌ BankingScreenController.Instance is NULL! Make sure BankingScreenCanvas has the component and is active.");
+            Debug.LogError("❌ BankingScreenController.Instance is NULL! Checks:" +
+                "\n1. Is BankingScreenCanvas GameObject ENABLED in hierarchy?" +
+                "\n2. Does BankingScreenCanvas have BankingScreenController component?" +
+                "\n3. Is BankingScreenController component ENABLED (checked)?" +
+                "\n4. Check the Awake() method didn't fail (check for other errors above)");
+
+            // Fallback: Continue game without banking screen
+            if (Instance != null)
+            {
+                Instance.AdvanceToNextMonth();
+            }
         }
+
     }
 
     public void TakeLoan(float amount)

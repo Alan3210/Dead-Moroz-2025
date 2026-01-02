@@ -35,6 +35,12 @@ public class BankingScreenController : MonoBehaviour
     [SerializeField] private AudioClip loanTakenSFX;
     [SerializeField] private AudioClip buttonClickSFX;
 
+    [Header("Animation")]
+    [SerializeField] private Animator panelAnimator;
+
+    [SerializeField] private Animator backgroundOverlayAnimator;
+
+
     private bool isShowingScreen = false;
     private float currentDeficit = 0f;
     private float previousTimeScale = 1f;
@@ -51,7 +57,15 @@ public class BankingScreenController : MonoBehaviour
 
     void Start()
     {
-        bankingPanel.SetActive(false);
+        if (bankingPanel != null)
+        {
+            bankingPanel.SetActive(false);
+        }
+
+        if (backgroundOverlayAnimator != null)
+        {
+            backgroundOverlayAnimator.gameObject.SetActive(false);
+        }
 
         if (loanButton != null)
         {
@@ -64,13 +78,32 @@ public class BankingScreenController : MonoBehaviour
         }
     }
 
+
     public void ShowBankingScreen(float income, ExpenseItem[] expenses, float balance, int monthNumber, bool canAffordExpenses, bool showLoanButton)
     {
         if (isShowingScreen) return;
 
         currentDeficit = Mathf.Abs(balance);
 
+        // Ensure overlay is visible
+        if (backgroundOverlayAnimator != null)
+        {
+            backgroundOverlayAnimator.gameObject.SetActive(true);
+        }
+
         bankingPanel.SetActive(true);
+
+        if (panelAnimator != null)
+        {
+            panelAnimator.SetTrigger("Show");
+        }
+
+        if (backgroundOverlayAnimator != null)
+        {
+            backgroundOverlayAnimator.SetTrigger("Show");
+        }
+
+
         isShowingScreen = true;
 
         previousTimeScale = Time.timeScale;
@@ -206,15 +239,32 @@ public class BankingScreenController : MonoBehaviour
         {
             EconomicManager.Instance.AdvanceToNextMonth();
         }
+
+        if (backgroundOverlayAnimator != null)
+        {
+            backgroundOverlayAnimator.SetTrigger("Hide");
+        }
+
     }
 
     public void HideBankingScreen()
     {
-        bankingPanel.SetActive(false);
-        isShowingScreen = false;
+        if (panelAnimator != null)
+        {
+            panelAnimator.SetTrigger("Hide");
+        }
 
+        if (backgroundOverlayAnimator != null)
+        {
+            backgroundOverlayAnimator.SetTrigger("Hide");
+        }
+
+        isShowingScreen = false;
         Time.timeScale = previousTimeScale;
+
+        StartCoroutine(DisablePanelAfterAnimation(0.4f));
     }
+
 
     void ClearExpenseLines()
     {
@@ -228,4 +278,21 @@ public class BankingScreenController : MonoBehaviour
     {
         return isShowingScreen;
     }
+
+    private IEnumerator DisablePanelAfterAnimation(float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+
+        if (bankingPanel != null)
+        {
+            bankingPanel.SetActive(false);
+        }
+
+        if (backgroundOverlayAnimator != null)
+        {
+            backgroundOverlayAnimator.gameObject.SetActive(false);
+        }
+    }
+
+
 }
