@@ -130,6 +130,14 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void PlaySFX(AudioClip clip, float volumeScale)
+    {
+        if (clip != null && sfxSource != null)
+        {
+            sfxSource.PlayOneShot(clip, volumeScale);
+        }
+    }
+
     public void PlayMusic(AudioClip musicClip)
     {
         if (musicClip != null && musicSource != null)

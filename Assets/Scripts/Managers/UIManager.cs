@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
 
     [Header("UI Panels")]
     [SerializeField] private GameObject mainMenuPanel;
+    [SerializeField] private GameObject creditsPanel;
     [SerializeField] private GameObject gameplayHUDPanel;
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject gameOverPanel;
@@ -22,6 +23,10 @@ public class UIManager : MonoBehaviour
 
     [Header("Main Menu Elements")]
     [SerializeField] private Button startButton;
+    [SerializeField] private Button creditsButton;
+
+    [Header("Credits Elements")]
+    [SerializeField] private Button backFromCreditsButton;
 
     [Header("Pause Elements")]
     [SerializeField] private Button resumeButton;
@@ -44,6 +49,7 @@ public class UIManager : MonoBehaviour
 
     [Header("Audio")]
     [SerializeField] private AudioClip buttonClickSFX;
+    [SerializeField] private AudioClip mainMenuMusic;
 
 
     private bool isPaused = false;
@@ -99,6 +105,15 @@ public class UIManager : MonoBehaviour
     {
         if (startButton != null)
             startButton.onClick.AddListener(OnStartGame);
+
+        if (creditsButton != null)
+            creditsButton.onClick.AddListener(OnShowCredits);
+
+        if (backFromCreditsButton != null)
+            backFromCreditsButton.onClick.AddListener(OnBackToMainMenu);
+
+        if (resumeButton != null)
+            resumeButton.onClick.AddListener(OnResumeGame);
 
         if (resumeButton != null)
             resumeButton.onClick.AddListener(OnResumeGame);
@@ -169,7 +184,13 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 1f;
         isPaused = false;
 
+        // Play main menu music
+        if (AudioManager.Instance != null && mainMenuMusic != null)
+        {
+            AudioManager.Instance.PlayMusic(mainMenuMusic);
+        }
     }
+
 
     public void ShowGameplayHUD()
     {
@@ -186,7 +207,10 @@ public class UIManager : MonoBehaviour
 
         Time.timeScale = 1f;
         isPaused = false;
+
+        // Music change is handled by GameManager.StartGame()
     }
+
 
 
     public void ShowPauseMenu()
@@ -261,6 +285,7 @@ public class UIManager : MonoBehaviour
     private void HideAllPanels()
     {
         if (mainMenuPanel != null) mainMenuPanel.SetActive(false);
+        if (creditsPanel != null) creditsPanel.SetActive(false);
         if (gameplayHUDPanel != null) gameplayHUDPanel.SetActive(false);
         if (pausePanel != null) pausePanel.SetActive(false);
         if (gameOverPanel != null) gameOverPanel.SetActive(false);
@@ -304,4 +329,31 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
+    private void OnShowCredits()
+    {
+        PlayButtonClickSound();
+        ShowCredits();
+    }
+
+    private void OnBackToMainMenu()
+    {
+        PlayButtonClickSound();
+        ShowMainMenu();
+    }
+
+    public void ShowCredits()
+    {
+        HideAllPanels();
+        if (creditsPanel != null)
+            creditsPanel.SetActive(true);
+
+        Time.timeScale = 1f;
+        isPaused = false;
+
+        // Keep main menu music playing (don't stop it)
+        // Music is already playing from ShowMainMenu()
+    }
+
+
 }
