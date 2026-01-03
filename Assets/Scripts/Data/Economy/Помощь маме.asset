@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: "\u041F\u043E\u043C\u043E\u0449\u044C \u043C\u0430\u043C\u0435"
   m_EditorClassIdentifier: Assembly-CSharp::ExpenseData
   expenseName: "\u041F\u043E\u043C\u043E\u0449\u044C \u043C\u0430\u043C\u0435"
-  baseCost: 4637
+  baseCost: 4437
   isMandatory: 1
   isEnabled: 1
