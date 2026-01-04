@@ -14,15 +14,15 @@ public class MonthVisualManager : MonoBehaviour
     private int currentMonth = -1;
     private Coroutine transitionCoroutine;
 
-    void Start()
-    {
-        if (directionalLight == null)
-        {
-            directionalLight = FindFirstObjectByType<Light>();
-        }
+    //void Start()
+    //{
+    //    if (directionalLight == null)
+    //    {
+    //        directionalLight = FindFirstObjectByType<Light>();
+    //    }
 
-        ApplyMonthVisuals(0, false);
-    }
+    //    ApplyMonthVisuals(0, false);
+    //}
 
     public void ApplyMonthVisuals(int monthIndex, bool animated = true)
     {

@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
 
         if (monthVisualManager != null)
         {
-            monthVisualManager.ApplyMonthVisuals(0, false);
+            //monthVisualManager.ApplyMonthVisuals(0, false);
         }
     }
 
@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
 
         if (monthVisualManager != null)
         {
-            monthVisualManager.ApplyMonthVisuals(0, false);
+            //monthVisualManager.ApplyMonthVisuals(0, false);
         }
 
         if (AudioManager.Instance != null)
@@ -154,7 +154,7 @@ public class GameManager : MonoBehaviour
 
         if (monthVisualManager != null)
         {
-            monthVisualManager.ApplyMonthVisuals(currentMonth - 1, true);
+            //monthVisualManager.ApplyMonthVisuals(currentMonth - 1, true);
         }
 
         if (UIManager.Instance != null)

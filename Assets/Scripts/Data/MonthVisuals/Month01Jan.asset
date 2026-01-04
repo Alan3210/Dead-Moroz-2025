@@ -15,13 +15,13 @@ MonoBehaviour:
   monthName: "\u042F\u043D\u0432\u0430\u0440\u044C"
   monthNumber: 1
   skyboxMaterial: {fileID: 2100000, guid: 3f506143f3cfe0f4aa03834de89c315c, type: 2}
-  ambientColor: {r: 0.19607843, g: 0.27450982, b: 0.39215687, a: 1}
+  ambientColor: {r: 0.5283019, g: 0.0473478, b: 0.22478384, a: 1}
   ambientIntensity: 0.8
   useFog: 1
   fogColor: {r: 0.78431374, g: 0.8627451, b: 1, a: 1}
   fogDensity: 0.015
   lightColor: {r: 0.9019608, g: 0.9411765, b: 1, a: 1}
-  lightIntensity: 2
+  lightIntensity: 1.7
   themeDescription: "\u0413\u043B\u0443\u0431\u043E\u043A\u0430\u044F \u0437\u0438\u043C\u0430.
     \u0425\u043E\u043B\u043E\u0434\u043D\u0430\u044F, \u0442\u0435\u043C\u043D\u0430\u044F
     \u043D\u043E\u0447\u044C \u0441 \u043F\u043B\u043E\u0442\u043D\u044B\u043C \u0442\u0443\u043C\u0430\u043D\u043E\u043C."
