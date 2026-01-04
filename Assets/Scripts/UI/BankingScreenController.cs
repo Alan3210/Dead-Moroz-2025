@@ -43,7 +43,6 @@ public class BankingScreenController : MonoBehaviour
 
     private bool isShowingScreen = false;
     private float currentDeficit = 0f;
-    private float previousTimeScale = 1f;
 
     void Awake()
     {
@@ -93,21 +92,37 @@ public class BankingScreenController : MonoBehaviour
 
         bankingPanel.SetActive(true);
 
+        // Reset animator to default state
+        if (panelAnimator != null)
+        {
+            panelAnimator.Rebind();
+            panelAnimator.Update(0f);
+        }
+
+        // Reset transform and canvas group to initial state
+        RectTransform panelRect = bankingPanel.GetComponent<RectTransform>();
+        if (panelRect != null)
+        {
+            panelRect.localScale = Vector3.one * 1.7f;
+        }
+
+        CanvasGroup canvasGroup = bankingPanel.GetComponent<CanvasGroup>();
+        if (canvasGroup != null)
+        {
+            canvasGroup.alpha = 1f;
+        }
+
         if (panelAnimator != null)
         {
             panelAnimator.SetTrigger("Show");
         }
 
-        if (backgroundOverlayAnimator != null)
-        {
-            backgroundOverlayAnimator.SetTrigger("Show");
-        }
 
 
         isShowingScreen = true;
 
-        previousTimeScale = Time.timeScale;
         Time.timeScale = slowMotionTimeScale;
+
 
         float earnedIncome = EconomicManager.Instance != null ? EconomicManager.Instance.EarnedMonthIncome : income;
         StartCoroutine(AnimateBankingScreen(earnedIncome, expenses, balance, monthNumber, showLoanButton));
@@ -144,7 +159,7 @@ public class BankingScreenController : MonoBehaviour
             TextMeshProUGUI amountText = lineItem.transform.Find("ExpenseAmountText").GetComponent<TextMeshProUGUI>();
 
             nameText.text = expense.name;
-            amountText.text = $"-{expense.amount:F0} руб";
+            amountText.text = $"-{expense.amount:F0}";
             amountText.color = negativeColor;
 
             totalExpenses += expense.amount;
@@ -190,7 +205,7 @@ public class BankingScreenController : MonoBehaviour
             if (loanButtonText != null)
             {
                 float loanAmount = Mathf.Ceil(currentDeficit / 1000f) * 1000f;
-                loanButtonText.text = $"ВЗЯТЬ ЗАЙМ {loanAmount:F0} руб\n(15% в месяц)";
+                loanButtonText.text = $"ВЗЯТЬ ЗАЙМ {loanAmount:F0}";
             }
         }
 
@@ -261,10 +276,11 @@ public class BankingScreenController : MonoBehaviour
         }
 
         isShowingScreen = false;
-        Time.timeScale = previousTimeScale;
+        Time.timeScale = 1f;
 
-        StartCoroutine(DisablePanelAfterAnimation(0.4f));
+        StartCoroutine(DisablePanelAfterAnimation(0.6f)); // Increased to allow animation to finish
     }
+
 
 
     void ClearExpenseLines()
@@ -282,7 +298,25 @@ public class BankingScreenController : MonoBehaviour
 
     private IEnumerator DisablePanelAfterAnimation(float delay)
     {
-        yield return new WaitForSecondsRealtime(delay);
+        yield return new WaitForSeconds(delay); // Use regular WaitForSeconds, NOT Realtime
+
+        // Force reset before disabling to ensure clean state next time
+        RectTransform panelRect = bankingPanel.GetComponent<RectTransform>();
+        if (panelRect != null)
+        {
+            panelRect.localScale = Vector3.one * 1.7f;
+        }
+
+        CanvasGroup canvasGroup = bankingPanel.GetComponent<CanvasGroup>();
+        if (canvasGroup != null)
+        {
+            canvasGroup.alpha = 1f;
+        }
+
+        if (panelAnimator != null)
+        {
+            panelAnimator.Rebind();
+        }
 
         if (bankingPanel != null)
         {
@@ -294,6 +328,7 @@ public class BankingScreenController : MonoBehaviour
             backgroundOverlayAnimator.gameObject.SetActive(false);
         }
     }
+
     private string GetMonthNameInRussian(int monthNumber)
     {
         switch (monthNumber)

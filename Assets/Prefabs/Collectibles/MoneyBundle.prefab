@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e85b17414fc839f4786499075c62e8d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoneyCollectible
-  value: 10
+  value: 8080
   rotationSpeed: 140
   bobSpeed: 2
   bobHeight: 0.3

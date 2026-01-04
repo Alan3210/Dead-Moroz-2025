@@ -50,7 +50,21 @@ public class EconomicManager : MonoBehaviour
         {
             Debug.LogError("EconomicManager: MonthlyExpenses configuration not assigned!");
         }
+
+        InitializeEconomy();
     }
+
+    private void InitializeEconomy()
+    {
+        earnedMonthIncome = 0f;
+        currentMonthIncome = 0f;
+        totalLifetimeIncome = 0f;
+        currentMonth = 1;
+        activeLoans.Clear();
+
+        Debug.Log("💰 Economic system initialized");
+    }
+
 
     public void AddMoney(float amount)
     {
@@ -60,6 +74,18 @@ public class EconomicManager : MonoBehaviour
 
         Debug.Log($"💰 Collected {amount}₽ | Earned: {earnedMonthIncome:F0}₽ | Available: {currentMonthIncome:F0}₽");
     }
+
+    public void ResetEconomy()
+    {
+        earnedMonthIncome = 0f;
+        currentMonthIncome = 0f;
+        totalLifetimeIncome = 0f;
+        currentMonth = 1;
+        activeLoans.Clear();
+
+        Debug.Log("💰 Economy reset for new game");
+    }
+
 
     public void ShowMonthEndScreen()
     {

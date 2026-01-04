@@ -76,6 +76,17 @@ public class GameManager : MonoBehaviour
         UpdateSpeed();
         ApplySpeedToPlayer();
 
+        // ADD THIS:
+        if (EconomicManager.Instance != null)
+        {
+            EconomicManager.Instance.ResetEconomy(); // We'll create this method
+        }
+
+        if (MonthlyMoneyManager.Instance != null)
+        {
+            MonthlyMoneyManager.Instance.ActivateMonthMoney(currentMonth);
+        }
+
         if (PassedObstaclesTracker.Instance != null)
         {
             PassedObstaclesTracker.Instance.ClearPassedObstacles();
@@ -151,6 +162,11 @@ public class GameManager : MonoBehaviour
         currentMonth++;
         UpdateSpeed();
         ApplySpeedToPlayer();
+
+        if (MonthlyMoneyManager.Instance != null)
+        {
+            MonthlyMoneyManager.Instance.ActivateMonthMoney(currentMonth);
+        }
 
         if (monthVisualManager != null)
         {
