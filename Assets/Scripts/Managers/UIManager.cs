@@ -9,6 +9,9 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
+    [Header("Mobile Controls")]
+    [SerializeField] private MobileInputButtons mobileInputButtons;
+
     [Header("UI Panels")]
     [SerializeField] private GameObject mainMenuPanel;
     [SerializeField] private GameObject creditsPanel;
@@ -200,6 +203,13 @@ public class UIManager : MonoBehaviour
 
     public void ShowMainMenu()
     {
+
+        if (mobileInputButtons != null)
+        {
+            mobileInputButtons.HideControls();
+        }
+
+
         HideAllPanels();
         if (mainMenuPanel != null)
             mainMenuPanel.SetActive(true);
@@ -237,6 +247,11 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 1f;
         isPaused = false;
 
+        if (mobileInputButtons != null)
+        {
+            mobileInputButtons.ShowControls();
+        }
+
         // Music change is handled by GameManager.StartGame()
     }
 
@@ -244,6 +259,12 @@ public class UIManager : MonoBehaviour
 
     public void ShowPauseMenu()
     {
+        if (mobileInputButtons != null)
+        {
+            mobileInputButtons.HideControls();
+        }
+
+
         if (pausePanel != null)
             pausePanel.SetActive(true);
 
@@ -253,6 +274,12 @@ public class UIManager : MonoBehaviour
 
     public void ShowGameOver(int monthReached)
     {
+        if (mobileInputButtons != null)
+        {
+            mobileInputButtons.HideControls();
+        }
+
+
         HideAllPanels();
         if (gameOverPanel != null)
         {
@@ -312,6 +339,12 @@ public class UIManager : MonoBehaviour
 
     public void ShowVictory()
     {
+        if (mobileInputButtons != null)
+        {
+            mobileInputButtons.HideControls();
+        }
+
+
         HideAllPanels();
         if (victoryPanel != null)
         {
@@ -417,6 +450,12 @@ public class UIManager : MonoBehaviour
 
         Time.timeScale = 1f;
         isPaused = false;
+
+        if (mobileInputButtons != null)
+        {
+            mobileInputButtons.ShowControls();
+        }
+
     }
 
     private void OnRestartGame()

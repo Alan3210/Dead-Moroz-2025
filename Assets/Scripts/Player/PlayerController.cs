@@ -126,7 +126,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
+    public void ChangeLaneViaButton(int direction)
+    {
+        ChangeLane(direction);
+    }
 
 
     public void IncreaseSpeed(float amount)
