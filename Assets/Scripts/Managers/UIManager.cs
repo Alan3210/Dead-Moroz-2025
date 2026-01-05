@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -35,12 +35,15 @@ public class UIManager : MonoBehaviour
 
     [Header("Game Over Elements")]
     [SerializeField] private TextMeshProUGUI gameOverMonthText;
+    [SerializeField] private TextMeshProUGUI monthReachedText;        // ADD THIS
+    [SerializeField] private TextMeshProUGUI highScoreText;           // ADD THIS
     [SerializeField] private Button restartFromGameOverButton;
     [SerializeField] private Button quitFromGameOverButton;
     [SerializeField] private PassedObstaclesList passedObstaclesList;
 
     [Header("Victory Elements")]
     [SerializeField] private TextMeshProUGUI victoryMessageText;
+    [SerializeField] private TextMeshProUGUI finalStatsText;          // ADD THIS
     [SerializeField] private Button restartFromVictoryButton;
     [SerializeField] private Button quitFromVictoryButton;
 
@@ -50,7 +53,10 @@ public class UIManager : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioClip buttonClickSFX;
     [SerializeField] private AudioClip mainMenuMusic;
-
+    [SerializeField] private AudioClip gameOverMusic;      // ADD THIS
+    [SerializeField] private AudioClip victoryMusic;       // ADD THIS
+    [SerializeField] private AudioClip gameOverSFX;        // ADD THIS (optional)
+    [SerializeField] private AudioClip victorySFX;         // ADD THIS (optional)
 
     private bool isPaused = false;
     private Keyboard keyboard;
@@ -97,6 +103,29 @@ public class UIManager : MonoBehaviour
                 controlsPanel.SetActive(false);
                 showingControls = false;
             }
+        }
+    }
+
+    [ContextMenu("Test Passed Obstacles List")]
+    private void TestPassedObstaclesList()
+    {
+        List<string> testObstacles = new List<string>
+    {
+        "Тест препятствие 1",
+        "Тест препятствие 2",
+        "Тест препятствие 3",
+        "Тест препятствие 4",
+        "Тест препятствие 5",
+        "Тест препятствие 6",
+        "Тест препятствие 7",
+        "Тест препятствие 8",
+        "Тест препятствие 9",
+        "Тест препятствие 10"
+    };
+
+        if (passedObstaclesList != null)
+        {
+            passedObstaclesList.DisplayPassedObstacles(testObstacles);
         }
     }
 
@@ -152,12 +181,12 @@ public class UIManager : MonoBehaviour
     private string GetMonthName(int month)
     {
         string[] monthNames = {
-        "������", "�������", "����", "������",
-        "���", "����", "����", "������",
-        "��������", "�������", "������", "�������"
+        "Январь", "Февраль", "Март", "Апрель",
+        "Май", "Июнь", "Июль", "Август",
+        "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"
     };
 
-        return month >= 1 && month <= 12 ? monthNames[month - 1] : "����������� �����";
+        return month >= 1 && month <= 12 ? monthNames[month - 1] : "Неизвестный месяц";
     }
 
 
@@ -230,19 +259,55 @@ public class UIManager : MonoBehaviour
             gameOverPanel.SetActive(true);
         }
 
-        Debug.Log("[UIManager] ShowGameOver called");
-        Debug.Log($"[UIManager] passedObstaclesList is null: {passedObstaclesList == null}");
-        Debug.Log($"[UIManager] PassedObstaclesTracker.Instance is null: {PassedObstaclesTracker.Instance == null}");
+        // Update month reached text
+        if (monthReachedText != null)
+        {
+            string monthName = GetMonthName(monthReached);
+            monthReachedText.text = $"Вы дожили до: {monthName.ToUpper()}";
+        }
 
+        // Update high score text
+        if (highScoreText != null)
+        {
+            int highScore = GameManager.Instance != null ? GameManager.Instance.HighScore : 0;
+            bool isNewRecord = monthReached > highScore;
+
+            if (isNewRecord)
+            {
+                highScoreText.text = $"🏆 НОВЫЙ РЕКОРД: {monthReached} месяцев!";
+                highScoreText.color = Color.yellow;
+            }
+            else
+            {
+                highScoreText.text = $"Рекорд: {highScore} месяцев";
+                highScoreText.color = Color.white;
+            }
+        }
+
+        // Display passed obstacles
         if (passedObstaclesList != null && PassedObstaclesTracker.Instance != null)
         {
             List<string> passedObstacles = PassedObstaclesTracker.Instance.GetPassedObstacles();
-            Debug.Log($"[UIManager] Passed obstacles count: {passedObstacles.Count}");
             passedObstaclesList.DisplayPassedObstacles(passedObstacles);
+        }
+
+        // Play game over music and SFX
+        if (AudioManager.Instance != null)
+        {
+            if (gameOverSFX != null)
+            {
+                AudioManager.Instance.PlaySFX(gameOverSFX);
+            }
+
+            if (gameOverMusic != null)
+            {
+                AudioManager.Instance.PlayMusic(gameOverMusic);
+            }
         }
 
         Time.timeScale = 0f;
     }
+
 
 
     public void ShowVictory()
@@ -252,14 +317,50 @@ public class UIManager : MonoBehaviour
         {
             victoryPanel.SetActive(true);
 
+            // Update victory message
             if (victoryMessageText != null)
             {
-                victoryMessageText.text = "�����������!\n�� �������� 2025� ���! ������ � ����������?";
+                victoryMessageText.text = "Ну, вывез,\nполучается";
+            }
+
+            // Calculate and display final statistics
+            if (finalStatsText != null)
+            {
+                int totalObstacles = 0;
+                float totalMoney = 0f;
+
+                if (PassedObstaclesTracker.Instance != null)
+                {
+                    totalObstacles = PassedObstaclesTracker.Instance.GetPassedObstacles().Count;
+                }
+
+                if (EconomicManager.Instance != null)
+                {
+                    totalMoney = EconomicManager.Instance.EarnedMonthIncome;
+                }
+
+                finalStatsText.text = $"До встречи в 2026м.\n" +
+                                      $"Утиль сбор на сани сам себя не оплатит";
+            }
+        }
+
+        // Play victory music and SFX
+        if (AudioManager.Instance != null)
+        {
+            if (victorySFX != null)
+            {
+                AudioManager.Instance.PlaySFX(victorySFX);
+            }
+
+            if (victoryMusic != null)
+            {
+                AudioManager.Instance.PlayMusic(victoryMusic);
             }
         }
 
         Time.timeScale = 0f;
     }
+
 
     public void ShowMonthTransition(int month, string monthName)
     {

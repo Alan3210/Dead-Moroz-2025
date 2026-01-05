@@ -1,4 +1,6 @@
+Ôªøusing TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -42,6 +44,14 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
+    void Update()
+    {
+        // DEBUG: Press V to trigger victory
+        if (Keyboard.current != null && Keyboard.current.vKey.wasPressedThisFrame)
+        {
+            TriggerVictory();
+        }
+    }
     private void Start()
     {
         InitializeGame();
@@ -129,6 +139,14 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
         isGameActive = false;
 
+        RecordAllPassedObstacles();
+
+        if (playerController != null)
+        {
+            playerController.StopPlayer();
+        }
+
+
         if (playerController != null)
         {
             playerController.StopPlayer();
@@ -191,12 +209,12 @@ public class GameManager : MonoBehaviour
     private string GetMonthName(int month)
     {
         string[] monthNames = {
-        "ﬂÌ‚‡¸", "‘Â‚‡Î¸", "Ã‡Ú", "¿ÔÂÎ¸",
-        "Ã‡È", "»˛Ì¸", "»˛Î¸", "¿‚„ÛÒÚ",
-        "—ÂÌÚˇ·¸", "ŒÍÚˇ·¸", "ÕÓˇ·¸", "ƒÂÍ‡·¸"
+        "–Ø–Ω–≤–∞—Ä—å", "–§–µ–≤—Ä–∞–ª—å", "–ú–∞—Ä—Ç", "–ê–ø—Ä–µ–ª—å",
+        "–ú–∞–π", "–ò—é–Ω—å", "–ò—é–ª—å", "–ê–≤–≥—É—Å—Ç",
+        "–°–µ–Ω—Ç—è–±—Ä—å", "–û–∫—Ç—è–±—Ä—å", "–ù–æ—è–±—Ä—å", "–î–µ–∫–∞–±—Ä—å"
     };
 
-        return month >= 1 && month <= 12 ? monthNames[month - 1] : "ÕÂËÁ‚ÂÒÚÌ˚È ÏÂÒˇˆ";
+        return month >= 1 && month <= 12 ? monthNames[month - 1] : "–ù–µ–∏–∑–≤–µ—Å—Ç–Ω—ã–π –º–µ—Å—è—Ü";
     }
 
 
@@ -232,5 +250,93 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.ShowVictory();
         }
     }
+    private void RecordAllPassedObstacles()
+    {
+        Debug.Log("[GameManager] === RecordAllPassedObstacles CALLED ===");
+
+        if (PassedObstaclesTracker.Instance == null)
+        {
+            Debug.LogWarning("[GameManager] ‚ùå PassedObstaclesTracker.Instance is NULL!");
+            return;
+        }
+
+        if (playerController == null)
+        {
+            Debug.LogWarning("[GameManager] ‚ùå playerController is NULL!");
+            return;
+        }
+
+        Debug.Log($"[GameManager] Player position: {playerController.transform.position}");
+
+        GameObject[] allObstacles = GameObject.FindGameObjectsWithTag("Obstacle");
+        Debug.Log($"[GameManager] Found {allObstacles.Length} obstacles with 'Obstacle' tag");
+
+        if (allObstacles.Length == 0)
+        {
+            Debug.LogWarning("[GameManager] ‚ùå No obstacles found! Check if obstacles have 'Obstacle' tag");
+            return;
+        }
+
+        int recordedCount = 0;
+        int skippedCount = 0;
+
+        foreach (GameObject obstacleObj in allObstacles)
+        {
+            if (obstacleObj == null) continue;
+
+            float distanceBehindPlayer = playerController.transform.position.z - obstacleObj.transform.position.z;
+
+            Debug.Log($"[GameManager] Checking obstacle: {obstacleObj.name} at Z={obstacleObj.transform.position.z:F1}, distance behind player: {distanceBehindPlayer:F1}");
+
+            if (distanceBehindPlayer > 0f)
+            {
+                ObstacleTextDisplay textDisplay = obstacleObj.GetComponent<ObstacleTextDisplay>();
+
+                if (textDisplay == null)
+                {
+                    Debug.LogWarning($"[GameManager] ‚ö†Ô∏è Obstacle {obstacleObj.name} has no ObstacleTextDisplay component!");
+                    skippedCount++;
+                    continue;
+                }
+
+                if (textDisplay.hasBeenRecorded)
+                {
+                    Debug.Log($"[GameManager] ‚è≠Ô∏è Obstacle {obstacleObj.name} already recorded, skipping");
+                    skippedCount++;
+                    continue;
+                }
+
+                TextMeshProUGUI tmpText = textDisplay.GetComponentInChildren<TextMeshProUGUI>();
+
+                if (tmpText == null)
+                {
+                    Debug.LogWarning($"[GameManager] ‚ö†Ô∏è Obstacle {obstacleObj.name} has no TextMeshProUGUI!");
+                    skippedCount++;
+                    continue;
+                }
+
+                if (string.IsNullOrEmpty(tmpText.text) || tmpText.text == "Loading...")
+                {
+                    Debug.LogWarning($"[GameManager] ‚ö†Ô∏è Obstacle {obstacleObj.name} has invalid text: '{tmpText.text}'");
+                    skippedCount++;
+                    continue;
+                }
+
+                Debug.Log($"[GameManager] ‚úÖ Recording passed obstacle: '{tmpText.text}' (distance behind: {distanceBehindPlayer:F1})");
+                PassedObstaclesTracker.Instance.RecordPassedObstacle(tmpText.text);
+                textDisplay.hasBeenRecorded = true;
+                recordedCount++;
+            }
+            else
+            {
+                Debug.Log($"[GameManager] ‚è© Obstacle {obstacleObj.name} is ahead of player, skipping");
+                skippedCount++;
+            }
+        }
+
+        Debug.Log($"[GameManager] === FINISHED: Recorded {recordedCount} new obstacles, Skipped {skippedCount} obstacles ===");
+    }
+
+
 
 }

@@ -81,6 +81,7 @@ public class LevelBuilder : MonoBehaviour
         BuildEnvironment();
         BuildObstacles();
         BuildMoneyCollectibles();
+        BuildFinishLine();  // 🆕 ADD THIS LINE
 
         Debug.Log($"Level built! Total length: {totalLevelLength} units");
     }
@@ -417,4 +418,38 @@ public class LevelBuilder : MonoBehaviour
 
         count++;
     }
+
+    void BuildFinishLine()
+    {
+        GameObject finishLine = new GameObject("FinishLine");
+        finishLine.transform.SetParent(transform);
+
+        float finishLineZ = totalLevelLength + 50f;
+        finishLine.transform.position = new Vector3(0f, 1f, finishLineZ);
+
+        BoxCollider trigger = finishLine.AddComponent<BoxCollider>();
+        trigger.isTrigger = true;
+        trigger.size = new Vector3(20f, 10f, 5f);
+
+        FinishLineTrigger finishTrigger = finishLine.AddComponent<FinishLineTrigger>();
+
+        // 🆕 ADD VISUAL MARKER (Optional)
+        GameObject visualMarker = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        visualMarker.name = "FinishLineVisual";
+        visualMarker.transform.SetParent(finishLine.transform);
+        visualMarker.transform.localPosition = Vector3.zero;
+        visualMarker.transform.localScale = new Vector3(15f, 8f, 2f);
+
+        Renderer renderer = visualMarker.GetComponent<Renderer>();
+        if (renderer != null)
+        {
+            renderer.material.color = new Color(0f, 0f, 0f, 0.3f);
+        }
+
+        Destroy(visualMarker.GetComponent<BoxCollider>());
+
+        Debug.Log($"[LevelBuilder] ✅ Built finish line at Z={finishLineZ:F1}");
+    }
+
+
 }

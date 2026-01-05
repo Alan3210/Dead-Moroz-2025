@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 2619320750568849432}
   m_Layer: 0
   m_Name: Obstacle
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -158,6 +158,7 @@ MonoBehaviour:
   pushBackDistance: 3
   reactionDuration: 2
   enableDebugLogs: 0
+  hasBeenRecorded: 0
 --- !u!54 &8132278221981152740
 Rigidbody:
   m_ObjectHideFlags: 0
