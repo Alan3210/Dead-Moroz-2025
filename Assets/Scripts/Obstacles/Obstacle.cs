@@ -88,6 +88,12 @@ public class Obstacle : MonoBehaviour
 
         PlayCollisionSound();
 
+        PlayerController pc = player.GetComponent<PlayerController>();
+        if (pc != null)
+        {
+            pc.TriggerImpactAnimation();
+        }
+
         if (HealthSystem.Instance != null)
         {
             HealthSystem.Instance.TakeDamage(1);

@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     private const int RIGHT_LANE = 2;
     private DynamicSleighTrails trailEffects;
     private SleighHoverController hoverController;
+    private Animator playerAnimator;
 
     void Awake()
     {
@@ -32,7 +33,7 @@ public class PlayerController : MonoBehaviour
         targetPosition = transform.position;
         trailEffects = GetComponent<DynamicSleighTrails>();
         hoverController = GetComponent<SleighHoverController>();
-
+        playerAnimator = GetComponentInChildren<Animator>();
     }
 
     void OnEnable()
@@ -108,7 +109,23 @@ public class PlayerController : MonoBehaviour
 
     void ChangeLane(int direction)
     {
-        currentLane = Mathf.Clamp(currentLane + direction, LEFT_LANE, RIGHT_LANE);
+        int newLane = Mathf.Clamp(currentLane + direction, LEFT_LANE, RIGHT_LANE);
+
+        if (newLane == currentLane) return;
+
+        currentLane = newLane;
+
+        if (playerAnimator != null)
+        {
+            if (direction > 0)
+            {
+                playerAnimator.SetTrigger("TurnRight");
+            }
+            else
+            {
+                playerAnimator.SetTrigger("TurnLeft");
+            }
+        }
 
         float targetX = (currentLane - 1) * laneDistance;
         targetPosition = new Vector3(targetX, transform.position.y, transform.position.z);
@@ -167,5 +184,13 @@ public class PlayerController : MonoBehaviour
     public float GetCurrentSpeed()
     {
         return forwardSpeed;
+    }
+
+    public void TriggerImpactAnimation()
+    {
+        if (playerAnimator != null)
+        {
+            playerAnimator.SetTrigger("Impact");
+        }
     }
 }
