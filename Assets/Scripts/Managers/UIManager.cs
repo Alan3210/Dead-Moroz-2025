@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -23,6 +23,9 @@ public class UIManager : MonoBehaviour
     [Header("HUD Elements")]
     [SerializeField] private TextMeshProUGUI monthText;
     [SerializeField] private GameObject controlsPanel;
+    [SerializeField] private float controlsShowDelay = 2f;
+    [SerializeField] private float controlsDisplayDuration = 5f;
+    [SerializeField] private float controlsFadeDuration = 0.5f;
 
     [Header("Main Menu Elements")]
     [SerializeField] private Button startButton;
@@ -38,15 +41,15 @@ public class UIManager : MonoBehaviour
 
     [Header("Game Over Elements")]
     [SerializeField] private TextMeshProUGUI gameOverMonthText;
-    [SerializeField] private TextMeshProUGUI monthReachedText;        // ADD THIS
-    [SerializeField] private TextMeshProUGUI highScoreText;           // ADD THIS
+    [SerializeField] private TextMeshProUGUI monthReachedText;
+    [SerializeField] private TextMeshProUGUI highScoreText;
     [SerializeField] private Button restartFromGameOverButton;
     [SerializeField] private Button quitFromGameOverButton;
     [SerializeField] private PassedObstaclesList passedObstaclesList;
 
     [Header("Victory Elements")]
     [SerializeField] private TextMeshProUGUI victoryMessageText;
-    [SerializeField] private TextMeshProUGUI finalStatsText;          // ADD THIS
+    [SerializeField] private TextMeshProUGUI finalStatsText;
     [SerializeField] private Button restartFromVictoryButton;
     [SerializeField] private Button quitFromVictoryButton;
 
@@ -56,14 +59,13 @@ public class UIManager : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioClip buttonClickSFX;
     [SerializeField] private AudioClip mainMenuMusic;
-    [SerializeField] private AudioClip gameOverMusic;      // ADD THIS
-    [SerializeField] private AudioClip victoryMusic;       // ADD THIS
-    [SerializeField] private AudioClip gameOverSFX;        // ADD THIS (optional)
-    [SerializeField] private AudioClip victorySFX;         // ADD THIS (optional)
+    [SerializeField] private AudioClip gameOverMusic;
+    [SerializeField] private AudioClip victoryMusic;
+    [SerializeField] private AudioClip gameOverSFX;
+    [SerializeField] private AudioClip victorySFX;
 
     private bool isPaused = false;
     private Keyboard keyboard;
-    private const float CONTROLS_DISPLAY_DURATION = 5f;
     private float controlsDisplayTimer = 0f;
     private bool showingControls = false;
 
@@ -97,13 +99,13 @@ public class UIManager : MonoBehaviour
 
     private void HandleControlsDisplay()
     {
-        if (showingControls && controlsPanel != null)
+        if (showingControls && controlsPanel != null && controlsPanel.activeSelf)
         {
             controlsDisplayTimer += Time.deltaTime;
 
-            if (controlsDisplayTimer >= CONTROLS_DISPLAY_DURATION)
+            if (controlsDisplayTimer >= controlsDisplayDuration)
             {
-                controlsPanel.SetActive(false);
+                StartCoroutine(FadeOutControls());
                 showingControls = false;
             }
         }
@@ -239,9 +241,16 @@ public class UIManager : MonoBehaviour
 
         if (controlsPanel != null)
         {
-            controlsPanel.SetActive(true);
-            showingControls = true;
-            controlsDisplayTimer = 0f;
+            controlsPanel.SetActive(false); // Ensure it's off initially
+            
+            // Reset Alpha if CanvasGroup exists
+            CanvasGroup cg = controlsPanel.GetComponent<CanvasGroup>();
+            if (cg != null) cg.alpha = 0f;
+
+            // Only show controls text on WebGL or PC builds
+            #if UNITY_WEBGL || UNITY_STANDALONE
+            StartCoroutine(ShowControlsDelayed());
+            #endif
         }
 
         Time.timeScale = 1f;
@@ -255,7 +264,56 @@ public class UIManager : MonoBehaviour
         // Music change is handled by GameManager.StartGame()
     }
 
+    private System.Collections.IEnumerator ShowControlsDelayed()
+    {
+        yield return new WaitForSeconds(controlsShowDelay);
+        
+        if (controlsPanel != null)
+        {
+            controlsPanel.SetActive(true);
+            CanvasGroup cg = controlsPanel.GetComponent<CanvasGroup>();
+            
+            // Fade In
+            if (cg != null)
+            {
+                float timer = 0f;
+                while (timer < controlsFadeDuration)
+                {
+                    timer += Time.deltaTime;
+                    cg.alpha = Mathf.Lerp(0f, 1f, timer / controlsFadeDuration);
+                    yield return null;
+                }
+                cg.alpha = 1f;
+            }
 
+            showingControls = true;
+            controlsDisplayTimer = 0f;
+        }
+    }
+
+    private System.Collections.IEnumerator FadeOutControls()
+    {
+        CanvasGroup cg = controlsPanel.GetComponent<CanvasGroup>();
+        
+        if (cg != null)
+        {
+            float timer = 0f;
+            float startAlpha = cg.alpha;
+
+            while (timer < controlsFadeDuration)
+            {
+                timer += Time.deltaTime;
+                cg.alpha = Mathf.Lerp(startAlpha, 0f, timer / controlsFadeDuration);
+                yield return null;
+            }
+            cg.alpha = 0f;
+        }
+
+        if (controlsPanel != null)
+        {
+            controlsPanel.SetActive(false);
+        }
+    }
 
     public void ShowPauseMenu()
     {
@@ -335,8 +393,6 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 0f;
     }
 
-
-
     public void ShowVictory()
     {
         if (mobileInputButtons != null)
@@ -372,8 +428,8 @@ public class UIManager : MonoBehaviour
                     totalMoney = EconomicManager.Instance.EarnedMonthIncome;
                 }
 
-                finalStatsText.text = $"До встречи в 2026м.\n" +
-                                      $"Утиль сбор на сани сам себя не оплатит";
+                finalStatsText.text = "До встречи в 2026м.\n" +
+                                      "Утиль сбор на сани сам себя не оплатит";
             }
         }
 
@@ -494,6 +550,4 @@ public class UIManager : MonoBehaviour
         // Keep main menu music playing (don't stop it)
         // Music is already playing from ShowMainMenu()
     }
-
-
 }
