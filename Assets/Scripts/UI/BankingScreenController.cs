@@ -112,14 +112,35 @@ public class BankingScreenController : MonoBehaviour
             canvasGroup.alpha = 1f;
         }
 
-        if (panelAnimator != null)
-        {
-            panelAnimator.SetTrigger("Show");
-        }
+                if (panelAnimator != null)
 
+                {
 
+                    panelAnimator.SetTrigger("Show");
 
-        isShowingScreen = true;
+                }
+
+        
+
+                if (bankingPanel != null)
+
+                {
+
+                    var fxController = bankingPanel.GetComponent<BankingPanelFX>();
+
+                    if (fxController != null)
+
+                    {
+
+                        fxController.PlayShowFX();
+
+                    }
+
+                }
+
+        
+
+                isShowingScreen = true;
 
         Time.timeScale = slowMotionTimeScale;
 
@@ -268,6 +289,15 @@ public class BankingScreenController : MonoBehaviour
         if (panelAnimator != null)
         {
             panelAnimator.SetTrigger("Hide");
+        }
+
+        if (bankingPanel != null)
+        {
+            var fxController = bankingPanel.GetComponent<BankingPanelFX>();
+            if (fxController != null)
+            {
+                fxController.PlayHideFX();
+            }
         }
 
         if (backgroundOverlayAnimator != null)

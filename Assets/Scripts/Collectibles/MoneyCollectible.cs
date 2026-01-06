@@ -14,6 +14,9 @@ public class MoneyCollectible : MonoBehaviour
     [Header("Audio Settings")]
     [SerializeField] private AudioClip collectSound;
 
+    [Header("VFX Settings")]
+    [SerializeField] private GameObject collectEffectPrefab;
+
     private Vector3 startPosition;
     private float bobOffset;
 
@@ -44,6 +47,11 @@ public class MoneyCollectible : MonoBehaviour
         if (EconomicManager.Instance != null)
         {
             EconomicManager.Instance.AddMoney(value);
+        }
+
+        if (collectEffectPrefab != null)
+        {
+            Instantiate(collectEffectPrefab, transform.position, Quaternion.identity);
         }
 
         if (collectSound != null && AudioManager.Instance != null)
