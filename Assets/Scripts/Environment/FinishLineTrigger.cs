@@ -27,9 +27,9 @@ public class FinishLineTrigger : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.black;
-        Gizmos.DrawCube(transform.position, GetComponent<BoxCollider>()?.size ?? Vector3.one * 10f);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.black;
+    //    Gizmos.DrawCube(transform.position, GetComponent<BoxCollider>()?.size ?? Vector3.one * 10f);
+    //}
 }
