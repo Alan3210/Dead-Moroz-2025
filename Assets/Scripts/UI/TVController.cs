@@ -18,6 +18,10 @@ public class TVController : MonoBehaviour
     [SerializeField] private AudioClip appearSFX;
     [Tooltip("Sound played when the TV screen actually turns on.")]
     [SerializeField] private AudioClip screenOnSFX;
+    [Tooltip("Sound played when the TV lifts up for banking screen.")]
+    [SerializeField] private AudioClip tvLiftSFX;
+    [Tooltip("Sound played when the TV lowers back down.")]
+    [SerializeField] private AudioClip tvLowerSFX;
 
     [Header("Ticker Settings")]
     [Tooltip("How long to wait AFTER the TV appears before the SCREEN turns on.")]
@@ -87,6 +91,11 @@ public class TVController : MonoBehaviour
         // Disable animator to allow manual movement
         if (tvAnimator != null) tvAnimator.enabled = false;
 
+        if (tvLiftSFX != null && AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(tvLiftSFX);
+        }
+
         defaultPosition = transform.localPosition;
         isLifted = true;
         
@@ -97,6 +106,11 @@ public class TVController : MonoBehaviour
     public void LowerTV()
     {
         if (!isLifted) return;
+
+        if (tvLowerSFX != null && AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(tvLowerSFX);
+        }
 
         isLifted = false;
         

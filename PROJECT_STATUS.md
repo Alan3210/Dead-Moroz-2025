@@ -10,10 +10,11 @@
 
 ## Architecture
 ### Managers (`Assets/Scripts/Managers/`)
-*   **GameManager:** Core loop, state machine (Menu -> Game -> Win/Loss), speed scaling, month progression.
-*   **EconomicManager:** Handles currency, loans, and monthly expenses. References `BankingScreenController`.
+*   **GameManager:** Core loop, state machine. Manages `TVController` activation and Month progression.
+*   **EconomicManager:** Handles currency, loans, and monthly expenses.
 *   **UIManager:** Manages all UI panels (HUD, Main Menu, Pause, Game Over, Victory).
-*   **EconomyManager:** *Legacy/Inactive* (superseded by `EconomicManager`).
+*   **BankingScreenController:** Controls the end-of-month financial summary.
+    *   *Feature:* Triggers `TVController.LiftTV()` to clear screen space when active.
 
 ### Player (`Assets/Scripts/Player/`)
 *   **PlayerController:** Handles 3-lane movement (Lerp), speed, and New Input System integration.
@@ -23,17 +24,35 @@
 *   **ObstacleSpawner:** Spawns text-block obstacles based on `MonthConfiguration`. Handles month transitions based on distance (Z-axis).
 *   **ObstacleTextDisplay:** Displays the "event" text on the blocks.
 
+### UI & Visuals (`Assets/Scripts/UI/`)
+*   **TVController:** Manages the animated TV companion.
+    *   *Logic:* Activates on Game Start.
+    *   *Animation:* Lifts up/down during Banking phase (Supports 3D transform).
+    *   *Audio:* Has start, lift, and lower SFX hooks.
+*   **PassedObstaclesList:** Displays a scrollable history of "events" survived on the Game Over screen.
+
 ## Gameplay Flow
-1.  **Start:** `UIManager` triggers `GameManager.StartGame()`.
-2.  **Run:** Player moves forward constantly. `ObstacleSpawner` spawns obstacles relative to player Z-position.
-3.  **Progression:** As player crosses distance thresholds, `ObstacleSpawner` triggers `GameManager.AdvanceMonth()`.
-4.  **Economy:** At month end, `EconomicManager` attempts to show a banking screen (via `BankingScreenController`) to handle expenses/loans.
+1.  **Start:** `UIManager` triggers `GameManager.StartGame()`. TV activates.
+2.  **Run:** Player moves forward. `ObstacleSpawner` spawns obstacles.
+3.  **Progression:** `ObstacleSpawner` triggers `GameManager.AdvanceMonth()`.
+4.  **Economy:** At month end, `BankingScreenController` appears.
+    *   **Transition:** TV lifts up, Banking UI fades in (Slow motion).
+    *   **Action:** User pays expenses or takes microloan.
+    *   **Resume:** TV lowers, game speed restores.
 5.  **End:** 
     *   **Victory:** Passing all 12 months.
-    *   **Defeat:** 3rd collision triggers Game Over.
+    *   **Defeat:** 3rd collision triggers Game Over (shows Passed Obstacles).
 
 ## Current State Observations
-*   **UI:** Game Over screen "Passed Obstacles List" is fixed and functional.
-*   **Economy Integration:** `EconomicManager` is wired up. The visual layer (`BankingScreenController`) is referenced but might need verification/implementation.
+*   **UI:** 
+    *   Game Over screen "Passed Obstacles List" is fully functional.
+    *   Banking Screen works with custom styled prefabs.
+    *   TV Ticker text is properly masked.
+*   **Economy Integration:** `EconomicManager` is wired up. `BankingScreenController` flow is polished (Animation + Sound).
 *   **Visuals:** `MonthVisualManager` calls are currently commented out in `GameManager` (visual environment changes inactive).
 *   **Content:** Obstacle texts are likely sourced from `DeadMoroz_ObstacleTexts_Simple.txt`.
+
+## Next Steps Priorities
+1.  **Visuals:** Enable `MonthVisualManager` for environment changes (Snow, Decorations).
+2.  **Content:** Expand obstacle text pool.
+3.  **Platform:** Verify Telegram Mini App integration.

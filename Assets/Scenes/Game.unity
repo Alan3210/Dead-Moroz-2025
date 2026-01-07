@@ -15175,7 +15175,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 158905477}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -44806,7 +44806,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &481059693
 RectTransform:
   m_ObjectHideFlags: 0
@@ -45660,6 +45660,7 @@ GameObject:
   - component: {fileID: 487116259}
   - component: {fileID: 487116258}
   - component: {fileID: 487116257}
+  - component: {fileID: 487116260}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -45751,6 +45752,20 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 100
   m_TargetDisplay: 0
+--- !u!114 &487116260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 487116255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RectMask2D
+  m_Padding: {x: 0.06, y: 0.05, z: 0.06, w: 0.05}
+  m_Softness: {x: 0, y: 0}
 --- !u!1 &487300698
 GameObject:
   m_ObjectHideFlags: 0
@@ -47022,7 +47037,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -444}
+  m_AnchoredPosition: {x: 0, y: 280}
   m_SizeDelta: {x: 763.6, y: 211.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &496254870
@@ -47049,8 +47064,8 @@ MonoBehaviour:
     \u0441\u0431\u043E\u0440 \u043D\u0430 \u0441\u0430\u043D\u0438 \u0441\u0430\u043C
     \u0441\u0435\u0431\u044F \u043D\u0435 \u043E\u043F\u043B\u0430\u0442\u0438\u0442"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
+  m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -47080,7 +47095,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -69895,7 +69910,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 90.33}
-  m_SizeDelta: {x: 776.9, y: 1379}
+  m_SizeDelta: {x: 864.6, y: 1379}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &635941244
 MonoBehaviour:
@@ -69917,22 +69932,25 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "2025 - \u044D\u0442\u043E \u0430\u0440\u043A\u0430\u0434\u0430, \u043F\u043E\u0432\u0435\u0441\u0442\u0432\u0443\u044E\u0449\u0430\u044F
-    \u043E \u043D\u0435\u043A\u043E\u0442\u043E\u0440\u044B\u0445 \u0441\u043E\u0431\u044B\u0442\u0438\u044F\u0445
-    2025 \u0433\u043E\u0434\u0430, \u0438 \u043E \u0446\u0438\u043A\u043B\u0435 \u0432\u044B\u0436\u0438\u0432\u0430\u043D\u0438\u044F
-    \u043E\u0431\u044B\u0447\u043D\u043E\u0433\u043E \u0442\u0440\u0443\u0434\u044F\u0449\u0435\u0433\u043E\u0441\u044F
-    \u0447\u0435\u043B\u043E\u0432\u0435\u043A\u0430 \u043D\u0430 \u0444\u043E\u043D\u0435
-    \u044D\u0442\u0438\u0445 \u0441\u043E\u0431\u044B\u0442\u0438\u0439.\r\n\r\n\u0420\u0410\u0417\u0420\u0410\u0411\u041E\u0422\u041A\u0410:\r\n\u0410\u043B\u0430\u043D
-    - \u0433\u0435\u0439\u043C\u0434\u0438\u0437\u0430\u0439\u043D, \u043A\u043E\u0434,
-    \u0430\u0440\u0442, \u0430\u043D\u0438\u043C\u0430\u0446\u0438\u044F, vfx, \u0441\u0430\u0443\u043D\u0434
-    \u0434\u0438\u0437\u0430\u0439\u043D, \u043C\u0443\u0437\u044B\u043A\u0430\r\n\r\n\u0411\u041B\u0410\u0413\u041E\u0414\u0410\u0420\u041D\u041E\u0421\u0422\u0418:\r\n\u0421\u043F\u0430\u0441\u0438\u0431\u043E
+  m_text: "\u0418\u0433\u0440\u0430 2025 - \u043F\u0440\u043E \u0436\u0438\u0437\u043D\u044C
+    \u0440\u044F\u0434\u043E\u0432\u043E\u0433\u043E \u0440\u043E\u0441\u0441\u0438\u044F\u043D\u0438\u043D\u0430
+    \u0441\u043E \u0441\u0440\u0435\u0434\u043D\u0435\u0439 \u043C\u0435\u0434\u0438\u0430\u043D\u043D\u043E\u0439
+    \u0437\u0430\u0440\u043F\u043B\u0430\u0442\u043E\u0439 \u043F\u043E \u0441\u0442\u0440\u0430\u043D\u0435.
+    \u0414\u0438\u0445\u043E\u0442\u043E\u043C\u0438\u044F \u0442\u0435\u043B\u0435\u0432\u0438\u0437\u043E\u0440\u0430
+    \u0438 \u0440\u0435\u0430\u043B\u044C\u043D\u043E\u0441\u0442\u0438 \u043D\u0430
+    \u0444\u043E\u043D\u0435 \u043F\u043E\u0434\u0447\u0430\u0441 \u0443\u0436\u0430\u0441\u043D\u044B\u0445
+    \u0441\u043E\u0431\u044B\u0442\u0438\u0439, \u043E \u043A\u043E\u0442\u043E\u0440\u044B\u0445
+    \u043F\u0438\u0441\u0430\u043B\u0438 \u0421\u041C\u0418 \u0432 2025 \u0433\u043E\u0434\u0443.\r\n\r\n\u0420\u0410\u0417\u0420\u0410\u0411\u041E\u0422\u041A\u0410:\r\n\u0410\u043B\u0430\u043D
+    - \u0438\u0434\u0435\u044F, \u0433\u0435\u0439\u043C\u0434\u0438\u0437\u0430\u0439\u043D,
+    \u043A\u043E\u0434, \u0430\u0440\u0442, \u0430\u043D\u0438\u043C\u0430\u0446\u0438\u044F,
+    vfx, \u0441\u0430\u0443\u043D\u0434 \u0434\u0438\u0437\u0430\u0439\u043D, \u043C\u0443\u0437\u044B\u043A\u0430\r\n\r\n\u0411\u041B\u0410\u0413\u041E\u0414\u0410\u0420\u041D\u041E\u0421\u0422\u0418:\r\n\u0421\u043F\u0430\u0441\u0438\u0431\u043E
     Sveta Bondarenko, Keinee \u0438 NeKus \u0437\u0430 \u043F\u043E\u043C\u043E\u0449\u044C
     \u0432 \u0441\u043E\u0437\u0434\u0430\u043D\u0438\u0438 \u0438\u0433\u0440\u044B
     \u043D\u0430 \u0440\u0430\u0437\u043D\u044B\u0445 \u0435\u0451 \u044D\u0442\u0430\u043F\u0430\u0445!\r\n\r\n\xA92026
-    goidaGames\r\n\u0412\u0435\u0440\u0441\u0438\u044F 1.0"
+    goidaGames"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
+  m_sharedMaterial: {fileID: 2140474, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -69969,7 +69987,7 @@ MonoBehaviour:
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: -6.4
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -83711,7 +83729,6 @@ GameObject:
   - component: {fileID: 767353076}
   - component: {fileID: 767353078}
   - component: {fileID: 767353077}
-  - component: {fileID: 767353079}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -83776,20 +83793,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 767353075}
   m_CullTransparentMesh: 1
---- !u!114 &767353079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 767353075}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RectMask2D
-  m_Padding: {x: 0.06, y: 0.05, z: 0.06, w: 0.05}
-  m_Softness: {x: 0, y: 0}
 --- !u!1001 &767568923
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -85030,7 +85033,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &776904518
 RectTransform:
   m_ObjectHideFlags: 0
@@ -90751,7 +90754,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 840530482}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -105000,7 +105003,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 300}
+  m_AnchoredPosition: {x: 0, y: 592}
   m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1035552578
@@ -105033,8 +105036,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u041D\u0423, \u0412\u042B\u0412\u0415\u0417,\n\u041F\u041E\u041B\u0423\u0427\u0410\u0415\u0422\u0421\u042F"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 21d74a735c1a97e45b44a37472075479, type: 2}
-  m_sharedMaterial: {fileID: -8225684911581034501, guid: 21d74a735c1a97e45b44a37472075479, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
+  m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -151835,7 +151838,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0423\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u0435: \\n\u0441\u043C\u0435\u043D\u0430
+  m_text: "\u0423\u041F\u0420\u0410\u0412\u041B\u0415\u041D\u0418\u0415 \\n\u0441\u043C\u0435\u043D\u0430
     \u043F\u043E\u043B\u043E\u0441\u044B - \u0441\u0442\u0440\u0435\u043B\u043A\u0438
     \u0438\u043B\u0438 A/D, \\n\u043F\u0430\u0443\u0437\u0430 - ESC"
   m_isRightToLeft: 0
@@ -211654,6 +211657,8 @@ MonoBehaviour:
   showTriggerName: Enter
   appearSFX: {fileID: 8300000, guid: 1dd4d7cd08092184c81de8ed1d676d95, type: 3}
   screenOnSFX: {fileID: 8300000, guid: 1bfbc21f35933324ebb7b814bece02d0, type: 3}
+  tvLiftSFX: {fileID: 8300000, guid: 4aa7885813571cb4f81006cc7cb59363, type: 3}
+  tvLowerSFX: {fileID: 8300000, guid: 4aa7885813571cb4f81006cc7cb59363, type: 3}
   screenTurnOnDelay: 5
   textStartDelay: 3
   tvScreenObject: {fileID: 767353075}

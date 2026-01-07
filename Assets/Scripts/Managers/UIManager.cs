@@ -410,6 +410,10 @@ public class UIManager : MonoBehaviour
             if (victoryMessageText != null)
             {
                 victoryMessageText.text = "Ну, вывез,\nполучается";
+                // Reset alpha to 0 for fade in
+                Color color = victoryMessageText.color;
+                color.a = 0f;
+                victoryMessageText.color = color;
             }
 
             // Calculate and display final statistics
@@ -430,7 +434,14 @@ public class UIManager : MonoBehaviour
 
                 finalStatsText.text = "До встречи в 2026м.\n" +
                                       "Утиль сбор на сани сам себя не оплатит";
+                
+                // Reset alpha to 0 for fade in
+                Color color = finalStatsText.color;
+                color.a = 0f;
+                finalStatsText.color = color;
             }
+            
+            StartCoroutine(FadeInVictoryTexts(2f));
         }
 
         // Play victory music and SFX
@@ -448,6 +459,49 @@ public class UIManager : MonoBehaviour
         }
 
         Time.timeScale = 0f;
+    }
+
+    private System.Collections.IEnumerator FadeInVictoryTexts(float duration)
+    {
+        float timer = 0f;
+        Color victoryStartColor = victoryMessageText != null ? victoryMessageText.color : Color.white;
+        Color statsStartColor = finalStatsText != null ? finalStatsText.color : Color.white;
+
+        while (timer < duration)
+        {
+            timer += Time.unscaledDeltaTime;
+            float alpha = Mathf.Clamp01(timer / duration);
+
+            if (victoryMessageText != null)
+            {
+                Color c = victoryMessageText.color;
+                c.a = alpha;
+                victoryMessageText.color = c;
+            }
+
+            if (finalStatsText != null)
+            {
+                Color c = finalStatsText.color;
+                c.a = alpha;
+                finalStatsText.color = c;
+            }
+
+            yield return null;
+        }
+
+        // Ensure fully visible at the end
+        if (victoryMessageText != null)
+        {
+            Color c = victoryMessageText.color;
+            c.a = 1f;
+            victoryMessageText.color = c;
+        }
+        if (finalStatsText != null)
+        {
+            Color c = finalStatsText.color;
+            c.a = 1f;
+            finalStatsText.color = c;
+        }
     }
 
 

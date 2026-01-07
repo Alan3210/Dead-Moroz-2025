@@ -51,7 +51,8 @@ public class MoneyCollectible : MonoBehaviour
 
         if (collectEffectPrefab != null)
         {
-            Instantiate(collectEffectPrefab, transform.position, Quaternion.identity);
+            GameObject vfx = Instantiate(collectEffectPrefab, transform.position, Quaternion.identity);
+            Destroy(vfx, 5f);
         }
 
         if (collectSound != null && AudioManager.Instance != null)
