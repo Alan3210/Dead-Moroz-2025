@@ -17,6 +17,7 @@ public class BankingScreenController : MonoBehaviour
     [SerializeField] private GameObject expenseLineItemPrefab;
     [SerializeField] private Button loanButton;
     [SerializeField] private Button continueButton;
+    [SerializeField] private TVController tvController;
 
     [Header("Animation Settings")]
     [SerializeField] private float lineDelay = 0.3f;
@@ -143,6 +144,15 @@ public class BankingScreenController : MonoBehaviour
                 isShowingScreen = true;
 
         Time.timeScale = slowMotionTimeScale;
+
+        if (tvController != null)
+        {
+            tvController.LiftTV();
+        }
+        else
+        {
+             Debug.LogWarning("[BankingScreenController] TVController reference is missing!");
+        }
 
 
         float earnedIncome = EconomicManager.Instance != null ? EconomicManager.Instance.EarnedMonthIncome : income;
@@ -303,6 +313,11 @@ public class BankingScreenController : MonoBehaviour
         if (backgroundOverlayAnimator != null)
         {
             backgroundOverlayAnimator.SetTrigger("Hide");
+        }
+
+        if (tvController != null)
+        {
+            tvController.LowerTV();
         }
 
         isShowingScreen = false;

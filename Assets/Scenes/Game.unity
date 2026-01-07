@@ -23088,6 +23088,7 @@ MonoBehaviour:
   expenseLineItemPrefab: {fileID: 5373141178533966616, guid: a8ac61003a177fa49aaf082b63a431e8, type: 3}
   loanButton: {fileID: 1403311716}
   continueButton: {fileID: 522688024}
+  tvController: {fileID: 7368333202848930671}
   lineDelay: 0.3
   slowMotionTimeScale: 0.5
   positiveColor: {r: 0.39593318, g: 0.6509434, b: 0.24256852, a: 1}
@@ -211750,6 +211751,8 @@ MonoBehaviour:
     \u0447\u0442\u043E 2026 \u0433\u043E\u0434 \u0431\u0443\u0434\u0435\u0442 \u0443\u0434\u0430\u0447\u043D\u044B\u043C"
   - '                                 '
   spaceBetweenLines: 50
+  liftHeight: 0.5
+  liftDuration: 5
 --- !u!1001 &8287469443748174786
 PrefabInstance:
   m_ObjectHideFlags: 0

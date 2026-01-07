@@ -30,10 +30,16 @@ public class TVController : MonoBehaviour
     [SerializeField] private float scrollSpeed = 100f;
     [SerializeField] private string[] newsLines;
     [SerializeField] private float spaceBetweenLines = 50f;
+    
+    [Header("Positioning")]
+    [SerializeField] private float liftHeight = 1.0f; // Default small for 3D
+    [SerializeField] private float liftDuration = 0.5f;
 
     private RectTransform tickerRect;
     private float textWidth;
     private bool isScrolling = false;
+    private bool isLifted = false;
+    private Vector3 defaultPosition;
 
     private void Awake()
     {
@@ -72,6 +78,48 @@ public class TVController : MonoBehaviour
             tvScreenObject.SetActive(false);
         }
         isScrolling = false;
+    }
+
+    public void LiftTV()
+    {
+        if (isLifted) return;
+
+        // Disable animator to allow manual movement
+        if (tvAnimator != null) tvAnimator.enabled = false;
+
+        defaultPosition = transform.localPosition;
+        isLifted = true;
+        
+        StopCoroutine("AnimatePosition");
+        StartCoroutine(AnimatePosition(defaultPosition + new Vector3(0, liftHeight, 0)));
+    }
+
+    public void LowerTV()
+    {
+        if (!isLifted) return;
+
+        isLifted = false;
+        
+        StopCoroutine("AnimatePosition");
+        StartCoroutine(AnimatePosition(defaultPosition));
+    }
+
+    private IEnumerator AnimatePosition(Vector3 targetPos)
+    {
+        Vector3 startPos = transform.localPosition;
+        float elapsed = 0f;
+
+        while (elapsed < liftDuration)
+        {
+            elapsed += Time.unscaledDeltaTime; // Use unscaled because banking screen might pause game
+            float t = Mathf.Clamp01(elapsed / liftDuration);
+            // Smooth step for nicer ease
+            t = t * t * (3f - 2f * t);
+            
+            transform.localPosition = Vector3.Lerp(startPos, targetPos, t);
+            yield return null;
+        }
+        transform.localPosition = targetPos;
     }
 
     private IEnumerator ShowTVRoutine()
