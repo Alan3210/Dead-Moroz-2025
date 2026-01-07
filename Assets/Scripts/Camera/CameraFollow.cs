@@ -92,6 +92,16 @@
             isFollowing = true;
         }
 
+        public void SetOffset(Vector3 newOffset)
+        {
+            offset = newOffset;
+        }
+
+        public Vector3 GetOffset()
+        {
+            return offset;
+        }
+
         private void CalculateDynamicEffects()
         {
             Vector3 targetVelocity = (target.position - lastTargetPosition) / Time.deltaTime;

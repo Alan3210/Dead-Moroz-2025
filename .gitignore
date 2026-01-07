@@ -64,6 +64,9 @@ sysinfo.txt
 *.unitypackage.meta
 *.app
 
+# Allow WebGL build folder for Vercel
+!/WebGLBuild/
+
 # Crashlytics generated file
 crashlytics-build.properties
 

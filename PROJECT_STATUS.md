@@ -44,17 +44,30 @@
     *   **Defeat:** 3rd collision triggers Game Over (shows Passed Obstacles).
 
 ## Current State Observations
+
+### WebGL & Vertical Adaptation (New)
+*   **Responsive Vertical Export:** 
+    *   Implemented `VerticalAspectAdapter.cs` to automatically adjust camera distance when running in portrait mode (9:16), keeping the full road width visible.
+    *   **Custom WebGL Template (`ResponsiveVertical`):** 
+        *   Forces 9:16 aspect ratio via JavaScript resizer (pillarboxing on wide screens).
+        *   Fixes WebGL 0x0 texture crash by ensuring canvas has valid dimensions before Unity initializes.
+        *   Includes "Tap to Start" overlay to comply with browser AudioContext policies.
+*   **Graphics Optimization:**
+    *   Switched WebGL default quality to **"PC" Profile** (Scale 1.0 vs Mobile 0.8).
+    *   Enabled **4x MSAA** (Anti-Aliasing) for crisp edges.
+    *   Enabled `window.devicePixelRatio` support for high-DPI (Retina/4K) rendering.
+*   **Deployment:** Configured for itch.io with specific embed settings (540x960 viewport, Portrait, Mobile Friendly).
+
+### UI & Core Features
 *   **UI:** 
-    *   **Controls Text:** Now fully configurable (Delay, Duration, Fade) via `UIManager`. Added option to force display on all platforms.
-    *   Game Over screen "Passed Obstacles List" is fully functional.
-    *   Banking Screen works with custom styled prefabs and includes a "phone appears" SFX.
-    *   TV Ticker text is properly masked.
-    *   **TV Companion:** Added looping ambience sound that plays while the screen is on (exposed volume/clip settings).
-*   **Economy Integration:** `EconomicManager` is wired up. `BankingScreenController` flow is polished (Animation + Sound).
+    *   **Controls Text:** Fully configurable (Delay, Duration, Fade).
+    *   Game Over screen "Passed Obstacles List" is functional.
+    *   Banking Screen fully integrated (Animation + Sound).
+    *   **TV Companion:** Added looping ambience sound.
 *   **Visuals:** 
-    *   `MonthVisualManager` is active; environment visuals (lighting, fog, skybox) now transition dynamically during month changes.
-    *   **Intro Sequence:** Implemented "Falling Sky" animation. Level elements (Snow, Environment, Obstacles, Collectibles) drop in waves when the sleigh starts moving. Includes "Bounce" physics and synchronized impact SFX.
-*   **Content:** Obstacle texts are likely sourced from `DeadMoroz_ObstacleTexts_Simple.txt`.
+    *   **Intro Sequence:** "Falling Sky" animation for level elements implemented with bounce physics.
+    *   **Dynamic Skybox/Fog:** `MonthVisualManager` handles visual transitions per month.
+*   **Content:** Obstacle texts sourced from `DeadMoroz_ObstacleTexts_Simple.txt`.
 
 ## Next Steps Priorities
 1.  **Content:** Expand obstacle text pool.

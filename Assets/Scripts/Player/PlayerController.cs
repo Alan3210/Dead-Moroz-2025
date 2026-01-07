@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
@@ -93,6 +94,12 @@ public class PlayerController : MonoBehaviour
 
         if (Touchscreen.current.primaryTouch.press.wasPressedThisFrame)
         {
+            // Prevent touch input if clicking on UI (Buttons)
+            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
+
             Vector2 touchPosition = Touchscreen.current.primaryTouch.position.ReadValue();
             float screenMiddle = Screen.width / 2f;
 
@@ -145,6 +152,7 @@ public class PlayerController : MonoBehaviour
 
     public void ChangeLaneViaButton(int direction)
     {
+        if (Time.time - lastInputTime < inputCooldown) return;
         ChangeLane(direction);
     }
 
