@@ -56,8 +56,22 @@ public class TVController : MonoBehaviour
             tickerRect = tickerText.GetComponent<RectTransform>();
             tickerText.text = ""; // Clear initial text
         }
+    }
 
+    public void ActivateTV()
+    {
+        StopAllCoroutines();
         StartCoroutine(ShowTVRoutine());
+    }
+
+    public void DeactivateTV()
+    {
+        StopAllCoroutines();
+        if (tvScreenObject != null)
+        {
+            tvScreenObject.SetActive(false);
+        }
+        isScrolling = false;
     }
 
     private IEnumerator ShowTVRoutine()

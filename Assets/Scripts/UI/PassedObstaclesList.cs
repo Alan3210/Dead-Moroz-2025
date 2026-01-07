@@ -14,6 +14,7 @@ public class PassedObstaclesList : MonoBehaviour
     [SerializeField] private float itemHeight = 40f;
     [SerializeField] private Color itemColor = Color.white;
     [SerializeField] private int fontSize = 24;
+    [SerializeField] private TMP_FontAsset fontAsset;
 
     [Header("Auto-Scroll Settings")]
     [SerializeField] private bool enableAutoScroll = true;
@@ -31,7 +32,7 @@ public class PassedObstaclesList : MonoBehaviour
         if (obstacles == null || obstacles.Count == 0)
         {
             Debug.Log("[PassedObstaclesList] No obstacles, creating empty message");
-            CreateListItem("Вы избежали всех препятствий!");
+            CreateListItem("пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!");
             return;
         }
 
@@ -94,9 +95,13 @@ public class PassedObstaclesList : MonoBehaviour
 
     private void CreateListItem(string text)
     {
-        GameObject item = new GameObject("ListItem");
+        GameObject item = new GameObject($"ListItem_{text}");
         item.layer = LayerMask.NameToLayer("UI");
         item.transform.SetParent(contentParent, false);
+
+        // Critical: Reset scale and position
+        item.transform.localScale = Vector3.one;
+        item.transform.localPosition = new Vector3(item.transform.localPosition.x, item.transform.localPosition.y, 0f);
 
         RectTransform rectTransform = item.AddComponent<RectTransform>();
         rectTransform.anchorMin = new Vector2(0, 1);
@@ -104,19 +109,52 @@ public class PassedObstaclesList : MonoBehaviour
         rectTransform.pivot = new Vector2(0.5f, 1);
         rectTransform.sizeDelta = new Vector2(0, itemHeight);
 
+        // Add Layout Element for VerticalLayoutGroup
         LayoutElement layoutElement = item.AddComponent<LayoutElement>();
         layoutElement.minHeight = itemHeight;
         layoutElement.preferredHeight = itemHeight;
         layoutElement.flexibleHeight = 0;
+        layoutElement.minWidth = 500f; // Force a minimum width
+        layoutElement.flexibleWidth = 1; 
 
         TextMeshProUGUI textComponent = item.AddComponent<TextMeshProUGUI>();
+        if (fontAsset != null)
+        {
+            textComponent.font = fontAsset;
+        }
+        else
+        {
+            Debug.LogError("[PassedObstaclesList] CRITICAL: Font Asset is NOT assigned in the Inspector! Text will be invisible.");
+        }
+
         textComponent.text = text;
         textComponent.fontSize = fontSize;
-        textComponent.color = itemColor;
+        // Force alpha to 1 just in case
+        textComponent.color = new Color(itemColor.r, itemColor.g, itemColor.b, 1f);
         textComponent.alignment = TextAlignmentOptions.Left;
         textComponent.margin = new Vector4(10, 5, 10, 5);
         textComponent.textWrappingMode = TextWrappingModes.Normal;
         textComponent.overflowMode = TextOverflowModes.Ellipsis;
+        
+        textComponent.raycastTarget = false; 
+
+        // Force Z position again after adding components
+        item.transform.localPosition = new Vector3(item.transform.localPosition.x, item.transform.localPosition.y, 0f);
+    }
+
+    private void Start()
+    {
+        if (contentParent != null)
+        {
+            if (contentParent.GetComponent<VerticalLayoutGroup>() == null)
+            {
+                Debug.LogError("[PassedObstaclesList] Content Parent is missing a VerticalLayoutGroup component! The list won't arrange items correctly.");
+            }
+            if (contentParent.GetComponent<ContentSizeFitter>() == null)
+            {
+                Debug.LogWarning("[PassedObstaclesList] Content Parent is missing a ContentSizeFitter component! Scrolling might not work if content doesn't expand.");
+            }
+        }
     }
 
     private void ClearList()
@@ -139,7 +177,14 @@ public class PassedObstaclesList : MonoBehaviour
 
         foreach (GameObject child in children)
         {
-            Destroy(child);
+            if (Application.isPlaying)
+            {
+                Destroy(child);
+            }
+            else
+            {
+                DestroyImmediate(child);
+            }
         }
     }
 

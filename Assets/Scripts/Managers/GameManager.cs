@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PlayerController playerController;
     [SerializeField] private MonthVisualManager monthVisualManager;
     [SerializeField] private CameraFollow cameraFollow;
+    [SerializeField] private TVController tvController;
 
     private const string HIGH_SCORE_KEY = "HighScore";
     private int highScore = 0;
@@ -70,6 +71,11 @@ public class GameManager : MonoBehaviour
             playerController.StopPlayer();
         }
 
+        if (tvController != null)
+        {
+            tvController.DeactivateTV();
+        }
+
         if (monthVisualManager != null)
         {
             //monthVisualManager.ApplyMonthVisuals(0, false);
@@ -110,6 +116,11 @@ public class GameManager : MonoBehaviour
         if (cameraFollow != null)
         {
             cameraFollow.StartFollowing();
+        }
+
+        if (tvController != null)
+        {
+            tvController.ActivateTV();
         }
 
         if (monthVisualManager != null)
