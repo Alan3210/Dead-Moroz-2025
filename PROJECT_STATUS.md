@@ -45,11 +45,15 @@
 
 ## Current State Observations
 *   **UI:** 
+    *   **Controls Text:** Now fully configurable (Delay, Duration, Fade) via `UIManager`. Added option to force display on all platforms.
     *   Game Over screen "Passed Obstacles List" is fully functional.
     *   Banking Screen works with custom styled prefabs and includes a "phone appears" SFX.
     *   TV Ticker text is properly masked.
+    *   **TV Companion:** Added looping ambience sound that plays while the screen is on (exposed volume/clip settings).
 *   **Economy Integration:** `EconomicManager` is wired up. `BankingScreenController` flow is polished (Animation + Sound).
-*   **Visuals:** `MonthVisualManager` is active; environment visuals (lighting, fog, skybox) now transition dynamically during month changes.
+*   **Visuals:** 
+    *   `MonthVisualManager` is active; environment visuals (lighting, fog, skybox) now transition dynamically during month changes.
+    *   **Intro Sequence:** Implemented "Falling Sky" animation. Level elements (Snow, Environment, Obstacles, Collectibles) drop in waves when the sleigh starts moving. Includes "Bounce" physics and synchronized impact SFX.
 *   **Content:** Obstacle texts are likely sourced from `DeadMoroz_ObstacleTexts_Simple.txt`.
 
 ## Next Steps Priorities

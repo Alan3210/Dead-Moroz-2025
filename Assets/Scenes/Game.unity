@@ -21860,10 +21860,11 @@ MonoBehaviour:
   gameOverPanel: {fileID: 1022120083}
   victoryPanel: {fileID: 776904517}
   monthText: {fileID: 1449628507}
-  controlsPanel: {fileID: 1508802204}
-  controlsShowDelay: 2
-  controlsDisplayDuration: 6
-  controlsFadeDuration: 0.5
+  controlsTextObject: {fileID: 1508802204}
+  controlsShowDelay: 6
+  controlsDisplayDuration: 5
+  controlsFadeDuration: 0.8
+  showControlsInAllPlatforms: 0
   startButton: {fileID: 1978618155}
   creditsButton: {fileID: 289236457}
   backFromCreditsButton: {fileID: 603292871}
@@ -23094,6 +23095,7 @@ MonoBehaviour:
   positiveColor: {r: 0.39593318, g: 0.6509434, b: 0.24256852, a: 1}
   negativeColor: {r: 1, g: 1, b: 1, a: 1}
   neutralColor: {r: 1, g: 1, b: 1, a: 1}
+  phoneAppearsSFX: {fileID: 8300000, guid: ae74d8d239f63a9438d502e51551689b, type: 3}
   moneyCountSFX: {fileID: 8300000, guid: c1ccfae68ac693640ae5438468cf4808, type: 3}
   expenseLineSFX: {fileID: 8300000, guid: 68dc8802b0351e3479c29fa82f6c565b, type: 3}
   balancePositiveSFX: {fileID: 8300000, guid: 94a7dc67a6376a44696eb0210423da41, type: 3}
@@ -41088,7 +41090,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &450220534
 RectTransform:
   m_ObjectHideFlags: 0
@@ -45764,7 +45766,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RectMask2D
-  m_Padding: {x: 0.06, y: 0.05, z: 0.06, w: 0.05}
+  m_Padding: {x: 0.03, y: 0.03, z: 0.03, w: 0.03}
   m_Softness: {x: 0, y: 0}
 --- !u!1 &487300698
 GameObject:
@@ -100346,6 +100348,7 @@ MonoBehaviour:
   environmentParent: {fileID: 673753385}
   obstaclesParent: {fileID: 769753113}
   collectiblesParent: {fileID: 686742006}
+  introAnimator: {fileID: 0}
 --- !u!4 &972517807
 Transform:
   m_ObjectHideFlags: 0
@@ -146397,6 +146400,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1461963992}
   - component: {fileID: 1461963991}
+  - component: {fileID: 1461963998}
   - component: {fileID: 1461963993}
   - component: {fileID: 1461963994}
   - component: {fileID: 1461963995}
@@ -146429,6 +146433,7 @@ MonoBehaviour:
   currentMonth: 1
   playerController: {fileID: 2139923273}
   monthVisualManager: {fileID: 1678280097}
+  levelIntroAnimator: {fileID: 1461963998}
   cameraFollow: {fileID: 330585548}
   tvController: {fileID: 7368333202848930671}
 --- !u!4 &1461963992
@@ -146524,6 +146529,66 @@ MonoBehaviour:
   delayBeforeStart: 1
   delayBetweenExpenses: 0.5
   delayBeforeFinish: 1
+--- !u!114 &1461963998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461963990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0d9d98fd28a22c4d90a1ac60f4e4847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelIntroAnimator
+  dropHeight: 200
+  dropDuration: 5
+  waveDelay: 0.005
+  categoryOverlap: 0.5
+  bounceCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.4166626
+      value: 1.029287
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.68750304
+      value: 1.0049927
+      inSlope: -0.15630071
+      outSlope: -0.16749388
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.58666265
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.11168653
+      outSlope: 0.11168653
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.58667237
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  impactSFX: {fileID: 8300000, guid: 804468af6e330cf4e811cc123344da4a, type: 3}
+  impactVolume: 0.342
 --- !u!1 &1462391330
 GameObject:
   m_ObjectHideFlags: 0
@@ -211657,6 +211722,8 @@ MonoBehaviour:
   showTriggerName: Enter
   appearSFX: {fileID: 8300000, guid: 1dd4d7cd08092184c81de8ed1d676d95, type: 3}
   screenOnSFX: {fileID: 8300000, guid: 1bfbc21f35933324ebb7b814bece02d0, type: 3}
+  tvAmbienceSFX: {fileID: 8300000, guid: 2d19587cf3313b04eaa04352016c93d9, type: 3}
+  tvAmbienceVolume: 1
   tvLiftSFX: {fileID: 8300000, guid: 4aa7885813571cb4f81006cc7cb59363, type: 3}
   tvLowerSFX: {fileID: 8300000, guid: 4aa7885813571cb4f81006cc7cb59363, type: 3}
   screenTurnOnDelay: 5

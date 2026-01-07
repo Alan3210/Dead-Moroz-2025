@@ -18,6 +18,11 @@ public class TVController : MonoBehaviour
     [SerializeField] private AudioClip appearSFX;
     [Tooltip("Sound played when the TV screen actually turns on.")]
     [SerializeField] private AudioClip screenOnSFX;
+    [Tooltip("Looping sound played while the TV screen is on.")]
+    [SerializeField] private AudioClip tvAmbienceSFX;
+    [Tooltip("Volume for the looping ambience sound.")]
+    [Range(0f, 1f)]
+    [SerializeField] private float tvAmbienceVolume = 0.5f;
     [Tooltip("Sound played when the TV lifts up for banking screen.")]
     [SerializeField] private AudioClip tvLiftSFX;
     [Tooltip("Sound played when the TV lowers back down.")]
@@ -44,9 +49,16 @@ public class TVController : MonoBehaviour
     private bool isScrolling = false;
     private bool isLifted = false;
     private Vector3 defaultPosition;
+    private AudioSource ambienceSource;
 
     private void Awake()
     {
+        // Setup ambience audio source
+        ambienceSource = gameObject.AddComponent<AudioSource>();
+        ambienceSource.loop = true;
+        ambienceSource.playOnAwake = false;
+        ambienceSource.spatialBlend = 0f; // 2D sound for UI-ish TV or keep it 3D? User didn't specify, usually TV is 2D-ish in UI.
+
         // Ensure the screen is off immediately upon creation
         if (tvScreenObject != null)
         {
@@ -81,6 +93,12 @@ public class TVController : MonoBehaviour
         {
             tvScreenObject.SetActive(false);
         }
+        
+        if (ambienceSource != null)
+        {
+            ambienceSource.Stop();
+        }
+        
         isScrolling = false;
     }
 
@@ -174,6 +192,14 @@ public class TVController : MonoBehaviour
         if (tvScreenObject != null)
         {
             tvScreenObject.SetActive(true);
+            
+            // Start looping ambience
+            if (tvAmbienceSFX != null && ambienceSource != null)
+            {
+                ambienceSource.clip = tvAmbienceSFX;
+                ambienceSource.volume = tvAmbienceVolume;
+                ambienceSource.Play();
+            }
         }
 
         // Wait before text starts

@@ -46,9 +46,18 @@ public class LevelBuilder : MonoBehaviour
     [SerializeField] private Transform obstaclesParent;
     [SerializeField] private Transform collectiblesParent;
 
+    [Header("Animation")]
+    [SerializeField] private LevelIntroAnimator introAnimator;
+
     public float StartSafeZoneDistance => startSafeZoneDistance;
     public float MonthBufferZone => monthBufferZone;
     public MonthConfiguration[] MonthConfigurations => monthConfigurations;
+
+    // Public Getters for Intro Animator
+    public Transform SnowParent => snowParent;
+    public Transform EnvironmentParent => environmentParent;
+    public Transform ObstaclesParent => obstaclesParent;
+    public Transform CollectiblesParent => collectiblesParent;
 
     void Start()
     {
@@ -67,6 +76,8 @@ public class LevelBuilder : MonoBehaviour
     [ContextMenu("Build Level")]
     public void BuildLevel()
     {
+        Debug.Log("[LevelBuilder] BuildLevel called.");
+
         if (roadPrefab == null || snowPrefab == null || pinePrefab == null || panelkaPrefab == null)
         {
             Debug.LogError("LevelBuilder: Missing prefabs! Assign all prefabs before building.");
@@ -82,6 +93,21 @@ public class LevelBuilder : MonoBehaviour
         BuildObstacles();
         BuildMoneyCollectibles();
         BuildFinishLine();  // 🆕 ADD THIS LINE
+
+        if (introAnimator == null)
+        {
+            introAnimator = GetComponent<LevelIntroAnimator>();
+        }
+
+        if (introAnimator != null)
+        {
+            Debug.Log("[LevelBuilder] Calling IntroAnimator.Prepare()...");
+            introAnimator.Prepare(snowParent, environmentParent, obstaclesParent, collectiblesParent);
+        }
+        else
+        {
+            Debug.LogError("[LevelBuilder] IntroAnimator reference is missing and component not found!");
+        }
 
         Debug.Log($"Level built! Total length: {totalLevelLength} units");
     }

@@ -22,10 +22,17 @@ public class UIManager : MonoBehaviour
 
     [Header("HUD Elements")]
     [SerializeField] private TextMeshProUGUI monthText;
-    [SerializeField] private GameObject controlsPanel;
+    [Header("Controls Text Settings")]
+    [Tooltip("The GameObject containing the controls instructions (e.g., 'ControlsText').")]
+    [SerializeField] private GameObject controlsTextObject;
+    [Tooltip("How long to wait after game start before showing the controls text.")]
     [SerializeField] private float controlsShowDelay = 2f;
+    [Tooltip("How long the controls text remains visible on screen.")]
     [SerializeField] private float controlsDisplayDuration = 5f;
+    [Tooltip("How long the fade in/out animation takes.")]
     [SerializeField] private float controlsFadeDuration = 0.5f;
+    [Tooltip("If true, controls text will show on all platforms (including mobile).")]
+    [SerializeField] private bool showControlsInAllPlatforms = false;
 
     [Header("Main Menu Elements")]
     [SerializeField] private Button startButton;
@@ -99,7 +106,7 @@ public class UIManager : MonoBehaviour
 
     private void HandleControlsDisplay()
     {
-        if (showingControls && controlsPanel != null && controlsPanel.activeSelf)
+        if (showingControls && controlsTextObject != null && controlsTextObject.activeSelf)
         {
             controlsDisplayTimer += Time.deltaTime;
 
@@ -216,8 +223,8 @@ public class UIManager : MonoBehaviour
         if (mainMenuPanel != null)
             mainMenuPanel.SetActive(true);
 
-        if (controlsPanel != null)
-            controlsPanel.SetActive(false);
+        if (controlsTextObject != null)
+            controlsTextObject.SetActive(false);
 
         showingControls = false;
         controlsDisplayTimer = 0f;
@@ -239,18 +246,24 @@ public class UIManager : MonoBehaviour
         if (gameplayHUDPanel != null)
             gameplayHUDPanel.SetActive(true);
 
-        if (controlsPanel != null)
+        if (controlsTextObject != null)
         {
-            controlsPanel.SetActive(false); // Ensure it's off initially
+            controlsTextObject.SetActive(false); // Ensure it's off initially
             
             // Reset Alpha if CanvasGroup exists
-            CanvasGroup cg = controlsPanel.GetComponent<CanvasGroup>();
+            CanvasGroup cg = controlsTextObject.GetComponent<CanvasGroup>();
             if (cg != null) cg.alpha = 0f;
 
-            // Only show controls text on WebGL or PC builds
+            // Show controls text based on platform or override
+            bool shouldShow = showControlsInAllPlatforms;
             #if UNITY_WEBGL || UNITY_STANDALONE
-            StartCoroutine(ShowControlsDelayed());
+            shouldShow = true;
             #endif
+
+            if (shouldShow)
+            {
+                StartCoroutine(ShowControlsDelayed());
+            }
         }
 
         Time.timeScale = 1f;
@@ -268,10 +281,10 @@ public class UIManager : MonoBehaviour
     {
         yield return new WaitForSeconds(controlsShowDelay);
         
-        if (controlsPanel != null)
+        if (controlsTextObject != null)
         {
-            controlsPanel.SetActive(true);
-            CanvasGroup cg = controlsPanel.GetComponent<CanvasGroup>();
+            controlsTextObject.SetActive(true);
+            CanvasGroup cg = controlsTextObject.GetComponent<CanvasGroup>();
             
             // Fade In
             if (cg != null)
@@ -293,7 +306,9 @@ public class UIManager : MonoBehaviour
 
     private System.Collections.IEnumerator FadeOutControls()
     {
-        CanvasGroup cg = controlsPanel.GetComponent<CanvasGroup>();
+        if (controlsTextObject == null) yield break;
+
+        CanvasGroup cg = controlsTextObject.GetComponent<CanvasGroup>();
         
         if (cg != null)
         {
@@ -309,9 +324,9 @@ public class UIManager : MonoBehaviour
             cg.alpha = 0f;
         }
 
-        if (controlsPanel != null)
+        if (controlsTextObject != null)
         {
-            controlsPanel.SetActive(false);
+            controlsTextObject.SetActive(false);
         }
     }
 

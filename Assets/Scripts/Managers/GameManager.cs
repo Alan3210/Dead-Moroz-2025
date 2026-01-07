@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private PlayerController playerController;
     [SerializeField] private MonthVisualManager monthVisualManager;
+    [SerializeField] private LevelIntroAnimator levelIntroAnimator;
     [SerializeField] private CameraFollow cameraFollow;
     [SerializeField] private TVController tvController;
 
@@ -60,6 +61,11 @@ public class GameManager : MonoBehaviour
 
     private void InitializeGame()
     {
+        if (levelIntroAnimator == null)
+        {
+            levelIntroAnimator = FindFirstObjectByType<LevelIntroAnimator>();
+        }
+
         isGameActive = false;
         isGameOver = false;
         currentMonth = 1;
@@ -125,7 +131,12 @@ public class GameManager : MonoBehaviour
 
         if (monthVisualManager != null)
         {
-            //monthVisualManager.ApplyMonthVisuals(0, false);
+            monthVisualManager.ApplyMonthVisuals(0, false);
+        }
+
+        if (levelIntroAnimator != null)
+        {
+            levelIntroAnimator.Play();
         }
 
         if (AudioManager.Instance != null)
