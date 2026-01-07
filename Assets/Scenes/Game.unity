@@ -146552,13 +146552,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1461963990}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0d9d98fd28a22c4d90a1ac60f4e4847, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelIntroAnimator
-  dropHeight: 200
-  dropDuration: 5
+  enableIntroAnimation: 0
+  dropHeight: 100
+  dropDuration: 0.1
   waveDelay: 0.005
   categoryOverlap: 0.5
   bounceCurve:

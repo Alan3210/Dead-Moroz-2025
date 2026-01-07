@@ -5,6 +5,9 @@ using System.Linq;
 
 public class LevelIntroAnimator : MonoBehaviour
 {
+    [Header("General Settings")]
+    [SerializeField] private bool enableIntroAnimation = true;
+
     [Header("Animation Settings")]
     [SerializeField] private float dropHeight = 80f;
     [SerializeField] private float dropDuration = 0.6f;
@@ -60,6 +63,12 @@ public class LevelIntroAnimator : MonoBehaviour
         StopAllCoroutines();
         originalPositions.Clear();
 
+        if (!enableIntroAnimation)
+        {
+            Debug.Log("[LevelIntroAnimator] Animation disabled. Skipping setup.");
+            return;
+        }
+
         // 1. Gather and Sort Objects (by Z position for the "Wave" effect)
         snowList = GatherAllChildren(snowParent);
         envList = GatherAllChildren(envParent);
@@ -78,6 +87,11 @@ public class LevelIntroAnimator : MonoBehaviour
     public void Play()
     {
         Debug.Log("[LevelIntroAnimator] Play sequence started.");
+
+        if (!enableIntroAnimation)
+        {
+            return;
+        }
 
         // Lazy Init: If lists are null, we missed Start/Prepare. Try to recover.
         if (snowList == null)
