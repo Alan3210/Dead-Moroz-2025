@@ -6,7 +6,7 @@ using System.Linq;
 public class LevelIntroAnimator : MonoBehaviour
 {
     [Header("General Settings")]
-    [SerializeField] private bool enableIntroAnimation = true;
+    [SerializeField] private bool enableIntroAnimation = false;
 
     [Header("Animation Settings")]
     [SerializeField] private float dropHeight = 80f;
