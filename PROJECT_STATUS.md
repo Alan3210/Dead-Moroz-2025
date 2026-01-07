@@ -46,13 +46,13 @@
 ## Current State Observations
 *   **UI:** 
     *   Game Over screen "Passed Obstacles List" is fully functional.
-    *   Banking Screen works with custom styled prefabs.
+    *   Banking Screen works with custom styled prefabs and includes a "phone appears" SFX.
     *   TV Ticker text is properly masked.
 *   **Economy Integration:** `EconomicManager` is wired up. `BankingScreenController` flow is polished (Animation + Sound).
-*   **Visuals:** `MonthVisualManager` calls are currently commented out in `GameManager` (visual environment changes inactive).
+*   **Visuals:** `MonthVisualManager` is active; environment visuals (lighting, fog, skybox) now transition dynamically during month changes.
 *   **Content:** Obstacle texts are likely sourced from `DeadMoroz_ObstacleTexts_Simple.txt`.
 
 ## Next Steps Priorities
-1.  **Visuals:** Enable `MonthVisualManager` for environment changes (Snow, Decorations).
-2.  **Content:** Expand obstacle text pool.
-3.  **Platform:** Verify Telegram Mini App integration.
+1.  **Content:** Expand obstacle text pool.
+2.  **Platform:** Verify Telegram Mini App integration.
+3.  **Polishing:** Fine-tune the speed increase curve and obstacle spawn frequency.

@@ -29,6 +29,7 @@ public class BankingScreenController : MonoBehaviour
     [SerializeField] private Color neutralColor = Color.white;
 
     [Header("Audio Clips")]
+    [SerializeField] private AudioClip phoneAppearsSFX;
     [SerializeField] private AudioClip moneyCountSFX;
     [SerializeField] private AudioClip expenseLineSFX;
     [SerializeField] private AudioClip balancePositiveSFX;
@@ -82,6 +83,11 @@ public class BankingScreenController : MonoBehaviour
     public void ShowBankingScreen(float income, ExpenseItem[] expenses, float balance, int monthNumber, bool canAffordExpenses, bool showLoanButton)
     {
         if (isShowingScreen) return;
+
+        if (AudioManager.Instance != null && phoneAppearsSFX != null)
+        {
+            AudioManager.Instance.PlaySFX(phoneAppearsSFX);
+        }
 
         currentDeficit = Mathf.Abs(balance);
 

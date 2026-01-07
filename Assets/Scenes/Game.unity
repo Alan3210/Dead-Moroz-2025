@@ -21573,7 +21573,7 @@ Transform:
   m_GameObject: {fileID: 244349578}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 2.96}
   m_LocalScale: {x: 15, y: 8, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -23097,7 +23097,7 @@ MonoBehaviour:
   moneyCountSFX: {fileID: 8300000, guid: c1ccfae68ac693640ae5438468cf4808, type: 3}
   expenseLineSFX: {fileID: 8300000, guid: 68dc8802b0351e3479c29fa82f6c565b, type: 3}
   balancePositiveSFX: {fileID: 8300000, guid: 94a7dc67a6376a44696eb0210423da41, type: 3}
-  balanceNegativeSFX: {fileID: 8300000, guid: 7fb8a7e6adba11a4ebeebf216f670715, type: 3}
+  balanceNegativeSFX: {fileID: 8300000, guid: 9e63e295a2389bc4d8854d795b5e3355, type: 3}
   loanTakenSFX: {fileID: 8300000, guid: bde034456cfb2404e993569a0e92c49c, type: 3}
   buttonClickSFX: {fileID: 8300000, guid: 4324e92d5da289e40a852b5e4663152f, type: 3}
   panelAnimator: {fileID: 1472496502}
@@ -123100,7 +123100,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: -1760}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1216640320
 MonoBehaviour:
@@ -123109,13 +123109,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1216640318}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5882353}
+  m_Color: {r: 0.38679248, g: 0.009122463, b: 0.31715783, a: 0.5882353}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -144821,7 +144821,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u041C\u0435\u0441\u044F\u0446: 1/12"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 21d74a735c1a97e45b44a37472075479, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_sharedMaterial: {fileID: -8225684911581034501, guid: 21d74a735c1a97e45b44a37472075479, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -144888,7 +144888,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: -124.24982, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &1449628508
@@ -192615,7 +192615,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -197083,7 +197083,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2013227753}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1899.8195}
+  m_LocalPosition: {x: 0, y: 0, z: 1902.7794}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
